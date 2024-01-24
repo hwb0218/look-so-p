@@ -2,7 +2,7 @@
 
 ## Demo Link
 
-🔗 Demo Page :
+Demo Page :
 
 ## 프로젝트 개요
 
