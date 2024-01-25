@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 
-export default function PrivateLayout() {
+function ConsoleLayout() {
   return (
     <div>
       <p>private layout</p>
@@ -8,3 +8,5 @@ export default function PrivateLayout() {
     </div>
   );
 }
+
+export default ConsoleLayout;

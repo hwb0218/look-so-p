@@ -1,14 +1,14 @@
 import { Outlet } from 'react-router-dom';
 
-import GlobalNav from './global-nav';
+import GlobalNav from './nav';
 
-const GlobalLayout = () => {
+function GlobalLayout() {
   return (
-    <div>
+    <>
       <GlobalNav />
       <Outlet />
-    </div>
+    </>
   );
-};
+}
 
 export default GlobalLayout;

@@ -1,18 +1,27 @@
-import { Navigate, RouteObject } from 'react-router-dom';
+import { RouteObject } from 'react-router-dom';
 
-import { GlobalLayout } from '@components/layout/global-nav-layout';
+import { GlobalLayout, ConsoleLayout } from '@components/layout';
 
-import { Private } from '@pages/index';
+import { ConsoleMain, ConsoleAddProduct, MyPage } from '@pages/private';
 
-import { ROUTE_PATHS } from '@constants/routes';
+import { AUTH_ROUTE_PATHS } from '@constants/routes';
 
-const privateRoutes: RouteObject = {
-  path: '/auth',
-  element: <GlobalLayout />,
-  children: [
-    { index: true, element: <Private /> },
-    { path: '*', element: <Navigate to={ROUTE_PATHS.LOGIN} replace /> },
-  ],
-};
+const privateRoutes: RouteObject[] = [
+  {
+    element: <GlobalLayout />,
+    children: [{ path: AUTH_ROUTE_PATHS.MYPAGE, element: <MyPage /> }],
+  },
+  {
+    element: <ConsoleLayout />,
+    children: [
+      { path: AUTH_ROUTE_PATHS.CONSOLE, element: <ConsoleMain /> },
+      {
+        path: AUTH_ROUTE_PATHS.CONSOLE_ADD_PRODUCT,
+        element: <ConsoleAddProduct />,
+      },
+    ],
+  },
+  // { path: '*', element: <Navigate to={ROUTE_PATHS.LOGIN} replace /> },
+];
 
 export default privateRoutes;

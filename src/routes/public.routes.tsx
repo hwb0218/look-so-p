@@ -1,20 +1,24 @@
 import { RouteObject } from 'react-router-dom';
 import { Navigate } from 'react-router-dom';
 
-import { GlobalLayout } from '@components/layout/global-nav-layout';
+import { GlobalLayout } from '@components/layout/nav-layout';
 
-import { Main, Login } from '@pages/index';
+import { Home, Login, SignUp, ProductAll } from '@pages/public';
 
 import { ROUTE_PATHS } from '@constants/routes';
 
-const publicRoutes: RouteObject = {
-  path: '/',
-  element: <GlobalLayout />,
-  children: [
-    { index: true, element: <Main /> },
-    { path: ROUTE_PATHS.LOGIN, element: <Login /> },
-    { path: '*', element: <Navigate to={ROUTE_PATHS.LOGIN} replace /> },
-  ],
-};
+const publicRoutes: RouteObject[] = [
+  {
+    path: '/',
+    element: <GlobalLayout />,
+    children: [
+      { index: true, element: <Home /> },
+      { path: ROUTE_PATHS.SIGNUP, element: <SignUp /> },
+      { path: ROUTE_PATHS.PRODUCT_ALL, element: <ProductAll /> },
+    ],
+  },
+  { path: ROUTE_PATHS.LOGIN, element: <Login /> },
+  { path: '*', element: <Navigate to={ROUTE_PATHS.LOGIN} replace /> },
+];
 
 export default publicRoutes;
