@@ -1,10 +1,17 @@
-import { zodResolver } from '@hookform/resolvers/zod';
+import { FirebaseError } from 'firebase/app';
+import { authService } from '@firebase/AuthService';
+
 import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+import useAuthContext from '@providers/use-auth-context';
+
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@components/ui/form';
+import { Input } from '@components/ui/input';
+import { Button } from '@components/ui/button';
+import { useNavigate } from 'react-router-dom';
+import { ROUTE_PATHS } from '@constants/routes';
 
 const formSchema = z.object({
   email: z.string().min(1, { message: '이메일을 입력하세요' }).email({ message: '이메일이 아닙니다' }),
@@ -17,6 +24,9 @@ const formSchema = z.object({
 });
 
 function Login() {
+  const navigate = useNavigate();
+  const { setUserData } = useAuthContext();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -25,16 +35,24 @@ function Login() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-  }
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      const { email, password } = values;
+
+      const userCredential = await authService.login(email, password);
+      setUserData(userCredential.user);
+
+      navigate({ pathname: ROUTE_PATHS.HOME });
+    } catch (error) {
+      if (error instanceof FirebaseError) {
+        console.error(error);
+      }
+    }
+  };
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="h-screen flex justify-center items-center flex-col space-y-4"
-      >
+      <form onSubmit={form.handleSubmit(onSubmit)} className="h-screen flex items-center flex-col space-y-4">
         <FormField
           control={form.control}
           name="email"

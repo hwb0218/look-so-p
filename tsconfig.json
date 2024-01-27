@@ -1,12 +1,16 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "paths": {
-      "@pages/*": ["src/pages/*"],
-      "@components/*": ["src/components/*"],
-      "@constants/*": ["src/constants/*"],
-      "@lib": ["src/lib"],
-      "@/*": ["./src/*"],
+      "@pages/*": ["pages/*"],
+      "@routes/*": ["routes/*"],
+      "@components/*": ["components/*"],
+      "@constants/*": ["constants/*"],
+      "@hooks/*": ["hooks/*"],
+      "@firebase/*": ["firebase/*"],
+      "@providers/*": ["providers/*"],
+      "@lib": ["lib"],
+      "@src/*": ["./*"],
     },
     "target": "ES6",
     "useDefineForClassFields": true,
@@ -29,5 +33,6 @@
     "noFallthroughCasesInSwitch": true,
   },
   "include": ["src"],
+  "exclude": ["node_modules"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -4,12 +4,15 @@ import { Ul, Li } from '@components/common/list';
 
 import { NavItems, NavItemsAuth, NavItemsUnauth } from './nav-items';
 
+import useAuthContext from '@providers/use-auth-context';
+
 import { ROUTE_PATHS } from '@constants/routes';
 
-import checkAuth from '@/utils/checkAuth';
-
 function GlobalNav() {
-  // const location = useLocation();
+  const { state } = useAuthContext();
+
+  console.log(state);
+
   return (
     <header className="px-5 py-2 flex justify-between sticky left-0 right-0 top-0 bottom-0 z-10">
       <Ul>
@@ -21,8 +24,8 @@ function GlobalNav() {
       </Ul>
       <Ul>
         <NavItems />
-        <NavItemsAuth renderIf={() => checkAuth() === true} />
-        <NavItemsUnauth renderIf={() => checkAuth() === false} />
+        <NavItemsAuth renderIf={() => !!state.auth?.uid} />
+        <NavItemsUnauth renderIf={() => !state.auth?.uid} />
       </Ul>
     </header>
   );

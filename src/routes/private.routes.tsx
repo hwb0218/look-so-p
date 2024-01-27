@@ -1,6 +1,6 @@
 import { RouteObject } from 'react-router-dom';
 
-import { GlobalLayout, ConsoleLayout } from '@components/layout';
+import { ProtectedLayout, GlobalLayout, ConsoleLayout } from '@components/layout';
 
 import { ConsoleMain, ConsoleAddProduct, MyPage } from '@pages/private';
 
@@ -8,11 +8,19 @@ import { AUTH_ROUTE_PATHS } from '@constants/routes';
 
 const privateRoutes: RouteObject[] = [
   {
-    element: <GlobalLayout />,
+    element: (
+      <ProtectedLayout>
+        <GlobalLayout />
+      </ProtectedLayout>
+    ),
     children: [{ path: AUTH_ROUTE_PATHS.MYPAGE, element: <MyPage /> }],
   },
   {
-    element: <ConsoleLayout />,
+    element: (
+      <ProtectedLayout>
+        <ConsoleLayout />
+      </ProtectedLayout>
+    ),
     children: [
       { path: AUTH_ROUTE_PATHS.CONSOLE, element: <ConsoleMain /> },
       {
@@ -21,7 +29,6 @@ const privateRoutes: RouteObject[] = [
       },
     ],
   },
-  // { path: '*', element: <Navigate to={ROUTE_PATHS.LOGIN} replace /> },
 ];
 
 export default privateRoutes;

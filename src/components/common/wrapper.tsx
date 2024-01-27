@@ -1,8 +1,8 @@
 import { PropsWithChildren } from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from '@src/lib/utils';
 
 interface Props {
-  className: string;
+  className?: string;
 }
 
 function Wrapper({ className, children }: PropsWithChildren<Props>) {

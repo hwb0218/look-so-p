@@ -2,6 +2,10 @@ import { NavLink } from 'react-router-dom';
 
 import { Li } from '@components/common/list';
 
+import useAuthContext from '@providers/use-auth-context';
+
+import { authService } from '@firebase/AuthService';
+
 import { AUTH_ROUTE_PATHS } from '@constants/routes';
 
 const AUTH_NAVIGATION_ITEMS = {
@@ -24,17 +28,29 @@ interface Props {
 }
 
 function NavItemsAuth({ renderIf }: Props) {
+  const { resetUserData } = useAuthContext();
+
   if (renderIf && !renderIf()) {
     return null;
   }
 
   return (
     <>
-      {AUTH_NAVIGATION_ITEMS['seller'].map(({ title, to }) => (
+      {AUTH_NAVIGATION_ITEMS['common'].map(({ title, to }) => (
         <Li key={to} className="ml-2">
           <NavLink to={to}>{title}</NavLink>
         </Li>
       ))}
+      <Li className="ml-2">
+        <button
+          onClick={async () => {
+            await authService.logout();
+            resetUserData();
+          }}
+        >
+          로그아웃
+        </button>
+      </Li>
     </>
   );
 }

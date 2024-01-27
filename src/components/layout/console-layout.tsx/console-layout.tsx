@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom';
 function ConsoleLayout() {
   return (
     <div>
-      <p>private layout</p>
+      <p>console layout</p>
       <Outlet />
     </div>
   );

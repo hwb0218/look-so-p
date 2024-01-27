@@ -2,7 +2,7 @@ export const ROUTE_PATHS = {
   HOME: '/',
   LOGIN: '/login',
   SIGNUP: '/sign-up',
-  PRODUCT_ALL: '/produc-all',
+  PRODUCT_ALL: '/product-all',
 };
 
 export const AUTH_ROUTE_PATHS = {

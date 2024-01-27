@@ -15,9 +15,9 @@ const publicRoutes: RouteObject[] = [
       { index: true, element: <Home /> },
       { path: ROUTE_PATHS.SIGNUP, element: <SignUp /> },
       { path: ROUTE_PATHS.PRODUCT_ALL, element: <ProductAll /> },
+      { path: ROUTE_PATHS.LOGIN, element: <Login /> },
     ],
   },
-  { path: ROUTE_PATHS.LOGIN, element: <Login /> },
   { path: '*', element: <Navigate to={ROUTE_PATHS.LOGIN} replace /> },
 ];
 
