@@ -11,8 +11,6 @@ import { ROUTE_PATHS } from '@constants/routes';
 function GlobalNav() {
   const { state } = useAuthContext();
 
-  console.log(state);
-
   return (
     <header className="px-5 py-2 flex justify-between sticky left-0 right-0 top-0 bottom-0 z-10">
       <Ul>

@@ -9,6 +9,7 @@
       "@hooks/*": ["hooks/*"],
       "@firebase/*": ["firebase/*"],
       "@providers/*": ["providers/*"],
+      "@schema": ["schema"],
       "@lib": ["lib"],
       "@src/*": ["./*"],
     },

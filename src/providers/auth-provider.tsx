@@ -1,35 +1,42 @@
 import { useReducer, createContext, useMemo, PropsWithChildren, useEffect } from 'react';
 
-import { UserCredential, onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '@firebase/config';
+import { DocumentData } from 'firebase/firestore';
 
 const enum REDUCER_ACTION_TYPE {
-  SET_USER_DATA,
-  RESET_USER_DATA,
+  SET_AUTH,
+  RESET_AUTH,
+  SET_IS_LOGGED_IN,
 }
 
 type ReducerAction =
-  | { type: REDUCER_ACTION_TYPE.SET_USER_DATA; payload: { user: UserCredential['user'] } }
-  | { type: REDUCER_ACTION_TYPE.RESET_USER_DATA; payload: Record<string, never> };
+  | { type: REDUCER_ACTION_TYPE.SET_AUTH; payload: DocumentData }
+  | { type: REDUCER_ACTION_TYPE.RESET_AUTH; payload: Record<string, never> }
+  | { type: REDUCER_ACTION_TYPE.SET_IS_LOGGED_IN; payload: boolean };
 
 const initState = {
-  auth: {} as UserCredential['user'],
+  auth: {} as DocumentData,
+  isLoggedIn: false,
 };
 
 type InitState = typeof initState;
 
 const reducer = (state: InitState = initState, action: ReducerAction) => {
   switch (action.type) {
-    case REDUCER_ACTION_TYPE.SET_USER_DATA: {
+    case REDUCER_ACTION_TYPE.SET_AUTH: {
       return {
         ...state,
-        auth: action.payload.user,
+        auth: action.payload,
       };
     }
-    case REDUCER_ACTION_TYPE.RESET_USER_DATA: {
+    case REDUCER_ACTION_TYPE.RESET_AUTH: {
+      return initState;
+    }
+    case REDUCER_ACTION_TYPE.SET_IS_LOGGED_IN: {
       return {
         ...state,
-        auth: initState.auth,
+        isLoggedIn: action.payload,
       };
     }
     default: {
@@ -40,14 +47,16 @@ const reducer = (state: InitState = initState, action: ReducerAction) => {
 
 interface IAuthContext {
   state: InitState;
-  setUserData: (userData: UserCredential['user']) => void;
-  resetUserData: () => void;
+  setAuth: (userData: DocumentData) => void;
+  resetAuth: () => void;
+  setIsLoggedIn: (isLoggedIn: boolean) => void;
 }
 
 export const AuthContext = createContext<IAuthContext>({
   state: initState,
-  setUserData: () => {},
-  resetUserData: () => {},
+  setAuth: () => {},
+  resetAuth: () => {},
+  setIsLoggedIn: () => {},
 });
 
 export default function AuthProvider({ children }: PropsWithChildren) {
@@ -56,32 +65,42 @@ export default function AuthProvider({ children }: PropsWithChildren) {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        setUserData(user);
+        console.log(user);
       }
     });
 
-    return () => unsubscribe();
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
-  const setUserData = (userCredential: UserCredential['user']) => {
+  const setAuth = (user: DocumentData) => {
     dispatch({
-      type: REDUCER_ACTION_TYPE.SET_USER_DATA,
-      payload: { user: userCredential },
+      type: REDUCER_ACTION_TYPE.SET_AUTH,
+      payload: user,
     });
   };
 
-  const resetUserData = () => {
+  const resetAuth = () => {
     dispatch({
-      type: REDUCER_ACTION_TYPE.RESET_USER_DATA,
+      type: REDUCER_ACTION_TYPE.RESET_AUTH,
       payload: {},
+    });
+  };
+
+  const setIsLoggedIn = (isLoggedIn: boolean) => {
+    dispatch({
+      type: REDUCER_ACTION_TYPE.SET_IS_LOGGED_IN,
+      payload: isLoggedIn,
     });
   };
 
   const contextValue: IAuthContext = useMemo(() => {
     return {
       state,
-      setUserData,
-      resetUserData,
+      setAuth,
+      resetAuth,
+      setIsLoggedIn,
     };
   }, [state]);
 

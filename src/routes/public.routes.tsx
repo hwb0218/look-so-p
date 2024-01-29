@@ -1,5 +1,4 @@
 import { RouteObject } from 'react-router-dom';
-import { Navigate } from 'react-router-dom';
 
 import { GlobalLayout } from '@components/layout/nav-layout';
 
@@ -18,7 +17,6 @@ const publicRoutes: RouteObject[] = [
       { path: ROUTE_PATHS.LOGIN, element: <Login /> },
     ],
   },
-  { path: '*', element: <Navigate to={ROUTE_PATHS.LOGIN} replace /> },
 ];
 
 export default publicRoutes;

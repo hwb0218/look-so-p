@@ -1,79 +1,134 @@
+import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '@firebase/config';
 import { FirebaseError } from 'firebase/app';
+import { authService } from '@firebase/AuthService';
+import { storageService } from '@firebase/StorageService';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import * as z from 'zod';
+import { type SignUpFormSchema, signUpFormSchema } from '@src/schema/sign-up-schema';
 
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@components/ui/form';
 import { Input } from '@components/ui/input';
 import { Button } from '@components/ui/button';
 import { Checkbox } from '@components/ui/checkbox';
+import { Avatar, AvatarFallback, AvatarImage } from '@components/ui/avatar';
 import Wrapper from '@components/common/wrapper';
 
-const formSchema = z
-  .object({
-    email: z.string().min(1, { message: '이메일을 입력하세요' }).email({ message: '이메일이 아닙니다' }),
-    password: z
-      .string()
-      .min(1, { message: '비밀번호를 입력하세요' })
-      .regex(/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}$/, {
-        message: '8자 이상의 영어 대문자 또는 소문자, 숫자, 특수문자가 필요합니다',
-      }),
-    checkPassword: z.string().optional(),
-    checkSeller: z.boolean().optional(),
-  })
-  .superRefine(({ password, checkPassword }, ctx) => {
-    if (password !== checkPassword) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: '패스워드가 일치하지 않습니다',
-        path: ['checkPassword'],
-      });
-    }
-  });
+import getImageData from '@src/utils/get-image-data';
+import { Label } from '@components/ui/label';
 
-function SignUp() {
+export default function SignUp() {
+  const [preview, setPreview] = useState('');
+  const inputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<SignUpFormSchema>({
+    mode: 'onSubmit',
+    resolver: zodResolver(signUpFormSchema),
     defaultValues: {
+      images: new File([], '/user_default.svg'),
       email: '',
+      nickname: '',
       password: '',
       checkPassword: '',
+      isSeller: false,
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: SignUpFormSchema) => {
     try {
-      const { email, password } = values;
-      await createUserWithEmailAndPassword(auth, email, password);
+      const profileURL = await storageService.uploadFile(values.images[0]);
+
+      await authService.createUser({
+        ...values,
+        images: profileURL,
+      });
+
       navigate(-1);
-    } catch (error) {
-      if (error instanceof FirebaseError) {
-        console.error(error);
+    } catch (err) {
+      if (err instanceof FirebaseError) {
+        console.error(err);
       }
+    }
+  };
+
+  const onClickFileInput = () => {
+    inputRef.current?.click();
+  };
+
+  const onResetFileInput = (e: React.MouseEvent) => {
+    e.stopPropagation();
+
+    if (inputRef.current) {
+      inputRef.current.value = '';
+      const dataTransfer = new DataTransfer();
+      dataTransfer.items.add(new File([], '/user_default.svg', { type: 'image/svg+xml' }));
+      form.setValue('images', dataTransfer.files);
+      setPreview('');
     }
   };
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="flex justify-center items-center flex-col space-y-4">
+        <Label>프로필</Label>
+        <Avatar className="w-24 h-24 cursor-pointer" onClick={onClickFileInput}>
+          <AvatarImage src={preview} onClick={onResetFileInput} />
+          <AvatarFallback className="bg-stone-300">
+            <img src="/user_add.svg" className="w-3/4" />
+          </AvatarFallback>
+        </Avatar>
         <Wrapper>
+          <FormField
+            control={form.control}
+            name="images"
+            render={({ field: { onChange } }) => (
+              <FormItem>
+                <FormControl>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    hidden
+                    disabled={form.formState.isSubmitting}
+                    onChange={(event) => {
+                      const { files, displayUrl } = getImageData(event);
+                      setPreview(displayUrl);
+                      onChange(files);
+                      console.log(event.target.value);
+                    }}
+                    ref={inputRef}
+                  />
+                </FormControl>
+                <FormMessage className="text-center space-y-2" />
+              </FormItem>
+            )}
+          />
+
           <FormField
             control={form.control}
             name="email"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="mt-2">
                 <FormLabel className="pl-2">아이디</FormLabel>
                 <FormControl>
                   <Input placeholder="아이디(이메일)" {...field} className="w-96" />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="ml-2" />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="nickname"
+            render={({ field }) => (
+              <FormItem className="mt-2">
+                <FormLabel className="pl-2">닉네임</FormLabel>
+                <FormControl>
+                  <Input placeholder="닉네임" {...field} className="w-96" />
+                </FormControl>
+                <FormMessage className="ml-2" />
               </FormItem>
             )}
           />
@@ -81,7 +136,7 @@ function SignUp() {
             control={form.control}
             name="password"
             render={({ field }) => (
-              <FormItem className="mt-3">
+              <FormItem className="mt-2">
                 <FormLabel className="pl-2">비밀번호</FormLabel>
                 <FormControl>
                   <Input
@@ -91,7 +146,7 @@ function SignUp() {
                     {...field}
                   />
                 </FormControl>
-                <FormMessage className="flex-none" />
+                <FormMessage className="ml-2" />
               </FormItem>
             )}
           />
@@ -99,7 +154,7 @@ function SignUp() {
             control={form.control}
             name="checkPassword"
             render={({ field }) => (
-              <FormItem className="mt-3">
+              <FormItem className="mt-2">
                 <FormLabel className="pl-2">비밀번호 확인</FormLabel>
                 <FormControl>
                   <Input placeholder="비밀번호 확인" type="password" className="w-96" {...field} />
@@ -110,7 +165,7 @@ function SignUp() {
           />
           <FormField
             control={form.control}
-            name="checkSeller"
+            name="isSeller"
             render={({ field }) => (
               <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md pl-2 py-4">
                 <FormControl>
@@ -130,5 +185,3 @@ function SignUp() {
     </Form>
   );
 }
-
-export default SignUp;

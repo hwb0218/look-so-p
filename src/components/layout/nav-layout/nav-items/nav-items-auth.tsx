@@ -28,7 +28,7 @@ interface Props {
 }
 
 function NavItemsAuth({ renderIf }: Props) {
-  const { resetUserData } = useAuthContext();
+  const { resetAuth, setIsLoggedIn } = useAuthContext();
 
   if (renderIf && !renderIf()) {
     return null;
@@ -45,7 +45,8 @@ function NavItemsAuth({ renderIf }: Props) {
         <button
           onClick={async () => {
             await authService.logout();
-            resetUserData();
+            resetAuth();
+            setIsLoggedIn(false);
           }}
         >
           로그아웃

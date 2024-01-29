@@ -25,7 +25,7 @@ const formSchema = z.object({
 
 function Login() {
   const navigate = useNavigate();
-  const { setUserData } = useAuthContext();
+  const { setAuth, setIsLoggedIn } = useAuthContext();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -39,10 +39,13 @@ function Login() {
     try {
       const { email, password } = values;
 
-      const userCredential = await authService.login(email, password);
-      setUserData(userCredential.user);
+      const user = await authService.getUser(email, password);
 
-      navigate({ pathname: ROUTE_PATHS.HOME });
+      if (user) {
+        setAuth(user);
+        setIsLoggedIn(true);
+        navigate({ pathname: ROUTE_PATHS.HOME });
+      }
     } catch (error) {
       if (error instanceof FirebaseError) {
         console.error(error);

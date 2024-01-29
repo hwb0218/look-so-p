@@ -17,6 +17,7 @@ module.exports = {
       'error', {
           'endOfLine': 'auto',
       }
-    ]
+    ],
+    "no-debugger":"off",
   },
 }
