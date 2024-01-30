@@ -43,7 +43,7 @@ export default function AddProductImages({ form }: Props) {
         control={form.control}
         name="images"
         render={({ field: { onChange } }) => (
-          <FormItem className="mt-2 w-1/2">
+          <FormItem className="mt-2">
             <FormLabel className="pl-1">상품 이미지</FormLabel>
             <Button
               type="button"
@@ -77,7 +77,7 @@ export default function AddProductImages({ form }: Props) {
           </FormItem>
         )}
       />
-      <Wrapper className="mt-2 p-2 flex w-1/2 gap-3 border rounded-md max-xl:flex-col">
+      <Wrapper className="mt-2 p-2 flex gap-3 border rounded-md max-xl:flex-col">
         {[...Array(3)].map((_, i) => {
           const previewURL = previewURLs[i];
           const thumbnail = i === 0;

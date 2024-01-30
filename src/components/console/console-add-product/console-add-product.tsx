@@ -81,14 +81,14 @@ export default function ConsoleProductRegistration() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
-        <Wrapper className="w-full flex justify-center items-center flex-col">
-          <h2 className="text-3xl font-bold">상품 등록</h2>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full flex justify-center items-center">
+        <Wrapper className="w-1/2 flex flex-col justify-center mb-5">
+          <h1 className="text-3xl font-bold">상품 등록</h1>
           <FormField
             control={form.control}
             name="productName"
             render={({ field }) => (
-              <FormItem className="mt-2 w-1/2">
+              <FormItem className="mt-2">
                 <FormLabel className="pl-1">상품 이름</FormLabel>
                 <FormControl>
                   <Input {...field} />
@@ -97,7 +97,7 @@ export default function ConsoleProductRegistration() {
               </FormItem>
             )}
           />
-          <Wrapper className="grid grid-flow-col w-1/2 gap-3">
+          <Wrapper className="grid grid-flow-col gap-3">
             <FormField
               control={form.control}
               name="productQuantity"
@@ -141,7 +141,7 @@ export default function ConsoleProductRegistration() {
             control={form.control}
             name="productDescription"
             render={({ field }) => (
-              <FormItem className="mt-2 w-1/2">
+              <FormItem className="mt-2">
                 <FormLabel className="pl-1">상품 설명</FormLabel>
                 <FormControl>
                   <Textarea {...field} className="resize-none" />
@@ -151,7 +151,7 @@ export default function ConsoleProductRegistration() {
             )}
           />
           <AddProductImages form={form} />
-          <Button type="submit" disabled={form.formState.isSubmitting} className="mt-5 w-1/2">
+          <Button type="submit" disabled={form.formState.isSubmitting} className="mt-5 mx-auto w-1/2 max-lg:w-full">
             상품 등록
           </Button>
         </Wrapper>
