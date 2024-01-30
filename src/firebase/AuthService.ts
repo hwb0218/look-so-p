@@ -2,11 +2,12 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } f
 import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
 import { auth, firestore } from '@src/firebase/config';
 
-import { type SignUpFormSchema } from '@pages/public/sign-up';
+import { type SignUpFormSchema } from '@src/schema/sign-up-schema';
 
 class AuthService {
   async signUp(email: string, password: string) {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+
     return userCredential.user.uid;
   }
 
@@ -34,6 +35,7 @@ class AuthService {
       const documentRef = doc(firestore, 'users', uid);
       const userRef = await setDoc(documentRef, {
         ...values,
+        uid,
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
       });

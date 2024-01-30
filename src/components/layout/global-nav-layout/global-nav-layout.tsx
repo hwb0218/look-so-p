@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 
-import GlobalNav from './nav';
+import GlobalNav from './global-nav';
 
 function GlobalLayout() {
   return (

@@ -8,6 +8,10 @@ export const ROUTE_PATHS = {
 export const AUTH_ROUTE_PATHS = {
   PRIVATE: '/auth',
   MYPAGE: '/my-page',
+};
+
+export const CONSOLE_ROUTE_PATHS = {
   CONSOLE: '/console',
-  CONSOLE_ADD_PRODUCT: '/console/add-prodct',
+  PRODUCT_ALL: '/console/product-all',
+  PRODUCT_REGISTRATION: '/console/product-registration',
 };

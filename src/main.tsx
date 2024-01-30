@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 // import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import { AuthProvider } from './providers';
+import AuthProvider from '@providers/auth-provider';
 
 import App from './app';
 

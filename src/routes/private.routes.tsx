@@ -1,16 +1,16 @@
 import { RouteObject } from 'react-router-dom';
 
-import { ProtectedLayout, GlobalLayout, ConsoleLayout } from '@components/layout';
+import { ProtectedLayout, GlobalNavLayout, ConsoleLayout } from '@components/layout';
 
-import { ConsoleMain, ConsoleAddProduct, MyPage } from '@pages/private';
+import { ConsoleMainPage, ProductRegistrationPage, MyPage } from '@pages/private';
 
-import { AUTH_ROUTE_PATHS } from '@constants/routes';
+import { AUTH_ROUTE_PATHS, CONSOLE_ROUTE_PATHS } from '@constants/routes';
 
 const privateRoutes: RouteObject[] = [
   {
     element: (
       <ProtectedLayout>
-        <GlobalLayout />
+        <GlobalNavLayout />
       </ProtectedLayout>
     ),
     children: [{ path: AUTH_ROUTE_PATHS.MYPAGE, element: <MyPage /> }],
@@ -22,10 +22,11 @@ const privateRoutes: RouteObject[] = [
       </ProtectedLayout>
     ),
     children: [
-      { path: AUTH_ROUTE_PATHS.CONSOLE, element: <ConsoleMain /> },
+      { path: CONSOLE_ROUTE_PATHS.CONSOLE, element: <ConsoleMainPage /> },
+      { path: CONSOLE_ROUTE_PATHS.PRODUCT_ALL, element: <ConsoleMainPage /> },
       {
-        path: AUTH_ROUTE_PATHS.CONSOLE_ADD_PRODUCT,
-        element: <ConsoleAddProduct />,
+        path: CONSOLE_ROUTE_PATHS.PRODUCT_REGISTRATION,
+        element: <ProductRegistrationPage />,
       },
     ],
   },

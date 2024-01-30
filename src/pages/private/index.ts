@@ -1,3 +1,3 @@
 export { default as MyPage } from './my-page';
-export { default as ConsoleMain } from './console-main';
-export { default as ConsoleAddProduct } from './console-add-product';
+export { default as ConsoleMainPage } from './console/console';
+export { default as ProductRegistrationPage } from './console/product-registration';

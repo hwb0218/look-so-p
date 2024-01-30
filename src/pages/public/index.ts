@@ -1,4 +1,4 @@
-export { default as Home } from './home';
-export { default as Login } from './login';
-export { default as SignUp } from './sign-up';
-export { default as ProductAll } from './product-all';
+export { default as HomePage } from './home';
+export { default as LoginPage } from './login';
+export { default as SignUpPage } from './sign-up';
+export { default as ProductAllPage } from './product-all';

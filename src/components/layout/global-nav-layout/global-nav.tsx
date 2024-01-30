@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 
 import { Ul, Li } from '@components/common/list';
 
-import { NavItems, NavItemsAuth, NavItemsUnauth } from './nav-items';
+import { NavItems, NavItemsAuth, NavItemsUnauth } from './global-nav-items';
 
 import useAuthContext from '@providers/use-auth-context';
 
@@ -12,9 +12,9 @@ function GlobalNav() {
   const { state } = useAuthContext();
 
   return (
-    <header className="px-5 py-2 flex justify-between sticky left-0 right-0 top-0 bottom-0 z-10">
+    <header className="px-4 py-2 flex justify-between sticky left-0 right-0 top-0 bottom-0 z-10">
       <Ul>
-        <Li className="w-14 h-14 rounded overflow-hidden">
+        <Li className="w-16 rounded overflow-hidden">
           <NavLink to={ROUTE_PATHS.HOME}>
             <img src="/logo.svg" />
           </NavLink>
@@ -22,7 +22,7 @@ function GlobalNav() {
       </Ul>
       <Ul>
         <NavItems />
-        <NavItemsAuth renderIf={() => !!state.auth?.uid} />
+        <NavItemsAuth renderIf={() => !!state.auth?.uid} isSeller={state.auth?.isSeller} />
         <NavItemsUnauth renderIf={() => !state.auth?.uid} />
       </Ul>
     </header>

@@ -9,7 +9,7 @@ function ProtectedLayout({ children }: PropsWithChildren) {
   const location = useLocation();
   const { state } = useAuthContext();
 
-  if (state.auth?.uid) {
+  if (!state.auth?.uid) {
     return <Navigate to={ROUTE_PATHS.LOGIN} state={{ from: location }} replace />;
   }
 
