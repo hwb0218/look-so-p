@@ -2,13 +2,21 @@ import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
 import { storage } from './config';
 
 class StorageService {
-  async uploadFile(file: File, path: string = '') {
-    const storageRef = ref(storage, `${path}/${file.name}`);
+  async uploadFiles(fileOrFiles: File | File[], path: string = '') {
+    const files = Array.isArray(fileOrFiles) ? fileOrFiles : [fileOrFiles];
 
-    await uploadBytes(storageRef, file);
+    const downloadUrls = await Promise.all(
+      files.map(async (file) => {
+        const storageRef = ref(storage, `${path}/${file.name}`);
 
-    const downloadURL = await getDownloadURL(storageRef);
-    return downloadURL;
+        await uploadBytes(storageRef, file);
+
+        const downloadURL = await getDownloadURL(storageRef);
+        return downloadURL;
+      }),
+    );
+
+    return downloadUrls;
   }
 }
 

@@ -12,6 +12,7 @@ import useAuthContext from '@providers/use-auth-context';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@components/ui/form';
 import { Input } from '@components/ui/input';
 import { Button } from '@components/ui/button';
+import Wrapper from '@components/common/wrapper';
 
 import { ROUTE_PATHS } from '@constants/routes';
 
@@ -47,36 +48,42 @@ function Login() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="h-screen flex items-center flex-col space-y-4">
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>아이디</FormLabel>
-              <FormControl>
-                <Input placeholder="아이디(이메일)" {...field} className="w-96" />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>비밀번호</FormLabel>
-              <FormControl>
-                <Input placeholder="비밀번호(영문, 숫자, 특수문자 조합)" type="password" className="w-96" {...field} />
-              </FormControl>
-              <FormMessage className="flex-none" />
-            </FormItem>
-          )}
-        />
-        <Button type="submit" variant="default">
-          로그인
-        </Button>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="pt-40 flex justify-center items-center flex-col space-y-4"
+      >
+        <Wrapper className="p-6 min-w-64 w-1/3 border rounded-md ring-2 ring-ring ring-offset-2">
+          <h1 className="text-2xl text-center font-bold">LookSoPretty</h1>
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem className="mt-2">
+                <FormLabel>아이디</FormLabel>
+                <FormControl>
+                  <Input placeholder="아이디(이메일)" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem className="mt-2">
+                <FormLabel>비밀번호</FormLabel>
+                <FormControl>
+                  <Input placeholder="비밀번호(영문, 숫자, 특수문자 조합)" type="password" {...field} />
+                </FormControl>
+                <FormMessage className="flex-none" />
+              </FormItem>
+            )}
+          />
+          <Button type="submit" className="w-full mt-5">
+            로그인
+          </Button>
+        </Wrapper>
       </form>
     </Form>
   );

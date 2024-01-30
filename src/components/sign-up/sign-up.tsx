@@ -43,7 +43,7 @@ function SignUp() {
 
   const onSubmit = async (values: SignUpFormSchema) => {
     try {
-      const profileURL = await storageService.uploadFile(values.images[0]);
+      const profileURL = await storageService.uploadFiles(values.images[0]);
 
       await authService.createUser({
         ...values,
@@ -100,7 +100,10 @@ function SignUp() {
                     disabled={form.formState.isSubmitting}
                     onChange={(event) => {
                       const { files, displayUrl } = getImageData(event);
-                      setPreview(displayUrl);
+
+                      const [imageUrl] = displayUrl;
+                      setPreview(imageUrl);
+
                       onChange(files);
                     }}
                     ref={inputRef}

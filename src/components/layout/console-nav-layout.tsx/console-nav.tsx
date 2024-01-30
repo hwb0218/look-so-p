@@ -38,7 +38,7 @@ function ConsoleNav() {
             </div>
             <ul className="px-4 pb-4 overflow-hidden overflow-y-auto scrollbar-thin scrollbar-thumb-slate-400 scrollbar-track-inherit">
               {CONSOLE_NAVIGATION_ITEMS.map(({ title, to }) => (
-                <Li key={title} className="text-base py-6 cursor-pointer">
+                <Li key={title} className="text-base py-6">
                   <NavLink to={to}>{title}</NavLink>
                 </Li>
               ))}
