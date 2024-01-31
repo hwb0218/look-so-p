@@ -1,6 +1,6 @@
 import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 
-import { authService } from '@firebase/AuthService';
+import { authService } from '@src/lib/firebase/AuthService';
 
 import { QUERY_KEYS } from '@constants/query-keys';
 

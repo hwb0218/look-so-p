@@ -1,8 +1,8 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
-import { auth, firestore } from '@src/firebase/config';
+import { auth, firestore } from '@src/lib/firebase/config';
 
-import { type SignUpFormSchema } from '@src/schema/sign-up-schema';
+import { type SignUpFormSchema } from '@src/lib/zod/sign-up-schema';
 
 class AuthService {
   async signUp(email: string, password: string) {

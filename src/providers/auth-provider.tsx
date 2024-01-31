@@ -1,7 +1,7 @@
 import { useReducer, createContext, useMemo, PropsWithChildren, useEffect } from 'react';
 
 import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '@firebase/config';
+import { auth } from '@src/lib/firebase/config';
 import { DocumentData } from 'firebase/firestore';
 
 const enum REDUCER_ACTION_TYPE {

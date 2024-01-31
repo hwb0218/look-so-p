@@ -1,11 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 
 import { FirebaseError } from 'firebase/app';
-import { authService } from '@firebase/AuthService';
+import { authService } from '@src/lib/firebase/AuthService';
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { loginFormSchema, type LoginFormSchema } from '@src/schema/login-schema';
+import { loginFormSchema, type LoginFormSchema } from '@src/lib/zod/login-schema';
 
 import useAuthContext from '@providers/use-auth-context';
 

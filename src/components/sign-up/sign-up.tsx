@@ -2,12 +2,12 @@ import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { FirebaseError } from 'firebase/app';
-import { authService } from '@firebase/AuthService';
-import { storageService } from '@firebase/StorageService';
+import { authService } from '@src/lib/firebase/AuthService';
+import { storageService } from '@src/lib/firebase/StorageService';
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { type SignUpFormSchema, signUpFormSchema } from '@src/schema/sign-up-schema';
+import { type SignUpFormSchema, signUpFormSchema } from '@src/lib/zod/sign-up-schema';
 
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@components/ui/form';
 import { Input } from '@components/ui/input';
