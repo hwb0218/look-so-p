@@ -2,13 +2,13 @@ import { useState, useRef } from 'react';
 import { type UseFormReturn } from 'react-hook-form';
 
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@components/ui/form';
-import Wrapper from '@components/common/wrapper';
-
-import getImageData from '@src/utils/get-image-data';
-
-import { type ProductFormSchema } from '../console-add-product';
 import { Button } from '@components/ui/button';
 import { Badge } from '@components/ui/badge';
+import Wrapper from '@components/common/wrapper';
+
+import { type ProductFormSchema } from '@src/lib/zod/add-product-schema';
+
+import getImageData from '@src/utils/get-image-data';
 
 interface Props {
   form: UseFormReturn<ProductFormSchema>;

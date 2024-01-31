@@ -1,46 +1,20 @@
 import { useState } from 'react';
 
 import { FirebaseError } from 'firebase/app';
-import { storageService } from '@firebase/StorageService';
+import { storageService } from '@src/lib/firebase/StorageService';
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
 
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@components/ui/form';
 import { Input } from '@components/ui/input';
 import { Button } from '@components/ui/button';
 import { Textarea } from '@components/ui/textarea';
 import Wrapper from '@components/common/wrapper';
-
-import formatNumber from '@src/utils/format-number';
-
 import { AddProductImages } from './add-product-images';
 
-const MAX_IMAGE_SIZE = 5242880;
-const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/jpg', 'image/svg+xml'];
-
-export const productFormSchema = z.object({
-  images: z
-    .any()
-    .refine((file) => file[0]?.size <= MAX_IMAGE_SIZE, `최대 이미지 크기는 5MB입니다`)
-    .refine((file) => ALLOWED_IMAGE_TYPES.includes(file[0]?.type), '.jpg, .jpeg, .png 형식만 지원됩니다'),
-  productName: z.string().min(1, { message: '상품 이름을 입력하세요' }),
-  productQuantity: z.string().min(1, { message: '상품 수량을 입력하세요' }),
-  productPrice: z.string().min(1, { message: '상품 가격을 입력하세요' }),
-  productDescription: z.string().optional(),
-});
-// .superRefine(({ password, checkPassword }, ctx) => {
-//   if (password !== checkPassword) {
-//     ctx.addIssue({
-//       code: z.ZodIssueCode.custom,
-//       message: '패스워드가 일치하지 않습니다',
-//       path: ['checkPassword'],
-//     });
-//   }
-// });
-
-export type ProductFormSchema = z.infer<typeof productFormSchema>;
+import { type ProductFormSchema, productFormSchema } from '@src/lib/zod/add-product-schema';
+import formatNumber from '@src/utils/format-number';
 
 export default function ConsoleProductRegistration() {
   const [displayValues, setDisplayValues] = useState({

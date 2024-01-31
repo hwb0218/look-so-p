@@ -4,7 +4,7 @@ import { Li } from '@components/common/list';
 
 import useAuthContext from '@providers/use-auth-context';
 
-import { authService } from '@firebase/AuthService';
+import { authService } from '@src/lib/firebase/AuthService';
 
 import { AUTH_ROUTE_PATHS, CONSOLE_ROUTE_PATHS } from '@constants/routes';
 
