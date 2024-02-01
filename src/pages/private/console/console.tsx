@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 
-import useGetConsoleProducts from '@hooks/use-get-console-products';
+import { useGetConsoleProducts } from '@hooks/use-console-products-query';
 
 import { ConsoleMain } from '@components/console';
 
