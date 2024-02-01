@@ -1,8 +1,8 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
-import { auth, firestore } from '@src/lib/firebase/config';
+import { auth, firestore } from './config';
 
-import { type SignUpFormSchema } from '@src/lib/zod/sign-up-schema';
+import type { CreateUserValues } from './types';
 
 class AuthService {
   async signUp(email: string, password: string) {
@@ -18,47 +18,35 @@ class AuthService {
   }
 
   async logout() {
-    try {
-      if (auth.currentUser) {
-        await signOut(auth);
-      }
-    } catch (err) {
-      console.error(err);
+    if (auth.currentUser) {
+      await signOut(auth);
     }
   }
 
-  async createUser(values: SignUpFormSchema) {
-    try {
-      const { email, password } = values;
-      const uid = await this.signUp(email, password);
+  async createUser(values: CreateUserValues) {
+    const { email, password } = values;
+    const uid = await this.signUp(email, password);
 
-      const documentRef = doc(firestore, 'users', uid);
-      const userRef = await setDoc(documentRef, {
-        ...values,
-        uid,
-        createdAt: serverTimestamp(),
-        updatedAt: serverTimestamp(),
-      });
-      return userRef;
-    } catch (err) {
-      console.error(err);
-    }
+    const documentRef = doc(firestore, 'users', uid);
+    const userRef = await setDoc(documentRef, {
+      ...values,
+      uid,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+    });
+    return userRef;
   }
 
   async getUser(email: string, password: string) {
-    try {
-      const uid = await this.login(email, password);
+    const uid = await this.login(email, password);
 
-      const userRef = doc(firestore, 'users', uid);
-      const userSanp = await getDoc(userRef);
+    const userRef = doc(firestore, 'users', uid);
+    const userSanp = await getDoc(userRef);
 
-      if (userSanp.exists()) {
-        return userSanp.data();
-      }
-      return null;
-    } catch (err) {
-      console.error(err);
+    if (userSanp.exists()) {
+      return userSanp.data();
     }
+    return null;
   }
   //TODO: 유저 정보 수정
   async editUser() {}

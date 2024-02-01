@@ -7,11 +7,10 @@ export const ROUTE_PATHS = {
 
 export const AUTH_ROUTE_PATHS = {
   PRIVATE: '/auth',
-  MYPAGE: '/my-page',
+  MYPAGE: (id?: string) => (id ? `/my-page/${id}` : '/my-page/:id'),
 };
 
 export const CONSOLE_ROUTE_PATHS = {
-  CONSOLE: '/console',
-  PRODUCT_ALL: '/console/product-all',
-  PRODUCT_REGISTRATION: '/console/product-registration',
+  CONSOLE: (id?: string) => (id ? `/console/${id}` : '/console/:id'),
+  PRODUCT_REGISTRATION: (id?: string) => (id ? `/console/add-product/${id}` : '/console/add-product/:id'),
 };

@@ -1,10 +1,11 @@
-import { useState } from 'react';
-
 import { FirebaseError } from 'firebase/app';
 import { storageService } from '@src/lib/firebase/StorageService';
 
+import useAuthContext from '@providers/use-auth-context';
+
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { type ProductFormSchema, productFormSchema } from '@src/lib/zod/add-product-schema';
 
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@components/ui/form';
 import { Input } from '@components/ui/input';
@@ -13,14 +14,11 @@ import { Textarea } from '@components/ui/textarea';
 import Wrapper from '@components/common/wrapper';
 import { AddProductImages } from './add-product-images';
 
-import { type ProductFormSchema, productFormSchema } from '@src/lib/zod/add-product-schema';
 import formatNumber from '@src/utils/format-number';
+import { storeService } from '@src/lib/firebase/StoreService';
 
 export default function ConsoleProductRegistration() {
-  const [displayValues, setDisplayValues] = useState({
-    productQuantity: '',
-    productPrice: '',
-  });
+  const { state } = useAuthContext();
 
   const form = useForm<ProductFormSchema>({
     mode: 'onSubmit',
@@ -35,22 +33,16 @@ export default function ConsoleProductRegistration() {
 
   const onSubmit = async (values: ProductFormSchema) => {
     try {
-      const imageURL = await storageService.uploadFiles(values.images[0]);
-      console.log(imageURL);
+      const imageURL = await storageService.uploadFiles(values.images, `products/${state.auth?.uid}`);
+
+      await storeService.createProducts({ ...values, images: imageURL });
+
+      alert('상품 등록 완료!');
     } catch (err) {
       if (err instanceof FirebaseError) {
         console.error(err);
       }
     }
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    const numberValue = value.replace(/,/g, '');
-    setDisplayValues({
-      ...displayValues,
-      [name]: formatNumber(numberValue),
-    });
   };
 
   return (
@@ -81,10 +73,8 @@ export default function ConsoleProductRegistration() {
                   <FormControl>
                     <Input
                       {...field}
-                      value={displayValues['productQuantity']}
-                      name="productQuantity"
-                      pattern="[0-9]"
-                      onChange={handleInputChange}
+                      value={formatNumber(field.value.replace(/[^0-9]/g, ''))}
+                      onChange={(e) => field.onChange(e.target.value.replace(/[^0-9]/g, ''))}
                     />
                   </FormControl>
                   <FormMessage className="ml-2" />
@@ -100,10 +90,8 @@ export default function ConsoleProductRegistration() {
                   <FormControl>
                     <Input
                       {...field}
-                      value={displayValues['productPrice']}
-                      name="productPrice"
-                      pattern="[0-9]"
-                      onChange={handleInputChange}
+                      value={formatNumber(field.value.replace(/[^0-9]/g, ''))}
+                      onChange={(e) => field.onChange(e.target.value.replace(/[^0-9]/g, ''))}
                     />
                   </FormControl>
                   <FormMessage className="ml-2" />

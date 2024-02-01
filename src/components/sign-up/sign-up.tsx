@@ -19,20 +19,24 @@ import Wrapper from '@components/common/wrapper';
 
 import getImageData from '@src/utils/get-image-data';
 
+function getDefaultProfile() {
+  const file = new File([], '/user_default.svg', { type: 'image/svg+xml' });
+  const dataTransfer = new DataTransfer();
+  dataTransfer.items.add(file);
+
+  return dataTransfer.files;
+}
+
 function SignUp() {
   const [preview, setPreview] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
 
-  const file = new File([], '/user_default.svg', { type: 'image/svg+xml' });
-  const dataTransfer = new DataTransfer();
-  dataTransfer.items.add(file);
-
   const form = useForm<SignUpFormSchema>({
     mode: 'onSubmit',
     resolver: zodResolver(signUpFormSchema),
     defaultValues: {
-      images: dataTransfer.files,
+      profile: getDefaultProfile(),
       email: '',
       nickname: '',
       password: '',
@@ -43,11 +47,11 @@ function SignUp() {
 
   const onSubmit = async (values: SignUpFormSchema) => {
     try {
-      const profileURL = await storageService.uploadFiles(values.images[0]);
+      const profileURL = await storageService.uploadFiles(values.profile, 'profile');
 
       await authService.createUser({
         ...values,
-        images: profileURL,
+        profile: profileURL,
       });
 
       navigate(-1);
@@ -68,9 +72,8 @@ function SignUp() {
     if (inputRef.current) {
       inputRef.current.value = '';
 
-      const dataTransfer = new DataTransfer();
-      dataTransfer.items.add(new File([], '/user_default.svg', { type: 'image/svg+xml' }));
-      form.setValue('images', dataTransfer.files);
+      const files = getDefaultProfile();
+      form.setValue('profile', files);
 
       setPreview('');
     }
@@ -89,7 +92,7 @@ function SignUp() {
         <Wrapper>
           <FormField
             control={form.control}
-            name="images"
+            name="profile"
             render={({ field: { onChange } }) => (
               <FormItem>
                 <FormControl>
@@ -98,8 +101,8 @@ function SignUp() {
                     accept="image/*"
                     hidden
                     disabled={form.formState.isSubmitting}
-                    onChange={(event) => {
-                      const { files, displayUrl } = getImageData(event);
+                    onChange={(e) => {
+                      const { files, displayUrl } = getImageData({ event: e, multiple: false });
 
                       const [imageUrl] = displayUrl;
                       setPreview(imageUrl);

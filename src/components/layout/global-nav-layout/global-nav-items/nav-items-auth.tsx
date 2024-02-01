@@ -1,8 +1,9 @@
 import { NavLink } from 'react-router-dom';
-
-import { Li } from '@components/common/list';
+import { FirebaseError } from 'firebase/app';
 
 import useAuthContext from '@providers/use-auth-context';
+
+import { Li } from '@components/common/list';
 
 import { authService } from '@src/lib/firebase/AuthService';
 
@@ -29,23 +30,30 @@ interface Props {
 }
 
 function NavItemsAuth({ renderIf, isSeller = false }: Props) {
-  const { resetAuth, setIsLoggedIn } = useAuthContext();
+  const { state, resetAuth, setIsLoggedIn } = useAuthContext();
+  const { uid } = state.auth;
 
   if (renderIf && !renderIf()) {
     return null;
   }
 
   const onClickButton = async () => {
-    await authService.logout();
-    resetAuth();
-    setIsLoggedIn(false);
+    try {
+      await authService.logout();
+      resetAuth();
+      setIsLoggedIn(false);
+    } catch (err) {
+      if (err instanceof FirebaseError) {
+        console.error(err);
+      }
+    }
   };
 
   return (
     <>
       {AUTH_NAVIGATION_ITEMS[isSeller ? 'seller' : 'common'].map(({ title, to }) => (
-        <Li key={to} className="ml-2">
-          <NavLink to={to}>{title}</NavLink>
+        <Li key={title} className="ml-2">
+          <NavLink to={to(uid)}>{title}</NavLink>
         </Li>
       ))}
       <Li className="ml-2">

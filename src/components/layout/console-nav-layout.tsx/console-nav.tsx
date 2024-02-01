@@ -9,7 +9,7 @@ import { CONSOLE_ROUTE_PATHS } from '@constants/routes';
 const CONSOLE_NAVIGATION_ITEMS = [
   {
     title: '전체 상품 조회',
-    to: CONSOLE_ROUTE_PATHS.PRODUCT_ALL,
+    to: CONSOLE_ROUTE_PATHS.CONSOLE,
   },
   {
     title: '상품 등록',
@@ -19,6 +19,7 @@ const CONSOLE_NAVIGATION_ITEMS = [
 
 function ConsoleNav() {
   const { state } = useAuthContext();
+  const { uid } = state.auth;
 
   return (
     <>
@@ -39,14 +40,14 @@ function ConsoleNav() {
             <ul className="px-4 pb-4 overflow-hidden overflow-y-auto scrollbar-thin scrollbar-thumb-slate-400 scrollbar-track-inherit">
               {CONSOLE_NAVIGATION_ITEMS.map(({ title, to }) => (
                 <Li key={title} className="text-base py-6">
-                  <NavLink to={to}>{title}</NavLink>
+                  <NavLink to={to(uid)}>{title}</NavLink>
                 </Li>
               ))}
             </ul>
           </div>
         </div>
       </nav>
-      <div className="fixed left-0 right-0 top-0 h-[80px] py-2 px-4 flex flex-row items-center justify-between z-10">
+      <div className="fixed left-0 right-0 top-0 h-[80px] py-2 px-4 flex flex-row items-center justify-between bg-slate-50 z-10">
         <NavLink to="/" className="ml-auto">
           홈으로
         </NavLink>
