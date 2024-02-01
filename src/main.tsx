@@ -9,10 +9,11 @@ import App from './app';
 
 import './index.css';
 
-const queryClient = new QueryClient({
+export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       retry: 0,
+      staleTime: 1_000 * 60 * 5,
     },
   },
 });

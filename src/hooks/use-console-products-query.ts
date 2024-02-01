@@ -1,30 +1,44 @@
 import { QUERY_KEYS } from '@constants/query-keys';
-import { useMutation, useQuery, useSuspenseInfiniteQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useInfiniteQuery } from '@tanstack/react-query';
 import { storeService } from '@src/lib/firebase/StoreService';
 import { queryClient } from '@src/main';
 import { Product } from '@src/lib/firebase/types';
+import { DocumentData, QueryDocumentSnapshot } from 'firebase/firestore';
 
 export function useGetConsoleProducts(sellerId: string) {
-  const { data: products } = useQuery({
+  const { data } = useQuery({
     queryKey: QUERY_KEYS.CONSOLE.PRODUCTS(sellerId),
     queryFn: () => storeService.getSellerProducts({ sellerId }),
   });
 
   return {
-    products: products ?? [],
+    products: data ?? [],
   };
 }
 
-export function useGetProductsSuspenseInfiniteQuery(sellerId: string) {
-  const { data: products } = useSuspenseInfiniteQuery({
+export function useGetProductsInfiniteQuery(sellerId: string) {
+  const {
+    data: products,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery({
     queryKey: QUERY_KEYS.CONSOLE.PRODUCTS(sellerId),
-    queryFn: ({ pageParam = '' }) => storeService.getSellerProducts(sellerId),
-    initialPageParam: '',
-    getNextPageParam: (lastPage) => {},
+    queryFn: ({ pageParam }: { pageParam?: QueryDocumentSnapshot<DocumentData, DocumentData> }) =>
+      storeService.getSellerProducts({ sellerId, pageParam }),
+    initialPageParam: undefined,
+    getNextPageParam: ({ lastVisible }) => lastVisible,
+    select: (data) => ({
+      pages: data.pages.flatMap((page) => page.products),
+      pageParams: data.pageParams,
+    }),
   });
 
   return {
-    products: products ?? [],
+    products: products?.pages ?? [],
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
   };
 }
 

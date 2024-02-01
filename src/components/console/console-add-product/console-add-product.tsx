@@ -1,5 +1,6 @@
 import { FirebaseError } from 'firebase/app';
 import { storageService } from '@src/lib/firebase/StorageService';
+import { storeService } from '@src/lib/firebase/StoreService';
 
 import useAuthContext from '@providers/use-auth-context';
 
@@ -14,8 +15,10 @@ import { Textarea } from '@components/ui/textarea';
 import Wrapper from '@components/common/wrapper';
 import { AddProductImages } from './add-product-images';
 
+import { queryClient } from '@src/main';
+import { QUERY_KEYS } from '@constants/query-keys';
+
 import formatNumber from '@src/utils/format-number';
-import { storeService } from '@src/lib/firebase/StoreService';
 
 export default function ConsoleProductRegistration() {
   const { state } = useAuthContext();
@@ -36,7 +39,7 @@ export default function ConsoleProductRegistration() {
       const imageURL = await storageService.uploadFiles(values.images, `products/${state.auth?.uid}`);
 
       await storeService.createProducts({ ...values, images: imageURL });
-
+      await queryClient.invalidateQueries({ queryKey: QUERY_KEYS.CONSOLE.PRODUCTS(state.auth?.uid) });
       alert('상품 등록 완료!');
     } catch (err) {
       if (err instanceof FirebaseError) {
