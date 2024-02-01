@@ -13,7 +13,7 @@ const privateRoutes: RouteObject[] = [
         <GlobalNavLayout />
       </ProtectedLayout>
     ),
-    children: [{ path: AUTH_ROUTE_PATHS.MYPAGE, element: <MyPage /> }],
+    children: [{ path: AUTH_ROUTE_PATHS.MYPAGE(), element: <MyPage /> }],
   },
   {
     element: (
@@ -22,10 +22,9 @@ const privateRoutes: RouteObject[] = [
       </ProtectedLayout>
     ),
     children: [
-      { path: CONSOLE_ROUTE_PATHS.CONSOLE, element: <ConsoleMainPage /> },
-      { path: CONSOLE_ROUTE_PATHS.PRODUCT_ALL, element: <ConsoleMainPage /> },
+      { path: CONSOLE_ROUTE_PATHS.CONSOLE(), element: <ConsoleMainPage /> },
       {
-        path: CONSOLE_ROUTE_PATHS.PRODUCT_REGISTRATION,
+        path: CONSOLE_ROUTE_PATHS.PRODUCT_REGISTRATION(),
         element: <ConsoleAddProductPage />,
       },
     ],
