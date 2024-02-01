@@ -7,7 +7,7 @@ function ConsoleLayout() {
   return (
     <div>
       <ConsoleNav />
-      <Wrapper className="ml-60 mt-[80px]">
+      <Wrapper className="ml-60 mt-[80px] pt-5">
         <Outlet />
       </Wrapper>
     </div>
