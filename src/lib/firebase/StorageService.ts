@@ -1,22 +1,30 @@
-import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
+import { ref, getDownloadURL, uploadBytes, deleteObject } from 'firebase/storage';
 import { storage } from './config';
 
+import genUID from '@src/utils/gen-UID';
+
 class StorageService {
-  async uploadFiles(fileOrFiles: File | File[], path: string = '') {
-    const files = Array.isArray(fileOrFiles) ? fileOrFiles : [fileOrFiles];
+  async uploadFiles(fileList: FileList, path: string = '') {
+    const files = Array.from(fileList);
 
-    const downloadUrls = await Promise.all(
-      files.map(async (file) => {
-        const storageRef = ref(storage, `${path}/${file.name}`);
+    const iterPromise = files.map(async (file) => {
+      const name = genUID();
 
-        await uploadBytes(storageRef, file);
+      const storageRef = ref(storage, `${path}/${name}`);
+      await uploadBytes(storageRef, file);
 
-        const downloadURL = await getDownloadURL(storageRef);
-        return downloadURL;
-      }),
-    );
+      const downloadURL = await getDownloadURL(storageRef);
+      return downloadURL;
+    });
 
+    const downloadUrls = await Promise.all(iterPromise);
     return downloadUrls;
+  }
+
+  async deleteFiles(fileURL: string) {
+    const storageRef = ref(storage, fileURL);
+
+    await deleteObject(storageRef);
   }
 }
 

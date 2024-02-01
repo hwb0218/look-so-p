@@ -6,7 +6,7 @@ const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/jpg'];
 export const productFormSchema = z.object({
   images: z
     .custom<FileList>((val) => val instanceof FileList, '이미지를 추가하세요')
-    .refine((files) => files.length > 0, `Required`)
+    .refine((files) => files.length > 0, `최소 1장이상의 이미지가 필요합니다`)
     .refine((files) => files.length <= 3, `이미지는 최대 3장까지만 가능합니다`)
     .refine((files) => Array.from(files).every((file) => file.size <= MAX_IMAGE_SIZE), `최대 이미지 크기는 5MB입니다`)
     .refine((files) =>

@@ -5,8 +5,8 @@ const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/jpg', 'image/svg+
 
 export const signUpFormSchema = z
   .object({
-    images: z
-      .any()
+    profile: z
+      .custom<FileList>((val) => val instanceof FileList, '이미지를 추가하세요')
       .refine((file) => file[0]?.size <= MAX_IMAGE_SIZE, `최대 이미지 크기는 5MB입니다`)
       .refine((file) => ALLOWED_IMAGE_TYPES.includes(file[0]?.type), '.jpg, .jpeg, .png 형식만 지원됩니다'),
     email: z.string().min(1, { message: '이메일을 입력하세요' }).email({ message: '이메일이 아닙니다' }),

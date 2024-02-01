@@ -4,6 +4,7 @@ import { type UseFormReturn } from 'react-hook-form';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@components/ui/form';
 import { Button } from '@components/ui/button';
 import { Badge } from '@components/ui/badge';
+import { Input } from '@components/ui/input';
 import Wrapper from '@components/common/wrapper';
 
 import { type ProductFormSchema } from '@src/lib/zod/add-product-schema';
@@ -14,25 +15,29 @@ interface Props {
   form: UseFormReturn<ProductFormSchema>;
 }
 
-const MAX_FILES = 3;
-
 export default function AddProductImages({ form }: Props) {
   const [previewURLs, setPreviewURLs] = useState<string[]>([]);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
   const onClickFileInput = () => {
-    inputRef.current?.click();
+    if (inputRef.current) {
+      inputRef.current?.click();
+      inputRef.current.value = '';
+    }
   };
 
-  const onResetFileInput = (e: React.MouseEvent, selectedPreviewUrl: string) => {
+  const onResetFileInput = (e: React.MouseEvent, selectedImage: number) => {
     e.stopPropagation();
 
     if (inputRef.current) {
-      inputRef.current.value = '';
+      const dataTransfer = new DataTransfer();
 
-      const filteredPreviewURLs = previewURLs.filter((previewURL) => previewURL !== selectedPreviewUrl);
+      const images = Array.from(form.getValues('images')).filter((_, i) => i !== selectedImage);
+      images.forEach((image) => dataTransfer.items.add(image));
+      form.setValue('images', dataTransfer.files);
 
+      const filteredPreviewURLs = previewURLs.filter((_, i) => i !== selectedImage);
       setPreviewURLs(filteredPreviewURLs);
     }
   };
@@ -42,7 +47,7 @@ export default function AddProductImages({ form }: Props) {
       <FormField
         control={form.control}
         name="images"
-        render={({ field: { onChange } }) => (
+        render={({ field: { onChange, value } }) => (
           <FormItem className="mt-2">
             <FormLabel className="pl-1">상품 이미지</FormLabel>
             <Button
@@ -54,21 +59,28 @@ export default function AddProductImages({ form }: Props) {
               등록
             </Button>
             <FormControl>
-              <input
+              <Input
                 ref={inputRef}
                 type="file"
                 accept="image/*"
                 multiple
                 hidden
+                className="hidden"
                 disabled={form.formState.isSubmitting}
                 onChange={(e) => {
-                  if (e.target.files && e.target.files?.length > MAX_FILES) {
-                    e.target.value = '';
-                    alert(`최대 ${MAX_FILES}개의 파일만 선택할 수 있습니다.`);
-                  }
+                  const maxFiles = 3;
+                  const prevFiles = value?.length ?? 0;
+                  const selectedFiles = e.target?.files;
+                  const isOverMaxFiles = selectedFiles && selectedFiles.length + prevFiles > maxFiles;
 
-                  const { files, displayUrl } = getImageData(e);
+                  if (isOverMaxFiles) {
+                    e.target.value = '';
+                    alert(`최대 ${maxFiles}개의 파일만 선택할 수 있습니다.`);
+                    return;
+                  }
+                  const { files, displayUrl } = getImageData({ event: e, prevImages: value, multiple: true });
                   setPreviewURLs(displayUrl);
+
                   onChange(files);
                 }}
               />
@@ -79,7 +91,7 @@ export default function AddProductImages({ form }: Props) {
       />
       <Wrapper className="mt-2 p-2 flex gap-3 border rounded-md max-xl:flex-col">
         {[...Array(3)].map((_, i) => {
-          const previewURL = previewURLs[i];
+          const url = previewURLs[i];
           const thumbnail = i === 0;
           // TODO: hover -> 우측 상단 제거 아이콘 추가하기
           return (
@@ -90,13 +102,7 @@ export default function AddProductImages({ form }: Props) {
                   썸네일
                 </Badge>
               )}
-              {previewURL && (
-                <img
-                  src={previewURL}
-                  onClick={(e) => onResetFileInput(e, previewURL)}
-                  className="object-cover w-full h-full"
-                />
-              )}
+              {url && <img src={url} onClick={(e) => onResetFileInput(e, i)} className="object-cover w-full h-full" />}
             </div>
           );
         })}
