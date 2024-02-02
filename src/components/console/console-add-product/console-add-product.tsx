@@ -6,14 +6,14 @@ import { useAuthContext } from '@providers/auth';
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { type ProductFormSchema, productFormSchema } from '@src/lib/zod/add-product-schema';
+import { type AddProductFormSchema, addProductFormSchema } from '@src/lib/zod/add-product-schema';
 
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@components/ui/form';
 import { Input } from '@components/ui/input';
 import { Button } from '@components/ui/button';
 import { Textarea } from '@components/ui/textarea';
 import Wrapper from '@components/common/wrapper';
-import { AddProductImages } from './add-product-images';
+import { ProductImages } from '../product-images';
 
 import { queryClient } from '@src/main';
 import { QUERY_KEYS } from '@constants/query-keys';
@@ -23,9 +23,9 @@ import formatNumber from '@src/utils/format-number';
 export default function ConsoleProductRegistration() {
   const { state } = useAuthContext();
 
-  const form = useForm<ProductFormSchema>({
+  const form = useForm<AddProductFormSchema>({
     mode: 'onSubmit',
-    resolver: zodResolver(productFormSchema),
+    resolver: zodResolver(addProductFormSchema),
     defaultValues: {
       productName: '',
       productQuantity: '',
@@ -34,7 +34,7 @@ export default function ConsoleProductRegistration() {
     },
   });
 
-  const onSubmit = async (values: ProductFormSchema) => {
+  const onSubmit = async (values: AddProductFormSchema) => {
     try {
       const imageURL = await storageService.uploadFiles(values.images, `products/${state.auth?.uid}`);
 
@@ -115,7 +115,7 @@ export default function ConsoleProductRegistration() {
               </FormItem>
             )}
           />
-          <AddProductImages form={form} />
+          <ProductImages form={form} />
           <Button type="submit" disabled={form.formState.isSubmitting} className="mt-5 mx-auto w-1/2 max-lg:w-full">
             상품 등록
           </Button>

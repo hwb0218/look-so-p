@@ -7,15 +7,15 @@ import { Badge } from '@components/ui/badge';
 import { Input } from '@components/ui/input';
 import Wrapper from '@components/common/wrapper';
 
-import { type ProductFormSchema } from '@src/lib/zod/add-product-schema';
+import { type AddProductFormSchema } from '@src/lib/zod/add-product-schema';
 
 import getImageData from '@src/utils/get-image-data';
 
 interface Props {
-  form: UseFormReturn<ProductFormSchema>;
+  form: UseFormReturn<AddProductFormSchema>;
 }
 
-export default function AddProductImages({ form }: Props) {
+export default function ProductImages({ form }: Props) {
   const [previewURLs, setPreviewURLs] = useState<string[]>([]);
 
   const inputRef = useRef<HTMLInputElement>(null);
