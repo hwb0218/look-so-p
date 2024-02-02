@@ -25,7 +25,7 @@ export default function ConsoleMain({ products }: Props) {
   };
 
   return (
-    <Ul className="flex flex-col items-start gap-4 px-4">
+    <Ul className="flex-col items-start gap-4 px-4 pb-4">
       <h1 className="text-3xl font-bold">전체 상품 조회</h1>
       {products?.map(({ createdAt, productName, productDescription, thumbnailUrl, id, sellerId }) => {
         const creaatedAt = createdAt.toDate();
