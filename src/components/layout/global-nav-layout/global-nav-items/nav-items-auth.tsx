@@ -8,6 +8,7 @@ import { Li } from '@components/common/list';
 import { authService } from '@src/lib/firebase/AuthService';
 
 import { AUTH_ROUTE_PATHS, CONSOLE_ROUTE_PATHS } from '@constants/routes';
+import { queryClient } from '@src/main';
 
 const AUTH_NAVIGATION_ITEMS = {
   seller: [
@@ -40,6 +41,7 @@ function NavItemsAuth({ renderIf, isSeller = false }: Props) {
   const onClickButton = async () => {
     try {
       await authService.logout();
+      queryClient.clear();
       resetAuth();
       setIsLoggedIn(false);
     } catch (err) {
