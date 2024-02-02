@@ -4,7 +4,7 @@ import { Ul, Li } from '@components/common/list';
 
 import { NavItems, NavItemsAuth, NavItemsUnauth } from './global-nav-items';
 
-import useAuthContext from '@providers/use-auth-context';
+import { useAuthContext } from '@providers/auth';
 
 import { ROUTE_PATHS } from '@constants/routes';
 

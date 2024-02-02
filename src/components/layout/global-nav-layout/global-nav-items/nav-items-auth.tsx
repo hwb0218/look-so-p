@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import { FirebaseError } from 'firebase/app';
 
-import useAuthContext from '@providers/use-auth-context';
+import { useAuthContext } from '@providers/auth';
 
 import { Li } from '@components/common/list';
 

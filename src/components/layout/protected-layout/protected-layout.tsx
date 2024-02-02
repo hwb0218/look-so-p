@@ -1,7 +1,7 @@
 import { PropsWithChildren } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 
-import useAuthContext from '@providers/use-auth-context';
+import { useAuthContext } from '@providers/auth';
 
 import { ROUTE_PATHS } from '@constants/routes';
 

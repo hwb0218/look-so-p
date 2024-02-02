@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginFormSchema, type LoginFormSchema } from '@src/lib/zod/login-schema';
 
-import useAuthContext from '@providers/use-auth-context';
+import { useAuthContext } from '@providers/auth';
 
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@components/ui/form';
 import { Input } from '@components/ui/input';

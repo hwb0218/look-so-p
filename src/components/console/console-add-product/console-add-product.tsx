@@ -2,7 +2,7 @@ import { FirebaseError } from 'firebase/app';
 import { storageService } from '@src/lib/firebase/StorageService';
 import { storeService } from '@src/lib/firebase/StoreService';
 
-import useAuthContext from '@providers/use-auth-context';
+import { useAuthContext } from '@providers/auth';
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';

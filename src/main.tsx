@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-import AuthProvider from '@providers/auth-provider';
+import { AuthProvider } from '@providers/auth';
 
 import App from './app';
 

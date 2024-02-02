@@ -1,7 +1,5 @@
-import { useReducer, createContext, useMemo, PropsWithChildren, useEffect } from 'react';
+import { useReducer, createContext, useMemo, PropsWithChildren } from 'react';
 
-import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '@src/lib/firebase/config';
 import { DocumentData } from 'firebase/firestore';
 
 const enum REDUCER_ACTION_TYPE {
@@ -61,18 +59,6 @@ export const AuthContext = createContext<IAuthContext>({
 
 export default function AuthProvider({ children }: PropsWithChildren) {
   const [state, dispatch] = useReducer(reducer, initState);
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        console.log(user);
-      }
-    });
-
-    return () => {
-      unsubscribe();
-    };
-  }, []);
 
   const setAuth = (user: DocumentData) => {
     dispatch({
