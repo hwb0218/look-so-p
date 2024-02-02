@@ -95,7 +95,10 @@ export default function AddProductImages({ form }: Props) {
           const thumbnail = i === 0;
           // TODO: hover -> 우측 상단 제거 아이콘 추가하기
           return (
-            <div className="relative w-full h-52 rounded-md hover:ring-2 hover:ring-ring hover:ring-offset-2 bg-slate-100 overflow-hidden cursor-pointer">
+            <div
+              key={url}
+              className="relative w-full h-52 rounded-md hover:ring-2 hover:ring-ring hover:ring-offset-2 bg-slate-100 overflow-hidden cursor-pointer"
+            >
               {thumbnail && (
                 <Badge className="absolute ml-2 mt-2 px-3 break-keep text-xs">
                   <span className="relative -left-[3px] p-1 mr-1 bg-emerald-400 rounded-full" />

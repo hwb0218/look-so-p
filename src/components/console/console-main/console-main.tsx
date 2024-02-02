@@ -36,7 +36,10 @@ export default function ConsoleMain({ products }: Props) {
         }).format(creaatedAt);
 
         return (
-          <Li className="w-full rounded-md mt-4 p-4 shadow-sm hover:shadow-md transition-shadow duration-150 ease-in-out">
+          <Li
+            key={id}
+            className="w-full rounded-md mt-4 p-4 shadow-sm hover:shadow-md transition-shadow duration-150 ease-in-out"
+          >
             <Wrapper className="flex justify-between">
               <div>
                 <div>{date}</div>
