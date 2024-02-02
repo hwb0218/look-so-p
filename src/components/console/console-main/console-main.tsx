@@ -1,14 +1,8 @@
 import { FirebaseError } from 'firebase/app';
 
-// import { storeService } from '@src/lib/firebase/StoreService';
-
 import { Li, Ul } from '@components/common/list';
 import Wrapper from '@components/common/wrapper';
 import { Button } from '@components/ui/button';
-
-// import { queryClient } from '@src/main';
-
-// import { QUERY_KEYS } from '@constants/query-keys';
 
 import type { Product } from '@src/lib/firebase/types';
 import { useDeleteProductsMutation } from '@hooks/use-console-products-query';
@@ -18,7 +12,6 @@ interface Props {
 }
 
 export default function ConsoleMain({ products }: Props) {
-  // const { invalidateQueries } = queryClient;
   const { mutate: deleteProduct } = useDeleteProductsMutation();
 
   const onClickDeleteButton = async (productId: string, sellerId: string) => {

@@ -22,6 +22,7 @@ export function useGetProductsInfiniteQuery(sellerId: string) {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
+    isFetched,
   } = useInfiniteQuery({
     queryKey: QUERY_KEYS.CONSOLE.PRODUCTS(sellerId),
     queryFn: ({ pageParam }: { pageParam?: QueryDocumentSnapshot<DocumentData, DocumentData> }) =>
@@ -39,6 +40,7 @@ export function useGetProductsInfiniteQuery(sellerId: string) {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
+    isFetched,
   };
 }
 

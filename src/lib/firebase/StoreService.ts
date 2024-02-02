@@ -24,7 +24,7 @@ class StoreService {
     sellerId: string;
     pageParam?: QueryDocumentSnapshot<DocumentData, DocumentData>;
   }) {
-    const limitNum = 10;
+    const limitNum = 5;
     const products: Product[] = [];
 
     const collectionRef = collection(firestore, 'console', sellerId, 'products');
