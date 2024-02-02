@@ -31,7 +31,7 @@ function ConsoleNav() {
                 <img src="/logo.svg" alt="logo" className="w-16 rounded" />
               </span>
               <div>
-                <span className="p-8 text-xl">LookSoP</span>
+                <span className="p-8 text-xl">LookSoPrt</span>
               </div>
             </header>
             <div className="p-4 mt-2 text-xl border-b-2 border-slate-400">
@@ -40,7 +40,9 @@ function ConsoleNav() {
             <ul className="px-4 pb-4 overflow-hidden overflow-y-auto scrollbar-thin scrollbar-thumb-slate-400 scrollbar-track-inherit">
               {CONSOLE_NAVIGATION_ITEMS.map(({ title, to }) => (
                 <Li key={title} className="text-base py-6">
-                  <NavLink to={to(uid)}>{title}</NavLink>
+                  <NavLink to={to(uid)} className="active:text-slate-400">
+                    {title}
+                  </NavLink>
                 </Li>
               ))}
             </ul>

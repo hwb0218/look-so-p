@@ -53,7 +53,7 @@ function Login() {
         className="pt-40 flex justify-center items-center flex-col space-y-4"
       >
         <Wrapper className="p-6 min-w-64 w-1/3 border rounded-md ring-2 ring-ring ring-offset-2">
-          <h1 className="text-2xl text-center font-bold">LookSoPretty</h1>
+          <h1 className="text-2xl text-center font-bold">LookSoPrt</h1>
           <FormField
             control={form.control}
             name="email"
