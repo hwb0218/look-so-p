@@ -48,25 +48,19 @@ class StoreService {
     return { products, lastVisible };
   }
 
-  async createProducts(values: CreateProductsValues) {
-    if (auth.currentUser?.uid) {
-      const { uid } = auth.currentUser;
-
-      const collectionRef = collection(firestore, `console/${uid}/products`);
-      await addDoc(collectionRef, {
-        ...values,
-        sellerId: uid,
-        thumbnailUrl: values.images[0],
-        createdAt: serverTimestamp(),
-        updatedAt: serverTimestamp(),
-      });
-    }
+  async createProducts(values: CreateProductsValues, sellerId: string) {
+    const collectionRef = collection(firestore, `console/${sellerId}/products`);
+    await addDoc(collectionRef, {
+      ...values,
+      sellerId: sellerId,
+      thumbnailUrl: values.images[0],
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+    });
   }
 
   async deleteProducts(productId: string, sellerId: string) {
-    const confirm = window.confirm('정말로 삭제하겠습니까?');
-
-    if (confirm && sellerId) {
+    if (sellerId) {
       const documentRef = doc(firestore, 'console', sellerId, 'products', productId);
       await deleteDoc(documentRef);
     }

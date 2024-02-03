@@ -6,7 +6,7 @@ import { useAuthContext } from '@providers/auth';
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { type AddProductFormSchema, addProductFormSchema } from '@src/lib/zod/add-product-schema';
+import { type ProductFormSchema, productFormSchema } from '@src/lib/zod/console-product-schema';
 
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@components/ui/form';
 import { Input } from '@components/ui/input';
@@ -23,9 +23,9 @@ import formatNumber from '@src/utils/format-number';
 export default function ConsoleProductRegistration() {
   const { state } = useAuthContext();
 
-  const form = useForm<AddProductFormSchema>({
+  const form = useForm<ProductFormSchema>({
     mode: 'onSubmit',
-    resolver: zodResolver(addProductFormSchema),
+    resolver: zodResolver(productFormSchema),
     defaultValues: {
       productName: '',
       productQuantity: '',
@@ -34,11 +34,11 @@ export default function ConsoleProductRegistration() {
     },
   });
 
-  const onSubmit = async (values: AddProductFormSchema) => {
+  const onSubmit = async (values: ProductFormSchema) => {
     try {
       const imageURL = await storageService.uploadFiles(values.images, `products/${state.auth?.uid}`);
 
-      await storeService.createProducts({ ...values, images: imageURL });
+      await storeService.createProducts({ ...values, images: imageURL }, state.auth?.uid);
       await queryClient.invalidateQueries({ queryKey: QUERY_KEYS.CONSOLE.PRODUCTS(state.auth?.uid) });
       alert('상품 등록 완료!');
     } catch (err) {
