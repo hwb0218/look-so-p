@@ -10,7 +10,7 @@ import { Badge } from '@components/ui/badge';
 import Wrapper from '@components/common/wrapper';
 
 import { type ProductFormSchema } from '@src/lib/zod/console-product-schema';
-import { resetImageData } from '@src/utils/image-data';
+import { resetImageData } from '@src/utils/set-image-data';
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -108,14 +108,8 @@ export default function Images({ form }: Props) {
                   onClick={(e) => {
                     e.stopPropagation();
                     if (thumbnailInputRef.current) {
-                      const { files, previewUrls } = resetImageData({
-                        selectedImages: form.getValues('thumbnail'),
-                        index,
-                        previewImageUrls,
-                      });
-
-                      form.setValue('thumbnail', files);
-                      setPreveiwThumbnailUrls(previewUrls);
+                      form.resetField('thumbnail');
+                      setPreveiwThumbnailUrls([]);
                     }
                   }}
                   className="object-cover w-full h-full cursor-pointer"

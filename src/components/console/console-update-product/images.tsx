@@ -10,7 +10,6 @@ import { Badge } from '@components/ui/badge';
 import Wrapper from '@components/common/wrapper';
 
 import { type UpdateProductFormSchema } from '@src/lib/zod/update-console-product-schama';
-import { resetImageData } from '@src/utils/image-data';
 import extractPathFromUrl from '@src/utils/extract-path-from-url';
 
 import type { ImagesToBeUpdated } from './types';
@@ -31,7 +30,7 @@ export default function Images({ form, setImagesToBeUpdated }: Props) {
     onClickInput,
     inputRef,
     thumbnailInputRef,
-  } = useUpdateConsoleImage<UpdateProductFormSchema>(form);
+  } = useUpdateConsoleImage(form);
 
   return (
     <>
@@ -86,7 +85,7 @@ export default function Images({ form, setImagesToBeUpdated }: Props) {
                 hidden
                 className="hidden"
                 disabled={form.formState.isSubmitting}
-                onChange={(e) => onChangeFileInput(e, onChange, value)}
+                onChange={(e) => onChangeFileInput(e, onChange, value as FileList)}
               />
             </FormControl>
           </FormItem>
@@ -109,7 +108,6 @@ export default function Images({ form, setImagesToBeUpdated }: Props) {
                   src={url}
                   onClick={(e) => {
                     e.stopPropagation();
-
                     const extractedThumbnialPath = extractPathFromUrl(url);
 
                     if (extractedThumbnialPath) {
@@ -118,8 +116,7 @@ export default function Images({ form, setImagesToBeUpdated }: Props) {
                         thumbnail: extractedThumbnialPath,
                       }));
                     }
-
-                    form.resetField('thumbnail');
+                    form.setValue('thumbnail', undefined);
                     setPreveiwThumbnailUrls([]);
                   }}
                   className="object-cover w-full h-full cursor-pointer"
@@ -139,7 +136,6 @@ export default function Images({ form, setImagesToBeUpdated }: Props) {
                   src={url}
                   onClick={(e) => {
                     e.stopPropagation();
-
                     const extractedImagePath = extractPathFromUrl(url);
 
                     if (extractedImagePath) {
@@ -149,14 +145,18 @@ export default function Images({ form, setImagesToBeUpdated }: Props) {
                       }));
                     }
 
-                    const { files, previewUrls } = resetImageData({
-                      selectedImages: (form.getValues('images') as FileList) || [],
-                      index,
-                      previewImageUrls,
-                    });
+                    const images = form.getValues('images') as FileList;
+                    setPreviewImageUrls(previewImageUrls.filter((url) => url !== e.currentTarget.currentSrc));
 
+                    const dataTransfer = new DataTransfer();
+
+                    if (images?.length) {
+                      Array.from(images)
+                        .filter((_, i) => i !== index)
+                        .forEach((image) => dataTransfer.items.add(image));
+                    }
+                    const files = dataTransfer.files;
                     form.setValue('images', files);
-                    setPreviewImageUrls(previewUrls);
                   }}
                   className="absolute inset-0 object-cover w-full h-full cursor-pointer"
                 />
