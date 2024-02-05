@@ -33,6 +33,8 @@ export default function useFetchConsoleProducts() {
 
   const updateConsoleProducts = async (values: UpdateConsoleProducts, sellerId: string, productId: string) => {
     try {
+      // 얘네는 전달된 FileList가 없다면 undefined를 반환함
+
       const thumbnailDownloadURL = await storageService.uploadThumbnail(
         values.thumbnail as FileList,
         `products/${sellerId}/${productId}`,
@@ -43,12 +45,14 @@ export default function useFetchConsoleProducts() {
         `products/${sellerId}/${productId}`,
       );
 
-      await storeService.updateProducts(values, {
+      const { imagesToBeUpdated, thumbnailToBeUpdated } = await storeService.updateProducts(values, {
         sellerId,
         productId,
         ...(thumbnailDownloadURL && { thumbnailDownloadURL }),
         ...(downloadUrls && { downloadUrls }),
       });
+
+      await storageService.deleteFiles([...imagesToBeUpdated, ...thumbnailToBeUpdated] as string[]);
 
       await queryClient.invalidateQueries({ queryKey: QUERY_KEYS.CONSOLE.PRODUCTS(sellerId) });
     } catch (err) {

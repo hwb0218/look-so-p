@@ -39,10 +39,17 @@ class StorageService {
     return downloadUrls;
   }
 
-  async deleteFiles(fileURL: string) {
-    const storageRef = ref(storage, fileURL);
+  async deleteFiles(fileURLs: string[]) {
+    if (!fileURLs.length) {
+      throw new Error('fileURLs not exist');
+    }
 
-    await deleteObject(storageRef);
+    const deletePromises = fileURLs.map((url) => {
+      const storageRef = ref(storage, url);
+      return deleteObject(storageRef);
+    });
+
+    await Promise.all(deletePromises);
   }
 }
 
