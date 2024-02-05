@@ -9,14 +9,6 @@ export interface CreateUserValues {
   isSeller?: boolean | undefined;
 }
 
-export interface CreateProductsValues {
-  productName: string;
-  productQuantity: string;
-  productPrice: string;
-  productDescription?: string | undefined;
-  images: string[];
-}
-
 export interface Product extends DocumentData {
   id: string;
   productDescription: string;
@@ -25,7 +17,7 @@ export interface Product extends DocumentData {
   productQuantity: string;
   sellerId: string;
   images: string[];
-  thumbnailUrl: string;
+  thumbnail: string;
   createdAt: Timestamp;
   updatedAt: Timestamp;
 }

@@ -1,27 +1,24 @@
-import { FirebaseError } from 'firebase/app';
-import { storageService } from '@src/lib/firebase/StorageService';
-import { storeService } from '@src/lib/firebase/StoreService';
+import { useForm } from 'react-hook-form';
 
+import useFetchProducts from '@hooks/use-fetch-console';
 import { useAuthContext } from '@providers/auth';
 
-import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { type ProductFormSchema, productFormSchema } from '@src/lib/zod/console-product-schema';
+
+import Images from './images';
 
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@components/ui/form';
 import { Input } from '@components/ui/input';
 import { Button } from '@components/ui/button';
 import { Textarea } from '@components/ui/textarea';
 import Wrapper from '@components/common/wrapper';
-import { ProductImages } from '../product-images';
-
-import { queryClient } from '@src/main';
-import { QUERY_KEYS } from '@constants/query-keys';
 
 import formatNumber from '@src/utils/format-number';
 
 export default function ConsoleProductRegistration() {
   const { state } = useAuthContext();
+  const { createConsoleProducts } = useFetchProducts();
 
   const form = useForm<ProductFormSchema>({
     mode: 'onSubmit',
@@ -35,17 +32,8 @@ export default function ConsoleProductRegistration() {
   });
 
   const onSubmit = async (values: ProductFormSchema) => {
-    try {
-      const imageURL = await storageService.uploadFiles(values.images, `products/${state.auth?.uid}`);
-
-      await storeService.createProducts({ ...values, images: imageURL }, state.auth?.uid);
-      await queryClient.invalidateQueries({ queryKey: QUERY_KEYS.CONSOLE.PRODUCTS(state.auth?.uid) });
-      alert('상품 등록 완료!');
-    } catch (err) {
-      if (err instanceof FirebaseError) {
-        console.error(err);
-      }
-    }
+    await createConsoleProducts(values, state?.auth.uid);
+    alert('상품 등록 완료!');
   };
 
   return (
@@ -115,7 +103,7 @@ export default function ConsoleProductRegistration() {
               </FormItem>
             )}
           />
-          <ProductImages form={form} />
+          <Images form={form} />
           <Button type="submit" disabled={form.formState.isSubmitting} className="mt-5 mx-auto w-1/2 max-lg:w-full">
             상품 등록
           </Button>

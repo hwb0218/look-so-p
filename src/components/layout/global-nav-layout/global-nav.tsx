@@ -22,7 +22,7 @@ function GlobalNav() {
       </Ul>
       <Ul>
         <NavItems />
-        <NavItemsAuth renderIf={() => !!state.auth?.uid} isSeller={state.auth?.isSeller} />
+        <NavItemsAuth renderIf={() => state.auth?.uid} isSeller={state.auth?.isSeller} />
         <NavItemsUnauth renderIf={() => !state.auth?.uid} />
       </Ul>
     </header>

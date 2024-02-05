@@ -1,29 +1,11 @@
 import { QUERY_KEYS } from '@constants/query-keys';
-import { useMutation, useQuery, useInfiniteQuery } from '@tanstack/react-query';
+import { useMutation, useInfiniteQuery } from '@tanstack/react-query';
 import { storeService } from '@src/lib/firebase/StoreService';
 import { queryClient } from '@src/main';
-import { Product } from '@src/lib/firebase/types';
 import { DocumentData, QueryDocumentSnapshot } from 'firebase/firestore';
 
-export function useGetConsoleProducts(sellerId: string) {
-  const { data } = useQuery({
-    queryKey: QUERY_KEYS.CONSOLE.PRODUCTS(sellerId),
-    queryFn: () => storeService.getSellerProducts({ sellerId }),
-  });
-
-  return {
-    products: data ?? [],
-  };
-}
-
 export function useGetProductsInfiniteQuery(sellerId: string) {
-  const {
-    data: products,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isFetched,
-  } = useInfiniteQuery({
+  const res = useInfiniteQuery({
     queryKey: QUERY_KEYS.CONSOLE.PRODUCTS(sellerId),
     queryFn: ({ pageParam }: { pageParam?: QueryDocumentSnapshot<DocumentData, DocumentData> }) =>
       storeService.getSellerProducts({ sellerId, pageParam }),
@@ -36,13 +18,15 @@ export function useGetProductsInfiniteQuery(sellerId: string) {
   });
 
   return {
-    products: products?.pages ?? [],
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isFetched,
+    data: res.data,
+    fetchNextPage: res.fetchNextPage,
+    hasNextPage: res.hasNextPage,
+    isFetchingNextPage: res.isFetchingNextPage,
+    isFetched: res.isFetched,
   };
 }
+
+type UseInfiniteQueryReturn = ReturnType<typeof useGetProductsInfiniteQuery>;
 
 export function useDeleteProductsMutation() {
   return useMutation({
@@ -52,14 +36,21 @@ export function useDeleteProductsMutation() {
       const queryKey = QUERY_KEYS.CONSOLE.PRODUCTS(sellerId);
 
       await queryClient.cancelQueries({ queryKey });
-      const prevProducts = queryClient.getQueryData(queryKey) as Product[];
-      const filteredProducts = prevProducts?.filter((product) => product.id !== productId);
 
-      queryClient.setQueryData(queryKey, filteredProducts);
+      const prevData = queryClient.getQueryData<UseInfiniteQueryReturn['data'] | undefined>(queryKey);
+
+      const prevProducts = prevData?.pages.flatMap((page) => page.products) ?? [];
+      const filteredProducts = prevProducts.filter((product) => product.id !== productId);
+
+      queryClient.setQueryData(queryKey, {
+        ...prevData,
+        pages: [{ ...prevData?.pages[0], products: filteredProducts }],
+      });
 
       return { productId, sellerId, filteredProducts };
     },
-    onError: (_, { sellerId }, context) => {
+    onError: (err, { sellerId }, context) => {
+      console.log('onError', err);
       const queryKey = QUERY_KEYS.CONSOLE.PRODUCTS(sellerId);
       queryClient.setQueryData(queryKey, context?.filteredProducts);
     },

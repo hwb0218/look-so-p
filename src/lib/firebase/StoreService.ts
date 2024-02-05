@@ -1,20 +1,28 @@
 import {
   collection,
   doc,
+  getDoc,
+  getDocs,
   addDoc,
-  serverTimestamp,
+  updateDoc,
   deleteDoc,
   orderBy,
-  getDocs,
   query,
+  serverTimestamp,
   limit,
   startAfter,
   QueryDocumentSnapshot,
   DocumentData,
+  DocumentReference,
 } from 'firebase/firestore';
-import { auth, firestore } from './config';
+import { firestore } from './config';
 
-import type { CreateProductsValues, Product } from './types';
+import type { Product } from './types';
+import type { ProductFormSchema } from '../zod/console-product-schema';
+
+import extractPathFromUrl from '@src/utils/extract-path-from-url';
+
+import type { UpdateConsoleProducts } from '@src/types';
 
 class StoreService {
   async getSellerProducts({
@@ -48,21 +56,91 @@ class StoreService {
     return { products, lastVisible };
   }
 
-  async createProducts(values: CreateProductsValues, sellerId: string) {
+  async createProducts(values: ProductFormSchema, sellerId: string) {
+    const productValues = {
+      productName: values.productName,
+      productQuantity: values.productQuantity,
+      productPrice: values.productPrice,
+      productDescription: values.productDescription,
+    };
+
     const collectionRef = collection(firestore, `console/${sellerId}/products`);
-    await addDoc(collectionRef, {
-      ...values,
+    const docRef = await addDoc(collectionRef, {
+      ...productValues,
       sellerId: sellerId,
-      thumbnailUrl: values.images[0],
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
     });
+
+    return docRef;
+  }
+
+  async updateProductsImages(
+    docRef: DocumentReference<DocumentData, DocumentData>,
+    {
+      thumbnailDownloadURL,
+      downloadUrls,
+    }: {
+      thumbnailDownloadURL: string;
+      downloadUrls: string[];
+    },
+  ) {
+    await updateDoc(docRef, {
+      thumbnail: thumbnailDownloadURL,
+      images: downloadUrls,
+    });
+  }
+
+  async updateProducts(
+    values: UpdateConsoleProducts,
+    {
+      sellerId,
+      productId,
+      thumbnailDownloadURL = '',
+      downloadUrls = [],
+    }: { sellerId: string; productId: string; thumbnailDownloadURL?: string; downloadUrls?: string[] },
+  ) {
+    const updateProductsValues = {
+      productName: values.productName,
+      productQuantity: values.productQuantity,
+      productPrice: values.productPrice,
+      productDescription: values.productDescription,
+    };
+
+    const docRef = doc(firestore, `console/${sellerId}/products/${productId}`);
+    const docSnapshot = await getDoc(docRef);
+
+    if (docSnapshot.exists()) {
+      const { imagesToBeUpdated } = values;
+
+      const { thumbnail, images } = docSnapshot.data() as Product;
+
+      const extractedThumbnailPath = extractPathFromUrl(thumbnail);
+      const newThumbnauilPath = extractedThumbnailPath !== thumbnailDownloadURL && thumbnailDownloadURL;
+
+      const filteredImagesPath = images.filter((image) => {
+        if (image) {
+          const extractedImagesPath = extractPathFromUrl(image) ?? '';
+          return !imagesToBeUpdated.images.includes(extractedImagesPath);
+        }
+      });
+
+      const newImagesPath = [...filteredImagesPath, ...downloadUrls];
+
+      await updateDoc(docRef, {
+        ...updateProductsValues,
+        ...(newThumbnauilPath && { thumbnail: newThumbnauilPath }),
+        ...(newImagesPath.length && { images: newImagesPath }),
+        updatedAt: serverTimestamp(),
+      });
+    }
   }
 
   async deleteProducts(productId: string, sellerId: string) {
     if (sellerId) {
-      const documentRef = doc(firestore, 'console', sellerId, 'products', productId);
-      await deleteDoc(documentRef);
+      const docRef = doc(firestore, 'console', sellerId, 'products', productId);
+
+      await deleteDoc(docRef);
     }
   }
 }

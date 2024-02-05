@@ -17,7 +17,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@components/ui/avatar';
 import { Label } from '@components/ui/label';
 import Wrapper from '@components/common/wrapper';
 
-import getImageData from '@src/utils/get-image-data';
+import { getImageData } from '@src/utils/image-data';
 
 function getDefaultProfile() {
   const file = new File([], '/user_default.svg', { type: 'image/svg+xml' });
@@ -44,7 +44,7 @@ function SignUp() {
       isSeller: false,
     },
   });
-
+  // TODO: 수정하기
   const onSubmit = async (values: SignUpFormSchema) => {
     try {
       const profileURL = await storageService.uploadFiles(values.profile, 'profile');
@@ -102,12 +102,12 @@ function SignUp() {
                     hidden
                     disabled={form.formState.isSubmitting}
                     onChange={(e) => {
-                      const { files, displayUrl } = getImageData({ event: e, multiple: false });
+                      const { files, previewUrls } = getImageData({ selectedImages: e.target?.files as FileList });
 
-                      const [imageUrl] = displayUrl;
-                      setPreview(imageUrl);
+                      const [imageUrl] = previewUrls;
 
                       onChange(files);
+                      setPreview(imageUrl);
                     }}
                     ref={inputRef}
                   />

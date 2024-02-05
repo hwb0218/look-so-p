@@ -49,7 +49,7 @@ function ConsoleNav() {
           </div>
         </div>
       </nav>
-      <div className="fixed left-0 right-0 top-0 h-[80px] py-2 px-4 flex flex-row items-center justify-between bg-slate-50 z-10">
+      <div className="fixed left-0 right-0 top-0 h-[80px] py-2 px-4 flex flex-row items-center justify-between bg-slate-100 z-10">
         <NavLink to="/" className="ml-auto">
           홈으로
         </NavLink>

@@ -1,46 +1,62 @@
-import { FirebaseError } from 'firebase/app';
-import { storageService } from '@src/lib/firebase/StorageService';
-import { storeService } from '@src/lib/firebase/StoreService';
-
-import { useAuthContext } from '@providers/auth';
+import { useState } from 'react';
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { type EditProductFormSchema, editProductFormSchema } from '@src/lib/zod/edit-product-schema';
+import { type UpdateProductFormSchema, updateProductFormSchema } from '@src/lib/zod/update-console-product-schama';
+
+import { useAuthContext } from '@providers/auth';
+import { useModalContext } from '@providers/modal';
+import useFetchProducts from '@hooks/use-fetch-console';
 
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@components/ui/form';
 import { Input } from '@components/ui/input';
 import { Button } from '@components/ui/button';
 import { Textarea } from '@components/ui/textarea';
 import Wrapper from '@components/common/wrapper';
-import { AddProductImages } from '../product-images';
 
-// import { queryClient } from '@src/main';
-// import { QUERY_KEYS } from '@constants/query-keys';
+import { Product } from '@src/lib/firebase/types';
 
 import formatNumber from '@src/utils/format-number';
-import { useModalContext } from '@providers/modal';
+import Images from './images';
 
-export default function ConsoleUpdateProduct() {
+import type { ImagesToBeUpdated } from './types';
+
+interface Props {
+  product: Product;
+}
+
+export default function ConsoleUpdateProduct({ product }: Props) {
+  const [imagesToBeUpdated, setImagesToBeUpdated] = useState<ImagesToBeUpdated>({
+    thumbnail: '',
+    images: [],
+  });
+
+  const { state } = useAuthContext();
   const { closeModal } = useModalContext();
+  const { updateConsoleProducts } = useFetchProducts();
 
-  const form = useForm<EditProductFormSchema>({
+  const form = useForm<UpdateProductFormSchema>({
     mode: 'onSubmit',
-    resolver: zodResolver(editProductFormSchema),
+    resolver: zodResolver(updateProductFormSchema),
     defaultValues: {
-      productName: '',
-      productQuantity: '',
-      productPrice: '',
-      productDescription: '',
+      productName: product.productName,
+      productQuantity: product.productQuantity,
+      productPrice: product.productPrice,
+      productDescription: product.productDescription,
+      previewUrls: product.images,
+      previewThumbnailUrls: [product.thumbnail],
     },
   });
 
-  const onSubmit = async (values: EditProductFormSchema) => {};
+  const onSubmit = async (values: UpdateProductFormSchema) => {
+    await updateConsoleProducts({ ...values, imagesToBeUpdated }, state?.auth.uid, product.id);
+    alert('상품 수정 완료!');
+  };
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="flex justify-center items-center absolute left-0 right-0 top-0 bottom-0 bg-stone-800 bg-opacity-80 z-[9999]">
+        <div className="flex justify-center items-center fixed left-0 right-0 top-0 bottom-0 bg-stone-800 bg-opacity-80 z-[9999]">
           <Wrapper className="p-4 w-1/2 mb-5 bg-white rounded-md overflow-hidden max-xl:h-5/6 max-xl:overflow-y-scroll">
             <h1 className="text-3xl font-bold">상품 정보 수정</h1>
             <FormField
@@ -105,10 +121,15 @@ export default function ConsoleUpdateProduct() {
                 </FormItem>
               )}
             />
-            <AddProductImages form={form} />
-            <Button type="button" onClick={closeModal} className="absolute top-5 right-5">
-              모달 제거
-            </Button>
+            <Images form={form} setImagesToBeUpdated={setImagesToBeUpdated} />
+            <Wrapper className="flex gap-x-3">
+              <Button type="submit" disabled={form.formState.isSubmitting} className="mt-5 w-1/2 max-lg:w-full">
+                수정
+              </Button>
+              <Button type="button" onClick={closeModal} className="mt-5 w-1/2 max-lg:w-full">
+                취소
+              </Button>
+            </Wrapper>
           </Wrapper>
         </div>
       </form>

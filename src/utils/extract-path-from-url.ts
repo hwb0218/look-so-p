@@ -3,8 +3,8 @@ export default function extractPathFromUrl(url: string) {
   const matched = url.match(regex);
 
   if (matched && matched[1]) {
-    return matched[1];
+    return decodeURIComponent(matched[1]);
   }
 
-  return null;
+  return undefined;
 }
