@@ -50,7 +50,6 @@ export function useDeleteProductsMutation() {
       return { productId, sellerId, filteredProducts };
     },
     onError: (err, { sellerId }, context) => {
-      console.log('onError', err);
       const queryKey = QUERY_KEYS.CONSOLE.PRODUCTS(sellerId);
       queryClient.setQueryData(queryKey, context?.filteredProducts);
     },

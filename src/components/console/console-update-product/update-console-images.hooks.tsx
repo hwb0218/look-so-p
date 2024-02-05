@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import { FieldValues, UseFormReturn } from 'react-hook-form';
 
-import { getImageData } from '@src/utils/image-data';
+import { FieldValues, UseFormReturn } from 'react-hook-form';
+import { getImageData } from '@src/utils/set-image-data';
 
 interface RequiredFields extends FieldValues {
   previewUrls?: string[];
