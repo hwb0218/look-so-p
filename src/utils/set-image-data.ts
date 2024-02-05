@@ -27,7 +27,7 @@ export function resetImageData({
   previewImageUrls,
   index,
 }: {
-  selectedImages: FileList;
+  selectedImages: FileList | File[];
   previewImageUrls: string[];
   index: number;
 }) {
