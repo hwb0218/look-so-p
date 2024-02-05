@@ -6,7 +6,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { AuthProvider } from '@providers/auth';
 import { ModalProvider } from '@providers/modal';
 
-import App from './app';
+import App from './App';
 
 import './index.css';
 import Modal from '@providers/modal/modal';
