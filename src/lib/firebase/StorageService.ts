@@ -39,8 +39,8 @@ class StorageService {
   }
 
   async deleteFiles(fileURLs: string[]) {
-    if (!fileURLs.length) {
-      throw new Error('fileURLs not exist');
+    if (!Array.isArray(fileURLs)) {
+      return console.log('String type 배열이 아닙니다.');
     }
 
     const deletePromises = fileURLs.map((url) => {
