@@ -39,7 +39,7 @@ class StorageService {
   }
 
   async deleteFiles(fileURLs: string[]) {
-    if (!Array.isArray(fileURLs)) {
+    if (!Array.isArray(fileURLs) || !fileURLs) {
       return console.log('String type 배열이 아닙니다.');
     }
 
