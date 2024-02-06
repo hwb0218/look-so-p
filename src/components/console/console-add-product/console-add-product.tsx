@@ -9,6 +9,7 @@ import { type ProductFormSchema, productFormSchema } from '@src/lib/zod/console-
 import Images from './images';
 
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@components/ui/form';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@components/ui/select';
 import { Input } from '@components/ui/input';
 import { Button } from '@components/ui/button';
 import { Textarea } from '@components/ui/textarea';
@@ -48,8 +49,32 @@ export default function ConsoleProductRegistration() {
               <FormItem className="mt-2">
                 <FormLabel className="pl-1">상품 이름</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input placeholder="상품 이름" {...field} />
                 </FormControl>
+                <FormMessage className="ml-2" />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="productCategory"
+            render={({ field: { onChange, value } }) => (
+              <FormItem className="mt-2">
+                <FormLabel className="pl-1">상품 카테고리</FormLabel>
+                <Select onValueChange={onChange} defaultValue={value}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="상품 카테고리" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="toner">토너/패드</SelectItem>
+                    <SelectItem value="cream">로션/크림</SelectItem>
+                    <SelectItem value="ampoule">에센스/앰플</SelectItem>
+                    <SelectItem value="cleansing">클렌징</SelectItem>
+                    <SelectItem value="suncare">선케어</SelectItem>
+                  </SelectContent>
+                </Select>
                 <FormMessage className="ml-2" />
               </FormItem>
             )}
@@ -64,6 +89,7 @@ export default function ConsoleProductRegistration() {
                   <FormControl>
                     <Input
                       {...field}
+                      placeholder="상품 수량"
                       value={formatNumber(field.value.replace(/[^0-9]/g, ''))}
                       onChange={(e) => field.onChange(e.target.value.replace(/[^0-9]/g, ''))}
                     />
@@ -81,6 +107,7 @@ export default function ConsoleProductRegistration() {
                   <FormControl>
                     <Input
                       {...field}
+                      placeholder="상품 가격"
                       value={formatNumber(field.value.replace(/[^0-9]/g, ''))}
                       onChange={(e) => field.onChange(e.target.value.replace(/[^0-9]/g, ''))}
                     />

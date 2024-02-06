@@ -15,6 +15,7 @@ export interface Product extends DocumentData {
   productName: string;
   productPrice: string;
   productQuantity: string;
+  productCategory: string;
   sellerId: string;
   images: string[];
   thumbnail: string;

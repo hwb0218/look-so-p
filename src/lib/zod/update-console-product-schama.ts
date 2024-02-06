@@ -30,6 +30,7 @@ export const updateProductFormSchema = z.object({
   productQuantity: z.string().min(1, { message: '상품 수량을 입력하세요' }),
   productPrice: z.string().min(1, { message: '상품 가격을 입력하세요' }),
   productDescription: z.string().optional(),
+  productCategory: z.string({ required_error: '카테고리를 선택하세요' }).min(1),
 });
 
 export type UpdateProductFormSchema = z.infer<typeof updateProductFormSchema>;

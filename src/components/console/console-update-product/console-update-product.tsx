@@ -9,6 +9,7 @@ import { useModalContext } from '@providers/modal';
 import useFetchProducts from '@hooks/use-fetch-console';
 
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@components/ui/form';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@components/ui/select';
 import { Input } from '@components/ui/input';
 import { Button } from '@components/ui/button';
 import { Textarea } from '@components/ui/textarea';
@@ -45,6 +46,7 @@ export default function ConsoleUpdateProduct({ product }: Props) {
       productDescription: product.productDescription,
       previewUrls: product.images,
       previewThumbnailUrls: [product.thumbnail],
+      productCategory: product.productCategory,
     },
   });
 
@@ -68,6 +70,30 @@ export default function ConsoleUpdateProduct({ product }: Props) {
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
+                  <FormMessage className="ml-2" />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="productCategory"
+              render={({ field }) => (
+                <FormItem className="mt-2">
+                  <FormLabel className="pl-1">상품 카테고리</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="상품 카테고리..?" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent className="z-[1000000]">
+                      <SelectItem value="toner">토너/패드</SelectItem>
+                      <SelectItem value="cream">로션/크림</SelectItem>
+                      <SelectItem value="ampoule">에센스/앰플</SelectItem>
+                      <SelectItem value="cleansing">클렌징</SelectItem>
+                      <SelectItem value="suncare">선케어</SelectItem>
+                    </SelectContent>
+                  </Select>
                   <FormMessage className="ml-2" />
                 </FormItem>
               )}
