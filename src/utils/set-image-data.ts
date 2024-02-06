@@ -1,5 +1,3 @@
-// TODO: set-image-data 변경
-
 export function getImageData({
   selectedImages,
   prevImages,

@@ -14,7 +14,6 @@ class StorageService {
     return downloadURL;
   }
 
-  // TODO: 프로필 작업
   async uploadThumbnail(thumbnail: FileList, path: string = '') {
     if (!thumbnail) {
       return undefined;

@@ -1,12 +1,6 @@
 import { useRef, useState } from 'react';
-// import { FieldValues, UseFormReturn } from 'react-hook-form';
 
-import { getImageData } from '@src/utils/image-data';
-
-// interface RequiredFields extends FieldValues {
-//   previewUrls?: string[];
-//   previewThumbnailUrls?: string[];
-// }
+import { getImageData } from '@src/utils/set-image-data';
 
 export default function useAddConsoleImage() {
   const [previewThumbnailUrls, setPreveiwThumbnailUrls] = useState<string[]>([]);
