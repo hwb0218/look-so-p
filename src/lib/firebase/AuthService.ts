@@ -1,6 +1,6 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
-import { auth, firestore } from './config';
+import { auth, db } from './config';
 
 import type { CreateUserValues } from './types';
 
@@ -27,7 +27,7 @@ class AuthService {
     const { email, password } = values;
     const uid = await this.signUp(email, password);
 
-    const documentRef = doc(firestore, 'users', uid);
+    const documentRef = doc(db, 'users', uid);
     const userRef = await setDoc(documentRef, {
       ...values,
       uid,
@@ -40,7 +40,7 @@ class AuthService {
   async getUser(email: string, password: string) {
     const uid = await this.login(email, password);
 
-    const userRef = doc(firestore, 'users', uid);
+    const userRef = doc(db, 'users', uid);
     const userSanp = await getDoc(userRef);
 
     if (userSanp.exists()) {
