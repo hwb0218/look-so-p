@@ -14,8 +14,9 @@ import {
   QueryDocumentSnapshot,
   DocumentData,
   DocumentReference,
+  where,
 } from 'firebase/firestore';
-import { firestore } from './config';
+import { db } from './config';
 
 import type { Product } from './types';
 import type { ProductFormSchema } from '../zod/console-product-schema';
@@ -35,9 +36,10 @@ class StoreService {
     const limitNum = 5;
     const products: Product[] = [];
 
-    const collectionRef = collection(firestore, 'console', sellerId, 'products');
+    const collectionRef = collection(db, 'products');
     const q = query(
       collectionRef,
+      where('sellerId', '==', sellerId),
       orderBy('updatedAt', 'desc'),
       limit(limitNum),
       ...(pageParam ? [startAfter(pageParam)] : []),
@@ -64,7 +66,7 @@ class StoreService {
       productDescription: values.productDescription,
     };
 
-    const collectionRef = collection(firestore, `console/${sellerId}/products`);
+    const collectionRef = collection(db, `products`);
     const docRef = await addDoc(collectionRef, {
       ...productValues,
       sellerId: sellerId,
@@ -77,13 +79,7 @@ class StoreService {
 
   async updateProductsImages(
     docRef: DocumentReference<DocumentData, DocumentData>,
-    {
-      thumbnailDownloadURL,
-      downloadUrls,
-    }: {
-      thumbnailDownloadURL: string;
-      downloadUrls: string[];
-    },
+    { thumbnailDownloadURL, downloadUrls }: { thumbnailDownloadURL: string; downloadUrls: string[] },
   ) {
     await updateDoc(docRef, {
       thumbnail: thumbnailDownloadURL,
@@ -94,20 +90,20 @@ class StoreService {
   async updateProducts(
     values: UpdateConsoleProducts,
     {
-      sellerId,
       productId,
       thumbnailDownloadURL = '',
       downloadUrls = [],
-    }: { sellerId: string; productId: string; thumbnailDownloadURL?: string; downloadUrls?: string[] },
+    }: { productId: string; thumbnailDownloadURL?: string; downloadUrls?: string[] },
   ) {
     const updateProductsValues = {
       productName: values.productName,
       productQuantity: values.productQuantity,
       productPrice: values.productPrice,
       productDescription: values.productDescription,
+      productCategory: values.productCategory,
     };
 
-    const docRef = doc(firestore, `console/${sellerId}/products/${productId}`);
+    const docRef = doc(db, `products/${productId}`);
     const docSnapshot = await getDoc(docRef);
 
     const { images: imagesToBeUpdated, thumbnail: thumbnailToBeUpdated } = values.imagesToBeUpdated;
@@ -142,10 +138,26 @@ class StoreService {
 
   async deleteProducts(productId: string, sellerId: string) {
     if (sellerId) {
-      const docRef = doc(firestore, 'console', sellerId, 'products', productId);
+      const docRef = doc(db, 'products', productId);
 
       await deleteDoc(docRef);
     }
+  }
+
+  async getAllGoods(categories: string[]) {
+    const getCategoryDocs = async (category: string) => {
+      const productsRef = collection(db, 'products');
+      const q = query(productsRef, where('category', '==', category), limit(4));
+
+      const querySnapshot = await getDocs(q);
+      const docs = querySnapshot.docs.map((doc) => doc.data());
+
+      return docs;
+    };
+
+    const allCategoryDocs = await Promise.all(categories.map(getCategoryDocs));
+
+    return allCategoryDocs;
   }
 }
 
