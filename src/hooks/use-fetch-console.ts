@@ -11,23 +11,27 @@ import { type ProductFormSchema } from '@src/lib/zod/console-product-schema';
 import { UpdateConsoleProducts } from '@src/types';
 
 export default function useFetchConsoleProducts() {
-  const createConsoleProducts = async (values: ProductFormSchema, id: string) => {
+  const createConsoleProducts = async (values: ProductFormSchema, sellerId: string) => {
     try {
-      const docRef = await storeService.createProducts(values, id);
+      const docRef = await storeService.createProducts(values, sellerId);
 
       const thumbnailDownloadURL = await storageService.uploadThumbnail(
         values.thumbnail,
-        `products/${id}/${docRef.id}`,
+        `products/${sellerId}/${docRef.id}`,
       );
-      const downloadUrls = await storageService.uploadFiles(values.images, `products/${id}/${docRef.id}`);
+      const downloadUrls = await storageService.uploadFiles(values.images, `products/${sellerId}/${docRef.id}`);
 
       if (thumbnailDownloadURL && downloadUrls) {
         await storeService.updateProductsImages(docRef, { thumbnailDownloadURL, downloadUrls });
       }
 
-      await queryClient.invalidateQueries({ queryKey: QUERY_KEYS.CONSOLE.PRODUCTS(id) });
+      await queryClient.invalidateQueries({ queryKey: QUERY_KEYS.CONSOLE.PRODUCTS(sellerId) });
     } catch (err) {
-      if (err instanceof FirebaseError) console.error(err);
+      if (err instanceof FirebaseError) {
+        console.error(err);
+      } else {
+        console.error(err);
+      }
     }
   };
 
@@ -44,14 +48,13 @@ export default function useFetchConsoleProducts() {
       );
 
       const { imagesToBeUpdated, thumbnailToBeUpdated } = await storeService.updateProducts(values, {
-        sellerId,
         productId,
         ...(thumbnailDownloadURL && { thumbnailDownloadURL }),
         ...(downloadUrls && { downloadUrls }),
       });
 
       await storageService.deleteFiles([...imagesToBeUpdated, ...thumbnailToBeUpdated] as string[]);
-
+      // FIXME: 추후 낙관적 업데이트로 수정
       await queryClient.invalidateQueries({ queryKey: QUERY_KEYS.CONSOLE.PRODUCTS(sellerId) });
     } catch (err) {
       if (err instanceof FirebaseError) {
