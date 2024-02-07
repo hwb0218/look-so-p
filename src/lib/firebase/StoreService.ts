@@ -18,12 +18,13 @@ import {
 } from 'firebase/firestore';
 import { db } from './config';
 
-import type { Product } from './types';
-import type { ProductFormSchema } from '../zod/console-product-schema';
-
 import extractPathFromUrl from '@src/utils/extract-path-from-url';
 
+import type { Product } from './types';
+import type { ProductFormSchema } from '../zod/console-product-schema';
 import type { UpdateConsoleProducts } from '@src/types';
+
+import { GOODS_CATEGORIES } from '@constants/goods-categories';
 
 class StoreService {
   async getSellerProducts({
@@ -144,20 +145,29 @@ class StoreService {
     }
   }
 
-  async getAllGoods(categories: string[]) {
+  async getAllGoods(categories: typeof GOODS_CATEGORIES) {
     const getCategoryDocs = async (category: string) => {
       const productsRef = collection(db, 'products');
-      const q = query(productsRef, where('category', '==', category), limit(4));
+      const q = query(productsRef, where('productCategory', '==', category), limit(4));
 
       const querySnapshot = await getDocs(q);
-      const docs = querySnapshot.docs.map((doc) => doc.data());
+      const docs = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 
       return docs;
     };
 
-    const allCategoryDocs = await Promise.all(categories.map(getCategoryDocs));
+    const promises = categories.map(async ({ value }) => {
+      const docs = await getCategoryDocs(value);
+      return { [value]: docs };
+    });
 
-    return allCategoryDocs;
+    const categoryDocsArray = await Promise.all(promises);
+
+    const allCategoryDocs = Object.assign({}, ...categoryDocsArray);
+
+    return allCategoryDocs as {
+      [category: string]: Product[];
+    };
   }
 }
 

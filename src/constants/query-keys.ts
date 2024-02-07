@@ -7,4 +7,9 @@ export const QUERY_KEYS = {
     BASE: [{ scope: 'console' }] as const,
     PRODUCTS: (sellerId: string) => [{ ...QUERY_KEYS.CONSOLE.BASE[0], sellerId }] as const,
   },
+  GOODS: {
+    BASE: [{ scope: 'goods' }] as const,
+    MAIN: () => [{ ...QUERY_KEYS.GOODS.BASE[0] }],
+    WITHCATEGORY: (category: string) => [{ ...QUERY_KEYS.GOODS.BASE[0], category }] as const,
+  },
 };
