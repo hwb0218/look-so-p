@@ -12,15 +12,15 @@ function GlobalNav() {
   const { state } = useAuthContext();
 
   return (
-    <header className="fixed top-0 left-0 right-0 px-12 py-2 flex justify-between z-10 border-b">
+    <header className="fixed top-0 left-0 right-0 px-6 py-2 flex justify-between z-10 border-b">
       <Ul>
-        <Li className="w-16 rounded overflow-hidden">
+        <Li className="w-14 rounded overflow-hidden">
           <NavLink to={ROUTE_PATHS.HOME}>
             <img src="/logo.svg" />
           </NavLink>
         </Li>
       </Ul>
-      <Ul>
+      <Ul className="gap-x-2">
         <NavItems />
         <NavItemsAuth renderIf={() => state.auth?.uid} isSeller={state.auth?.isSeller} />
         <NavItemsUnauth renderIf={() => !state.auth?.uid} />

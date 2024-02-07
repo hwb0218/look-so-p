@@ -37,7 +37,7 @@ export default function GoodsCategoryList({ categories, filterCategory, setFilte
         </Li>
       ))}
       <Li className="absolute right-0 cursor-pointer" onClick={() => handleClickMore(filterCategory)}>
-        + more
+        + More
       </Li>
     </Ul>
   );
