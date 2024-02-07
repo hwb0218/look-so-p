@@ -62,8 +62,8 @@ class StoreService {
   async createProducts(values: ProductFormSchema, sellerId: string) {
     const productValues = {
       productName: values.productName,
-      productQuantity: values.productQuantity,
-      productPrice: values.productPrice,
+      productQuantity: Number(values.productQuantity),
+      productPrice: Number(values.productPrice),
       productDescription: values.productDescription,
     };
 
