@@ -1,3 +1,5 @@
+import { Goods } from '@components/goods';
+
 export default function HomePage() {
-  return <div>홈화면</div>;
+  return <Goods />;
 }
