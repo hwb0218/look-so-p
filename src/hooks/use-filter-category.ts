@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-export default function useFilterCategory() {
-  const [filterCategory, setFilterCategory] = useState<string>('toner');
+export default function useFilterCategory(category: string) {
+  const [filterCategory, setFilterCategory] = useState<string>(category);
 
   return {
     filterCategory,

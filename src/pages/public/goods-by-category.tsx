@@ -1,5 +1,5 @@
-import { Goods } from '@components/goods';
+import { GoodsByCategory } from '@components/goods';
 
-export default function GoodsByCategory() {
-  return <Goods />;
+export default function GoodsByCategoryPage() {
+  return <GoodsByCategory />;
 }

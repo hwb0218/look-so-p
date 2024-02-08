@@ -1,9 +1,6 @@
-import { useNavigate, createSearchParams } from 'react-router-dom';
-
 import { Li, Ul } from '@components/common/list';
 
 import { GOODS_CATEGORIES } from '@constants/goods-categories';
-import { ROUTE_PATHS } from '@constants/routes';
 
 interface Props {
   categories: typeof GOODS_CATEGORIES;
@@ -12,17 +9,8 @@ interface Props {
 }
 
 export default function GoodsCategoryList({ categories, filterCategory, setFilterCategory }: Props) {
-  const navigate = useNavigate();
-
   const handleClickCategory = (category: string) => {
     setFilterCategory(category);
-  };
-
-  const handleClickMore = (category: string) => {
-    navigate({
-      pathname: ROUTE_PATHS.GOODS_LIST,
-      search: `?${createSearchParams({ category: category.trim() })}`,
-    });
   };
 
   return (
@@ -36,9 +24,6 @@ export default function GoodsCategoryList({ categories, filterCategory, setFilte
           {title}
         </Li>
       ))}
-      <Li className="absolute right-0 cursor-pointer" onClick={() => handleClickMore(filterCategory)}>
-        + More
-      </Li>
     </Ul>
   );
 }
