@@ -7,7 +7,7 @@ import { Ul } from '@components/common/list';
 import { ROUTE_PATHS } from '@constants/routes';
 
 import { Product } from '@src/lib/firebase/types';
-import { GoodsCategories } from './types';
+import { GoodsCategories } from '../types';
 
 interface Props {
   categories: GoodsCategories;
