@@ -8,18 +8,18 @@ interface Props {
   setFilterCategory: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export default function GoodsCategoryList({ categories, filterCategory, setFilterCategory }: Props) {
+export default function GoodsCategories({ categories, filterCategory, setFilterCategory }: Props) {
   const handleClickCategory = (category: string) => {
     setFilterCategory(category);
   };
 
   return (
-    <Ul className="relative px-12 break-keep ">
+    <Ul className="w-full py-6 text-center relative px-12 break-keep">
       {categories.map(({ value, title }) => (
         <Li
           key={value}
           onClick={() => handleClickCategory(value)}
-          className={`px-10 cursor-pointer text-stone-500 hover:text-stone-900 ${value === filterCategory && 'text-stone-900 font-bold'}`}
+          className={`w-full cursor-pointer text-stone-500 hover:text-stone-900 ${value === filterCategory && 'text-stone-900 text-base font-bold'}`}
         >
           {title}
         </Li>
