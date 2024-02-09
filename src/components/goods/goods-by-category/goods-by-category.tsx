@@ -2,8 +2,10 @@ import { useState } from 'react';
 
 import useFetchGoodsByCategory from '@hooks/use-fetch-goods-by-category';
 
-import { GoodsCategories, GoodsListByCategory } from '.';
 import Wrapper from '@components/common/wrapper';
+import { GoodsCategories, GoodsListByCategory, GoodsSorter } from './';
+
+import sortbyOptions from '@src/utils/sort-by-options';
 
 import { GOODS_CATEGORIES } from '@constants/goods-categories';
 
@@ -13,10 +15,13 @@ interface Props {
 
 export default function GoodsByCategory({ category }: Props) {
   const [filterCategory, setFilterCategory] = useState(category);
+  const [sortingOption, setSortingOption] = useState('latest');
 
   const { data: goods, ref } = useFetchGoodsByCategory(filterCategory);
 
   const goodsContent = goods?.pages ?? [];
+
+  const sortedGoods = sortbyOptions(goodsContent, sortingOption);
 
   return (
     <Wrapper className="w-10/12 m-auto pb-20">
@@ -25,7 +30,8 @@ export default function GoodsByCategory({ category }: Props) {
         filterCategory={filterCategory}
         setFilterCategory={setFilterCategory}
       />
-      <GoodsListByCategory goods={goodsContent} />
+      <GoodsSorter sortingOption={sortingOption} setSortingOption={setSortingOption} />
+      <GoodsListByCategory goods={sortedGoods} />
       {goods && <div ref={ref} />}
     </Wrapper>
   );
