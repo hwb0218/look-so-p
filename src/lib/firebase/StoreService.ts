@@ -45,12 +45,11 @@ class StoreService {
       limit(limitNum),
       ...(pageParam ? [startAfter(pageParam)] : []),
     );
-    const documentSnapshots = await getDocs(q);
+    const docSnapshot = await getDocs(q);
 
-    const lastVisible =
-      documentSnapshots.size >= limitNum ? documentSnapshots.docs[documentSnapshots.docs.length - 1] : undefined;
+    const lastVisible = docSnapshot.size >= limitNum ? docSnapshot.docs[docSnapshot.docs.length - 1] : undefined;
 
-    documentSnapshots.forEach((doc) => {
+    docSnapshot.forEach((doc) => {
       const { id } = doc;
       const data = doc.data() as Product;
       products.push({ ...data, id });
@@ -65,6 +64,7 @@ class StoreService {
       productQuantity: Number(values.productQuantity),
       productPrice: Number(values.productPrice),
       productDescription: values.productDescription,
+      productCategory: values.productCategory,
     };
 
     const collectionRef = collection(db, `products`);
@@ -168,6 +168,30 @@ class StoreService {
     return allCategoryDocs as {
       [category: string]: Product[];
     };
+  }
+
+  async getAllGoodsByCategory(
+    category: string,
+    { pageParam, limitNum = 12 }: { pageParam?: QueryDocumentSnapshot<DocumentData, DocumentData>; limitNum?: number },
+  ) {
+    const collectionRef = collection(db, 'products');
+    const q = query(
+      collectionRef,
+      where('productCategory', '==', category),
+      orderBy('updatedAt', 'desc'),
+      limit(limitNum),
+      ...(pageParam ? [startAfter(pageParam)] : []),
+    );
+
+    const docSnapshot = await getDocs(q);
+
+    const lastVisible = docSnapshot.size >= limitNum ? docSnapshot.docs[docSnapshot.docs.length - 1] : undefined;
+
+    const products = docSnapshot.docs.map((doc) => {
+      return { id: doc.id, ...doc.data() } as Product;
+    });
+
+    return { products, lastVisible };
   }
 }
 
