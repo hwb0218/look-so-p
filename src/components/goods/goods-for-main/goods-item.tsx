@@ -1,11 +1,12 @@
-import { Carousel, CarouselContent, CarouselItem } from '@components/ui/carousel';
-import { Card, CardContent } from '@components/ui/card';
+import { GoodsItemCard } from '../goods-item-card';
+
 import Wrapper from '@components/common/wrapper';
+import { Li } from '@components/common/list';
+import { Carousel, CarouselContent, CarouselItem } from '@components/ui/carousel';
 
 import { Product } from '@src/lib/firebase/types';
 
 import numberFormat from '@src/utils/number-format';
-import { Li } from '@components/common/list';
 
 interface Props {
   goods: Product;
@@ -19,22 +20,16 @@ export default function GoodsItem({ goods }: Props) {
           <CarouselContent>
             {[goods.thumbnail, ...goods.images].map((src) => (
               <CarouselItem key={src}>
-                <Wrapper className="p-1">
-                  <Card>
-                    <CardContent className="p-0 flex aspect-square items-center justify-center">
-                      <img src={src} alt={src} className="w-full h-full object-cover" />
-                    </CardContent>
-                  </Card>
-                </Wrapper>
+                <GoodsItemCard src={src} />
               </CarouselItem>
             ))}
           </CarouselContent>
         </Carousel>
+        <span className="text-sm">{goods.productName}</span>
         <Wrapper>
-          <span>{`[${goods.productCategory}]`}</span>
-          <span>{goods.productName}</span>
+          <span>{`${numberFormat(Number(goods.productPrice))}원`}</span>
+          <span className="float-right">{`${goods.productCategory}`}</span>
         </Wrapper>
-        <div>{`${numberFormat(Number(goods.productPrice))}원`}</div>
       </div>
     </Li>
   );
