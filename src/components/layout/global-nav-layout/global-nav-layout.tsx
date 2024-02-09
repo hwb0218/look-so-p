@@ -7,7 +7,7 @@ function GlobalLayout() {
   return (
     <>
       <GlobalNav />
-      <Wrapper className="mt-[80px]">
+      <Wrapper className="mt-[72px]">
         <Outlet />
       </Wrapper>
     </>

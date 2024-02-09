@@ -12,7 +12,7 @@ function GlobalNav() {
   const { state } = useAuthContext();
 
   return (
-    <header className="fixed top-0 left-0 right-0 px-6 py-2 flex justify-between z-10 border-b">
+    <header className="fixed top-0 left-0 right-0 px-6 py-2 flex justify-between z-10 border-b bg-white/70">
       <Ul>
         <Li className="w-14 rounded overflow-hidden">
           <NavLink to={ROUTE_PATHS.HOME}>
