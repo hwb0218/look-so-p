@@ -1,2 +1,3 @@
 export { default as GoodsByCategory } from './goods-by-category';
-export { default as GoodsCategoryList } from './goods-category-list';
+export { default as GoodsCategories } from './goods-categories';
+export { default as GoodsListByCategory } from './goods-list-by-category';

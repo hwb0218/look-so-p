@@ -172,7 +172,7 @@ class StoreService {
 
   async getAllGoodsByCategory(
     category: string,
-    { pageParam, limitNum = 12 }: { pageParam?: QueryDocumentSnapshot<DocumentData, DocumentData>; limitNum?: number },
+    { pageParam, limitNum = 8 }: { pageParam?: QueryDocumentSnapshot<DocumentData, DocumentData>; limitNum?: number },
   ) {
     const collectionRef = collection(db, 'products');
     const q = query(
