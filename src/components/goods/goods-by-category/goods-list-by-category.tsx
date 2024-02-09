@@ -14,9 +14,9 @@ interface Props {
 
 export default function GoodsListByCategory({ goods }: Props) {
   return (
-    <Ul className="grid grid-cols-4 gap-4">
+    <Ul className="grid grid-cols-4 gap-x-5 gap-y-20">
       {goods?.map((item) => (
-        <Li className="w-full max-w-xs">
+        <Li className="w-full">
           <React.Fragment key={item.id}>
             <GoodsItemCard src={item.thumbnail} />
             <Wrapper className="pt-4">
