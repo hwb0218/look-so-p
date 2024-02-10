@@ -5,7 +5,7 @@ import { storeService } from '@src/lib/firebase/StoreService';
 
 import { GOODS_CATEGORIES } from '@constants/goods-categories';
 
-export default function useFetchGoods(categories: typeof GOODS_CATEGORIES) {
+export default function useFetchAllGoods(categories: typeof GOODS_CATEGORIES) {
   return useQuery({
     queryKey: QUERY_KEYS.GOODS.MAIN(),
     queryFn: () => storeService.getAllGoods(categories),
