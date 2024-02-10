@@ -17,7 +17,9 @@ export default function GoodsSorter({ sortingOption, setSortingOption }: Props) 
         </SelectTrigger>
         <SelectContent>
           {sortingOptions.map(({ value, title }) => (
-            <SelectItem value={value}>{title}</SelectItem>
+            <SelectItem key={value} value={value}>
+              {title}
+            </SelectItem>
           ))}
         </SelectContent>
       </Select>
