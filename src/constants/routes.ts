@@ -4,6 +4,7 @@ export const ROUTE_PATHS = {
   SIGNUP: '/sign-up',
   PRODUCT_ALL: '/product-all',
   GOODS_LIST: '/goods/goods-list',
+  GOODS_DETAIL: (productId?: string) => (productId ? `/goods/goods-detail/${productId}` : '/goods/goods-detail/:id'),
 };
 
 export const AUTH_ROUTE_PATHS = {

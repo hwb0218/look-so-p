@@ -16,7 +16,7 @@ export default function GoodsList({ categories }: Props) {
   return (
     <div className="flex-col items-start p-3">
       {categories.map(({ value, title }) => (
-        <GoodsSection goodsByCategory={goodsByCategory} category={value} title={title} />
+        <GoodsSection key={value} goodsByCategory={goodsByCategory} category={value} title={title} />
       ))}
     </div>
   );

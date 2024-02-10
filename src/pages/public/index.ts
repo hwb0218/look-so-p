@@ -3,3 +3,4 @@ export { default as LoginPage } from './login';
 export { default as SignUpPage } from './sign-up';
 export { default as ProductAllPage } from './product-all';
 export { default as GoodsByCategory } from './goods-by-category';
+export { default as GoodsDetailPage } from './goods-detail';
