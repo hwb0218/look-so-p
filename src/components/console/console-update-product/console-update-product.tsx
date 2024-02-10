@@ -108,7 +108,7 @@ export default function ConsoleUpdateProduct({ product }: Props) {
                     <FormControl>
                       <Input
                         {...field}
-                        value={formatNumber(field.value.replace(/[^0-9]/g, ''))}
+                        value={formatNumber(String(field.value).replace(/[^0-9]/g, ''))}
                         onChange={(e) => field.onChange(e.target.value.replace(/[^0-9]/g, ''))}
                       />
                     </FormControl>
@@ -125,7 +125,7 @@ export default function ConsoleUpdateProduct({ product }: Props) {
                     <FormControl>
                       <Input
                         {...field}
-                        value={formatNumber(field.value.replace(/[^0-9]/g, ''))}
+                        value={formatNumber(String(field.value).replace(/[^0-9]/g, ''))}
                         onChange={(e) => field.onChange(e.target.value.replace(/[^0-9]/g, ''))}
                       />
                     </FormControl>

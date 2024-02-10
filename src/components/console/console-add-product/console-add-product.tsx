@@ -90,7 +90,7 @@ export default function ConsoleProductRegistration() {
                     <Input
                       {...field}
                       placeholder="상품 수량"
-                      value={formatNumber(field.value.replace(/[^0-9]/g, ''))}
+                      value={formatNumber(String(field.value).replace(/[^0-9]/g, ''))}
                       onChange={(e) => field.onChange(e.target.value.replace(/[^0-9]/g, ''))}
                     />
                   </FormControl>
@@ -108,7 +108,7 @@ export default function ConsoleProductRegistration() {
                     <Input
                       {...field}
                       placeholder="상품 가격"
-                      value={formatNumber(field.value.replace(/[^0-9]/g, ''))}
+                      value={formatNumber(String(field.value).replace(/[^0-9]/g, ''))}
                       onChange={(e) => field.onChange(e.target.value.replace(/[^0-9]/g, ''))}
                     />
                   </FormControl>
