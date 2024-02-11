@@ -10,6 +10,7 @@ export const QUERY_KEYS = {
   GOODS: {
     BASE: [{ scope: 'goods' }] as const,
     MAIN: () => [{ ...QUERY_KEYS.GOODS.BASE[0] }],
+    BY_ID: (productId: string) => [{ ...QUERY_KEYS.GOODS.BASE[0], productId }] as const,
     BY_CATEGORY: (category: string) => [{ ...QUERY_KEYS.GOODS.BASE[0], category }] as const,
   },
 };

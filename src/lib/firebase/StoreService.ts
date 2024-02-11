@@ -170,6 +170,16 @@ class StoreService {
     };
   }
 
+  async getGoodsById(productId: string) {
+    const docRef = doc(db, 'products', productId);
+    const docSnapshot = await getDoc(docRef);
+
+    if (docSnapshot.exists()) {
+      const { id, ...data } = docSnapshot.data() as Product;
+      return { id, ...data };
+    }
+  }
+
   async getAllGoodsByCategory(
     category: string,
     { pageParam, limitNum = 8 }: { pageParam?: QueryDocumentSnapshot<DocumentData, DocumentData>; limitNum?: number },
