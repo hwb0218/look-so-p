@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, createSearchParams } from 'react-router-dom';
 
 import { Li, Ul } from '@components/common/list';
 import { GoodsItemCard } from '../goods-item-card';
@@ -19,7 +19,13 @@ export default function GoodsListByCategory({ goods }: Props) {
     <Ul className="grid grid-cols-4 gap-x-5 gap-y-20">
       {goods?.map((item) => (
         <Li key={item.id} className="w-full">
-          <Link to={ROUTE_PATHS.GOODS_DETAIL(item.id)} key={item.id}>
+          <Link
+            to={{
+              pathname: ROUTE_PATHS.GOODS_DETAIL(item.id),
+              search: `?${createSearchParams({ category: item.productCategory.trim() })}`,
+            }}
+            key={item.id}
+          >
             <GoodsItemCard src={item.thumbnail} />
             <Wrapper className="pt-4">
               <div className="text-sm">{item.productName}</div>
