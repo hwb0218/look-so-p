@@ -1,9 +1,12 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 
 import { GoodsDetail } from '@components/goods/goods-detail';
 
 export default function GoodsDetailPage() {
   const { id } = useParams() as { id: string };
+  const [params] = useSearchParams();
 
-  return <GoodsDetail productId={id} />;
+  const category = params.get('category') ?? '';
+
+  return <GoodsDetail productId={id} category={category} />;
 }
