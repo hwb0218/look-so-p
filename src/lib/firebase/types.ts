@@ -13,8 +13,8 @@ export interface Product extends DocumentData {
   id: string;
   productDescription: string;
   productName: string;
-  productPrice: string;
-  productQuantity: string;
+  productPrice: number;
+  productQuantity: number;
   productCategory: string;
   sellerId: string;
   images: string[];

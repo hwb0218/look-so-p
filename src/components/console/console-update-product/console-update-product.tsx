@@ -41,8 +41,8 @@ export default function ConsoleUpdateProduct({ product }: Props) {
     resolver: zodResolver(updateProductFormSchema),
     defaultValues: {
       productName: product.productName,
-      productQuantity: product.productQuantity,
-      productPrice: product.productPrice,
+      productQuantity: String(product.productQuantity),
+      productPrice: String(product.productPrice),
       productDescription: product.productDescription,
       previewUrls: product.images,
       previewThumbnailUrls: [product.thumbnail],
