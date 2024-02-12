@@ -1,22 +1,26 @@
 import { useState } from 'react';
 
 import useFetchGoodsById from '@hooks/use-fetch-goods-by-id';
+import useFetchRecommend from '@hooks/use-fetch-recommend';
 
 import Wrapper from '@components/common/wrapper';
 import { GoodsItemCard } from '../goods-item-card';
 
 import numberFormat from '@src/utils/number-format';
+import GoodsDetailRecommend from './goods-detail-recommend';
 
 interface Props {
   productId: string;
+  category: string;
 }
 
-export default function GoodsDetail({ productId }: Props) {
+export default function GoodsDetail({ productId, category }: Props) {
   const [goodsCount, setGoodsCount] = useState(1);
 
   const { data: goods } = useFetchGoodsById(productId);
+  const { data: recommend } = useFetchRecommend(category);
 
-  if (!goods) {
+  if (!goods || !recommend) {
     return <p>상품 정보 없을 때..!</p>;
   }
 
@@ -31,8 +35,8 @@ export default function GoodsDetail({ productId }: Props) {
   };
 
   return (
-    <Wrapper className="w-10/12 m-auto pt-6 pb-20">
-      <div className="flex justify-center gap-x-6 m-auto">
+    <Wrapper className="flex flex-col items-center p-20">
+      <div className="flex justify-center gap-x-6">
         <div className="w-full max-w-md">
           <GoodsItemCard src={goods.thumbnail} />
         </div>
@@ -89,6 +93,7 @@ export default function GoodsDetail({ productId }: Props) {
           </table>
         </div>
       </div>
+      <GoodsDetailRecommend recommend={recommend} />
     </Wrapper>
   );
 }

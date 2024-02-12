@@ -1,16 +1,17 @@
 export const QUERY_KEYS = {
   AUTH: {
-    BASE: [{ scope: 'user' }] as const,
-    USER: () => [{ ...QUERY_KEYS.AUTH.BASE[0] }] as const,
+    BASE: ['user'] as const,
+    USER: () => [...QUERY_KEYS.AUTH.BASE] as const,
   },
   CONSOLE: {
-    BASE: [{ scope: 'console' }] as const,
-    PRODUCTS: (sellerId: string) => [{ ...QUERY_KEYS.CONSOLE.BASE[0], sellerId }] as const,
+    BASE: ['console'] as const,
+    PRODUCTS: (sellerId: string) => [...QUERY_KEYS.CONSOLE.BASE, sellerId] as const,
   },
   GOODS: {
-    BASE: [{ scope: 'goods' }] as const,
-    MAIN: () => [{ ...QUERY_KEYS.GOODS.BASE[0] }],
-    BY_ID: (productId: string) => [{ ...QUERY_KEYS.GOODS.BASE[0], productId }] as const,
-    BY_CATEGORY: (category: string) => [{ ...QUERY_KEYS.GOODS.BASE[0], category }] as const,
+    BASE: ['goods'] as const,
+    MAIN: () => [...QUERY_KEYS.GOODS.BASE],
+    BY_ID: (productId: string) => [...QUERY_KEYS.GOODS.BASE, productId] as const,
+    BY_CATEGORY: (category: string) => [...QUERY_KEYS.GOODS.BASE, category] as const,
+    RECOMMEND: () => [...QUERY_KEYS.GOODS.BASE, 'recommend'] as const,
   },
 };

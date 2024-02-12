@@ -203,6 +203,22 @@ class StoreService {
 
     return { products, lastVisible };
   }
+
+  async getRecommend(category: string) {
+    const collectionRef = collection(db, 'products');
+    const q = query(collectionRef, where('productCategory', '==', category), limit(20));
+
+    const docSnapshot = await getDocs(q);
+    const { docs } = docSnapshot;
+
+    const shuffledDocs = docs.sort(() => Math.random() - 0.5).slice(0, 10);
+
+    const recommend = shuffledDocs.map((doc) => {
+      return { id: doc.id, ...doc.data() } as Product;
+    });
+
+    return recommend;
+  }
 }
 
 export const storeService = new StoreService();
