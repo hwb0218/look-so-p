@@ -8,6 +8,7 @@ import { GoodsItemCard } from '../goods-item-card';
 
 import numberFormat from '@src/utils/number-format';
 import GoodsDetailRecommend from './goods-detail-recommend';
+import { Button } from '@components/ui/button';
 
 interface Props {
   productId: string;
@@ -45,7 +46,7 @@ export default function GoodsDetail({ productId, category }: Props) {
             <h3 className="text-lg">{goods.productName}</h3>
           </div>
           <div>
-            <ul>
+            <ul className="my-3">
               <li>
                 <small className="inline-block w-full max-w-20">판매가</small>
                 <strong>{numberFormat(goods.productPrice)}원</strong>
@@ -55,42 +56,41 @@ export default function GoodsDetail({ productId, category }: Props) {
                 <span>{numberFormat(goods.productQuantity)}개</span>
               </li>
             </ul>
+            <small>{goods.productDescription}</small>
           </div>
-          <table className="my-4 border-t break-keep">
-            <colgroup>
-              <col className="w-[284px]" />
-              <col className="w-[118px]" />
-              <col className="w-[95px]" />
-            </colgroup>
-            <tbody>
-              <tr>
-                <td>
-                  <small>{goods?.productName}</small>
-                </td>
-                <td className="pt-2">
-                  <span className="inline-block">
-                    <input
-                      type="text"
-                      value={goodsCount}
-                      readOnly
-                      className="float-left w-8 h-8 text-center text-sm border"
-                    />
-                    <span className="float-left">
-                      <button name="increase" onClick={handleClick} className="w-6 h-4 block leading-tight border">
-                        +
-                      </button>
-                      <button name="decrease" onClick={handleClick} className="w-6 h-4 block leading-tight border">
-                        -
-                      </button>
-                    </span>
-                  </span>
-                </td>
-                <td className="text-right text-sm">
-                  <strong>{numberFormat(goods.productPrice * goodsCount)}원</strong>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <div className="flex justify-between items-center mt-4 border-t break-keep">
+            <div>
+              <small>{goods?.productName}</small>
+            </div>
+            <div className="pt-2">
+              <span className="inline-block">
+                <input
+                  type="text"
+                  value={goodsCount}
+                  readOnly
+                  className="float-left w-8 h-8 text-center text-sm border"
+                />
+                <span className="float-left">
+                  <button name="increase" onClick={handleClick} className="w-6 h-4 block leading-tight border">
+                    +
+                  </button>
+                  <button name="decrease" onClick={handleClick} className="w-6 h-4 block leading-tight border">
+                    -
+                  </button>
+                </span>
+              </span>
+            </div>
+            <div className="text-right text-sm w-full max-w-20">
+              <strong>{numberFormat(goods.productPrice * goodsCount)}원</strong>
+            </div>
+          </div>
+          <div className="flex justify-between mb-3">
+            <span className="text-stone-800">총 합계금액</span>
+            <strong>{numberFormat(goods.productPrice * goodsCount)}원</strong>
+          </div>
+          <div>
+            <Button className="w-full h-12">장바구니</Button>
+          </div>
         </div>
       </div>
       <GoodsDetailRecommend recommend={recommend} />
