@@ -9,7 +9,7 @@ function ProtectedLayout({ children }: PropsWithChildren) {
   const ready = useCheckAuth();
 
   if (!ready) {
-    return <Navigate to={ROUTE_PATHS.LOGIN} state={{ from: location }} replace />;
+    <Navigate to={ROUTE_PATHS.LOGIN} state={{ from: location }} replace />;
   }
 
   return children;
