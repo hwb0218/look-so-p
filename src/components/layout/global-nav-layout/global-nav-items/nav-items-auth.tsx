@@ -31,7 +31,7 @@ interface Props {
 }
 
 function NavItemsAuth({ renderIf, isSeller = false }: Props) {
-  const { state, resetAuth, setIsLoggedIn } = useAuthContext();
+  const { state, resetAuth } = useAuthContext();
   const { uid } = state.auth;
 
   if (renderIf && !renderIf()) {
@@ -43,7 +43,6 @@ function NavItemsAuth({ renderIf, isSeller = false }: Props) {
       await authService.logout();
       queryClient.clear();
       resetAuth();
-      setIsLoggedIn(false);
     } catch (err) {
       if (err instanceof FirebaseError) {
         console.error(err);

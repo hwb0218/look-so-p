@@ -2,7 +2,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } f
 import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
 import { auth, db } from './config';
 
-import type { CreateUserValues } from './types';
+import type { CreateUserValues, User } from './types';
 
 class AuthService {
   async signUp(email: string, password: string) {
@@ -44,7 +44,17 @@ class AuthService {
     const userSanp = await getDoc(userRef);
 
     if (userSanp.exists()) {
-      return userSanp.data();
+      const data = userSanp.data() as User;
+
+      const user = {
+        email: data.email,
+        isSeller: data.isSeller,
+        nickname: data.nickname,
+        profile: data.profile,
+        uid: data.uid,
+      };
+
+      return user;
     }
     return null;
   }

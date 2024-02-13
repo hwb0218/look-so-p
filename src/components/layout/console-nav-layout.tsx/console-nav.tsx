@@ -21,7 +21,7 @@ const CONSOLE_NAVIGATION_ITEMS = [
 ];
 
 function ConsoleNav() {
-  const { state, resetAuth, setIsLoggedIn } = useAuthContext();
+  const { state, resetAuth } = useAuthContext();
   const { uid } = state.auth;
 
   const onClickButton = async () => {
@@ -29,7 +29,6 @@ function ConsoleNav() {
       await authService.logout();
       queryClient.clear();
       resetAuth();
-      setIsLoggedIn(false);
     } catch (err) {
       if (err instanceof FirebaseError) {
         console.error(err);

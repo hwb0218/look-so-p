@@ -1,15 +1,14 @@
 import { PropsWithChildren } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 
-import { useAuthContext } from '@providers/auth';
-
 import { ROUTE_PATHS } from '@constants/routes';
+import useCheckAuth from '@hooks/use-check-auth';
 
 function ProtectedLayout({ children }: PropsWithChildren) {
   const location = useLocation();
-  const { state } = useAuthContext();
+  const ready = useCheckAuth();
 
-  if (!state.auth?.uid) {
+  if (!ready) {
     return <Navigate to={ROUTE_PATHS.LOGIN} state={{ from: location }} replace />;
   }
 

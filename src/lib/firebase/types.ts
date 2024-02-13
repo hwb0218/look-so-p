@@ -9,6 +9,14 @@ export interface CreateUserValues {
   isSeller?: boolean | undefined;
 }
 
+export interface User extends DocumentData {
+  email: string;
+  isSeller: boolean;
+  nickname: string;
+  profile: string[];
+  uid: string;
+}
+
 export interface Product extends DocumentData {
   id: string;
   productDescription: string;

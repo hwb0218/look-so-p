@@ -18,7 +18,7 @@ import { ROUTE_PATHS } from '@constants/routes';
 
 function Login() {
   const navigate = useNavigate();
-  const { setAuth, setIsLoggedIn } = useAuthContext();
+  const { setAuth } = useAuthContext();
 
   const form = useForm<LoginFormSchema>({
     resolver: zodResolver(loginFormSchema),
@@ -36,7 +36,6 @@ function Login() {
 
       if (user) {
         setAuth(user);
-        setIsLoggedIn(true);
         navigate({ pathname: ROUTE_PATHS.HOME });
       }
     } catch (error) {
