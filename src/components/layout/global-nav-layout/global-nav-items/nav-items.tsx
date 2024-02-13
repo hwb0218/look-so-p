@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { Li } from '@components/common/list';
 
 import { ROUTE_PATHS } from '@constants/routes';
+import { useCartContext } from '@providers/cart';
 
 const NAVIGATION_ITEMS = [
   {
@@ -12,10 +13,15 @@ const NAVIGATION_ITEMS = [
 ];
 
 function NavItems() {
+  const { expanded, setExpanded } = useCartContext();
+
   return (
     <>
+      <Li className="ml-2">
+        <button onClick={() => setExpanded(!expanded)}>장바구니</button>
+      </Li>
       {NAVIGATION_ITEMS.map(({ title, to }) => (
-        <Li key={to}>
+        <Li key={to} className="ml-2">
           <NavLink to={to}>
             <span>{title}</span>
           </NavLink>
