@@ -9,6 +9,8 @@ import { GoodsItemCard } from '../goods-item-card';
 import numberFormat from '@src/utils/number-format';
 import GoodsDetailRecommend from './goods-detail-recommend';
 import { Button } from '@components/ui/button';
+import useAddGoodsToCartQuery from '@hooks/use-fetch-cart-item-query';
+import { useAuthContext } from '@providers/auth';
 
 interface Props {
   productId: string;
@@ -18,8 +20,12 @@ interface Props {
 export default function GoodsDetail({ productId, category }: Props) {
   const [goodsCount, setGoodsCount] = useState(1);
 
+  const { state } = useAuthContext();
+  const { uid } = state.auth;
+
   const { data: goods } = useFetchGoodsById(productId);
   const { data: recommend } = useFetchRecommend(category);
+  const { mutate: addGoodsToCart } = useAddGoodsToCartQuery();
 
   if (!goods || !recommend) {
     return <p>상품 정보 없을 때..!</p>;
@@ -35,13 +41,26 @@ export default function GoodsDetail({ productId, category }: Props) {
     }
   };
 
+  const handleClickCartBtn = () => {
+    try {
+      const values = {
+        ...goods,
+        productId,
+      };
+
+      addGoodsToCart({ goods: values, uid });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
-    <Wrapper className="flex flex-col items-center p-20">
+    <Wrapper className="w-full flex flex-col justify-center items-center p-20">
       <div className="flex justify-center gap-x-6">
         <div className="w-full max-w-md">
           <GoodsItemCard src={goods.thumbnail} />
         </div>
-        <div className="w-1/4 max-w-[576px] min-w-80 border-t border-t-black">
+        <div className="w-1/4 max-w-[576px] min-w-96 border-t border-t-black">
           <div className="pt-10 mb-3">
             <h3 className="text-lg">{goods.productName}</h3>
           </div>
@@ -89,7 +108,9 @@ export default function GoodsDetail({ productId, category }: Props) {
             <strong>{numberFormat(goods.productPrice * goodsCount)}원</strong>
           </div>
           <div>
-            <Button className="w-full h-12">장바구니</Button>
+            <Button onClick={handleClickCartBtn} className="w-full h-12">
+              장바구니
+            </Button>
           </div>
         </div>
       </div>

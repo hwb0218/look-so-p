@@ -15,6 +15,7 @@ import {
   DocumentData,
   DocumentReference,
   where,
+  setDoc,
 } from 'firebase/firestore';
 import { db } from './config';
 
@@ -175,8 +176,10 @@ class StoreService {
     const docSnapshot = await getDoc(docRef);
 
     if (docSnapshot.exists()) {
-      const { id, ...data } = docSnapshot.data() as Product;
-      return { id, ...data };
+      const { id } = docSnapshot;
+      const data = docSnapshot.data() as Product;
+
+      return { ...data, id };
     }
   }
 
@@ -218,6 +221,20 @@ class StoreService {
     });
 
     return recommend;
+  }
+
+  async addGoodsToCart(goods: Product, uid: string) {
+    const cartRef = doc(collection(db, 'users', uid, 'cart'));
+
+    await setDoc(cartRef, goods);
+
+    const cartSnapshot = await getDoc(cartRef);
+
+    if (cartSnapshot.exists()) {
+      const data = cartSnapshot.data() as Product;
+      const { id } = cartSnapshot;
+      return { ...data, id };
+    }
   }
 }
 
