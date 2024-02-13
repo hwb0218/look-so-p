@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 import { useAuthContext } from '@providers/auth';
 
@@ -21,6 +21,7 @@ const CONSOLE_NAVIGATION_ITEMS = [
 ];
 
 function ConsoleNav() {
+  const navigate = useNavigate();
   const { state, resetAuth } = useAuthContext();
   const { uid } = state.auth;
 
@@ -29,6 +30,7 @@ function ConsoleNav() {
       await authService.logout();
       queryClient.clear();
       resetAuth();
+      navigate('/login');
     } catch (err) {
       if (err instanceof FirebaseError) {
         console.error(err);
