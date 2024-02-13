@@ -29,6 +29,7 @@ export function useGetProductsInfiniteQuery(sellerId: string) {
 type UseInfiniteQueryReturn = ReturnType<typeof useGetProductsInfiniteQuery>;
 
 export function useDeleteProductsMutation() {
+  // FIXME: 상위 스코프에서 queryKey 재사용하기
   return useMutation({
     mutationFn: ({ productId, sellerId }: { productId: string; sellerId: string }) =>
       storeService.deleteProducts(productId, sellerId),
@@ -50,6 +51,7 @@ export function useDeleteProductsMutation() {
       return { productId, sellerId, filteredProducts };
     },
     onError: (err, { sellerId }, context) => {
+      console.error(err);
       const queryKey = QUERY_KEYS.CONSOLE.PRODUCTS(sellerId);
       queryClient.setQueryData(queryKey, context?.filteredProducts);
     },
