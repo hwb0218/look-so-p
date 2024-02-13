@@ -13,12 +13,12 @@ const publicRoutes: RouteObject[] = [
     children: [
       { index: true, element: <HomePage /> },
       { path: ROUTE_PATHS.SIGNUP, element: <SignUpPage /> },
-      { path: ROUTE_PATHS.LOGIN, element: <LoginPage /> },
       { path: ROUTE_PATHS.PRODUCT_ALL, element: <ProductAllPage /> },
       { path: ROUTE_PATHS.GOODS_LIST, element: <GoodsByCategory /> },
       { path: ROUTE_PATHS.GOODS_DETAIL(), element: <GoodsDetailPage /> },
     ],
   },
+  { path: ROUTE_PATHS.LOGIN, element: <LoginPage /> },
 ];
 
 export default publicRoutes;

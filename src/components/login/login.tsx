@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 import { FirebaseError } from 'firebase/app';
 import { authService } from '@src/lib/firebase/AuthService';
@@ -49,9 +49,9 @@ function Login() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="pt-40 flex justify-center items-center flex-col space-y-4"
+        className="h-screen relative flex justify-center items-center flex-col space-y-4"
       >
-        <Wrapper className="p-6 min-w-64 w-1/3 border rounded-md ring-2 ring-ring ring-offset-2">
+        <Wrapper className="relative p-6 min-w-64 w-1/3 border rounded-md ring-2 ring-ring ring-offset-2">
           <h1 className="text-2xl text-center font-bold">LookSoPrt</h1>
           <FormField
             control={form.control}
@@ -82,6 +82,9 @@ function Login() {
           <Button type="submit" className="w-full mt-5">
             로그인
           </Button>
+          <NavLink to={ROUTE_PATHS.HOME} className="absolute top-2 right-2">
+            <img src="/close_MD.svg" alt="close" className="text-black" />
+          </NavLink>
         </Wrapper>
       </form>
     </Form>
