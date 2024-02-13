@@ -10,8 +10,8 @@ interface Props {
 
 export default function GoodsDetailRecommend({ recommend }: Props) {
   return (
-    <Wrapper className="flex flex-col justify-center mt-14">
-      <h3 className="text-lg font-bold py-4">비슷한 상품</h3>
+    <Wrapper className="flex flex-col justify-center items-center mt-14">
+      <h3 className="text-lg font-bold py-4 mr-auto">비슷한 상품</h3>
       <Carousel className="w-full max-w-3xl">
         <CarouselContent className="-ml-1">
           {recommend.map((recommendItem) => (
