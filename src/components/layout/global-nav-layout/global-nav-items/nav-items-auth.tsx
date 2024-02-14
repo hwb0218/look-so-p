@@ -53,11 +53,11 @@ function NavItemsAuth({ renderIf, isSeller = false }: Props) {
   return (
     <>
       {AUTH_NAVIGATION_ITEMS[isSeller ? 'seller' : 'common'].map(({ title, to }) => (
-        <Li key={title} className="ml-2">
+        <Li key={title} className="ml-3">
           <NavLink to={to(uid)}>{title}</NavLink>
         </Li>
       ))}
-      <Li className="ml-2">
+      <Li className="ml-3">
         <button onClick={onClickButton}>로그아웃</button>
       </Li>
     </>

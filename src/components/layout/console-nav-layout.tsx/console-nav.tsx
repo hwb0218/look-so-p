@@ -72,7 +72,7 @@ function ConsoleNav() {
         <NavLink to="/" className="ml-auto">
           홈으로
         </NavLink>
-        <Li className="ml-2">
+        <Li className="ml-3">
           <button onClick={onClickButton}>로그아웃</button>
         </Li>
       </Ul>

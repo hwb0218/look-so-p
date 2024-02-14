@@ -27,7 +27,7 @@ function NavItemsUnauth({ renderIf }: Props) {
   return (
     <>
       {UNAUTH_NAVIGATION_ITEMS.map(({ title, to }) => (
-        <Li key={to} className="ml-2">
+        <Li key={to} className="ml-3">
           <NavLink to={to}>{title}</NavLink>
         </Li>
       ))}
