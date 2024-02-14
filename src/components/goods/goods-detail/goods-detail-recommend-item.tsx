@@ -7,5 +7,5 @@ interface Props {
 }
 
 export default function GoodsDetailRecommendItem({ recommendItem }: Props) {
-  return <GoodsItemCard src={recommendItem.thumbnail} />;
+  return <GoodsItemCard src={recommendItem.thumbnail} alt={recommendItem.productName} />;
 }

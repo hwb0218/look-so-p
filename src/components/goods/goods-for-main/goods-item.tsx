@@ -30,7 +30,7 @@ export default function GoodsItem({ goods }: Props) {
           <CarouselContent>
             {[goods.thumbnail, ...goods.images].map((src) => (
               <CarouselItem key={src}>
-                <GoodsItemCard src={src} />
+                <GoodsItemCard src={src} alt="" />
               </CarouselItem>
             ))}
           </CarouselContent>

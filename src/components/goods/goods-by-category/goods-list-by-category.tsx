@@ -26,7 +26,7 @@ export default function GoodsListByCategory({ goods }: Props) {
             }}
             key={item.id}
           >
-            <GoodsItemCard src={item.thumbnail} />
+            <GoodsItemCard src={item.thumbnail} alt={item.productName} />
             <Wrapper className="pt-4">
               <div className="text-sm">{item.productName}</div>
               <div>{`${numberFormat(Number(item.productPrice))}원`}</div>
