@@ -29,5 +29,4 @@ export interface User extends DocumentData {
   nickname: string;
   profile: string[];
   uid: string;
-  cart: Product[];
 }
