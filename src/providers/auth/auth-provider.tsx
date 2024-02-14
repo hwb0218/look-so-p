@@ -1,7 +1,6 @@
 import { useReducer, createContext, useMemo, PropsWithChildren } from 'react';
 
-import { DocumentData } from 'firebase/firestore';
-import { removeLocalStorage, setLocalStorage } from '@src/utils/local-storage';
+import { User } from '@src/lib/firebase/types';
 
 const enum REDUCER_ACTION_TYPE {
   SET_AUTH,
@@ -9,11 +8,11 @@ const enum REDUCER_ACTION_TYPE {
 }
 
 type ReducerAction =
-  | { type: REDUCER_ACTION_TYPE.SET_AUTH; payload: DocumentData }
+  | { type: REDUCER_ACTION_TYPE.SET_AUTH; payload: User }
   | { type: REDUCER_ACTION_TYPE.RESET_AUTH; payload: Record<string, never> };
 
 const initState = {
-  auth: {} as DocumentData,
+  auth: {} as User,
   isLoggedIn: false,
 };
 
@@ -22,15 +21,12 @@ type InitState = typeof initState;
 const reducer = (state: InitState = initState, action: ReducerAction) => {
   switch (action.type) {
     case REDUCER_ACTION_TYPE.SET_AUTH: {
-      setLocalStorage({ key: 'auth', value: action.payload });
-
       return {
         ...state,
         auth: action.payload,
       };
     }
     case REDUCER_ACTION_TYPE.RESET_AUTH: {
-      removeLocalStorage({ key: 'auth' });
       return initState;
     }
     default: {
@@ -41,7 +37,7 @@ const reducer = (state: InitState = initState, action: ReducerAction) => {
 
 interface IAuthContext {
   state: InitState;
-  setAuth: (userData: DocumentData) => void;
+  setAuth: (userData: User) => void;
   resetAuth: () => void;
 }
 
@@ -54,7 +50,7 @@ export const AuthContext = createContext<IAuthContext>({
 export default function AuthProvider({ children }: PropsWithChildren) {
   const [state, dispatch] = useReducer(reducer, initState);
 
-  const setAuth = (user: DocumentData) => {
+  const setAuth = (user: User) => {
     dispatch({
       type: REDUCER_ACTION_TYPE.SET_AUTH,
       payload: user,
