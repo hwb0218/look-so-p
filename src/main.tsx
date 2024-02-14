@@ -10,7 +10,6 @@ import App from './App';
 
 import './index.css';
 import Modal from '@providers/modal/modal';
-import { CartProvider } from '@providers/cart';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -25,12 +24,10 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <CartProvider>
-          <ModalProvider>
-            <App />
-            <Modal />
-          </ModalProvider>
-        </CartProvider>
+        <ModalProvider>
+          <App />
+          <Modal />
+        </ModalProvider>
       </AuthProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
