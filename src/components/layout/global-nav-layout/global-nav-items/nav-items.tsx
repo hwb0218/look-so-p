@@ -13,12 +13,12 @@ const NAVIGATION_ITEMS = [
 ];
 
 function NavItems() {
-  const { expanded, setExpanded } = useCartContext();
+  const { handleOpenCart } = useCartContext();
 
   return (
     <>
       <Li className="ml-2">
-        <button onClick={() => setExpanded(!expanded)}>장바구니</button>
+        <button onClick={handleOpenCart}>장바구니</button>
       </Li>
       {NAVIGATION_ITEMS.map(({ title, to }) => (
         <Li key={to} className="ml-2">
