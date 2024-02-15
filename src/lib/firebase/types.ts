@@ -30,3 +30,7 @@ export interface User extends DocumentData {
   profile: string[];
   uid: string;
 }
+
+export interface CartGoods extends Product {
+  goodsCount: number;
+}

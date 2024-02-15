@@ -54,10 +54,10 @@ export default function GoodsDetail({ productId, category }: Props) {
       const values = {
         ...goods,
         productId,
+        goodsCount,
       };
-
       addGoodsToCart({ goods: values, uid });
-      onAddItemToCart(goods);
+      onAddItemToCart(values);
       onOpenCart(e);
     } catch (error) {
       console.log(error);
