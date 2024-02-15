@@ -236,6 +236,12 @@ class StoreService {
       return { ...data, id };
     }
   }
+
+  async deleteGoodsToCart(cartGoodsId: string, uid: string) {
+    const cartRef = doc(db, 'users', uid, 'cart', cartGoodsId);
+
+    await deleteDoc(cartRef);
+  }
 }
 
 export const storeService = new StoreService();

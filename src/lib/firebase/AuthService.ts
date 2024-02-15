@@ -1,5 +1,5 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import { doc, setDoc, getDoc, serverTimestamp, getDocs, collection } from 'firebase/firestore';
+import { doc, setDoc, getDoc, serverTimestamp, getDocs, collection, orderBy, query } from 'firebase/firestore';
 import { auth, db } from './config';
 
 import { getLocalStorage, removeLocalStorage, setLocalStorage } from '@src/utils/local-storage';
@@ -21,7 +21,7 @@ class AuthService {
 
   async logout() {
     if (auth.currentUser) {
-      removeLocalStorage({ key: 'auth' });
+      localStorage.clear();
       await signOut(auth);
     }
   }
@@ -56,9 +56,11 @@ class AuthService {
     if (userSnap.exists()) {
       const data = userSnap.data() as User;
 
-      const cartRef = collection(userRef, 'cart');
-      const cartSnap = await getDocs(cartRef);
-      const cartItems = cartSnap.docs.map((doc) => doc.data()) as Product[];
+      const q = query(collection(userRef, 'cart'), orderBy('updatedAt', 'desc'));
+      const cartSnap = await getDocs(q);
+      const cartItems = cartSnap.docs.map((doc) => {
+        return { ...doc.data(), id: doc.id } as Product;
+      }) as Product[];
 
       const user = {
         email: data.email,
@@ -66,10 +68,10 @@ class AuthService {
         nickname: data.nickname,
         profile: data.profile,
         uid: data.uid,
-        cart: cartItems,
       };
 
       setLocalStorage({ key: 'auth', value: user });
+      setLocalStorage({ key: 'cart', value: cartItems });
 
       return user;
     }
