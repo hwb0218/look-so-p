@@ -2,15 +2,18 @@ import { useState } from 'react';
 
 import useFetchGoodsById from '@hooks/use-fetch-goods-by-id';
 import useFetchRecommend from '@hooks/use-fetch-recommend';
+import useAddGoodsToCartQuery from '@hooks/use-fetch-cart-item-query';
 
+import { useAuthContext } from '@providers/auth';
+import { useCartContext } from '@providers/cart';
+
+import { Button } from '@components/ui/button';
 import Wrapper from '@components/common/wrapper';
+
 import { GoodsItemCard } from '../goods-item-card';
+import GoodsDetailRecommend from './goods-detail-recommend';
 
 import numberFormat from '@src/utils/number-format';
-import GoodsDetailRecommend from './goods-detail-recommend';
-import { Button } from '@components/ui/button';
-import useAddGoodsToCartQuery from '@hooks/use-fetch-cart-item-query';
-import { useAuthContext } from '@providers/auth';
 
 interface Props {
   productId: string;
@@ -20,6 +23,7 @@ interface Props {
 export default function GoodsDetail({ productId, category }: Props) {
   const [goodsCount, setGoodsCount] = useState(1);
 
+  const { cart, onAddItemToCart, onOpenCart } = useCartContext();
   const { state } = useAuthContext();
   const { uid } = state.auth;
 
@@ -31,7 +35,7 @@ export default function GoodsDetail({ productId, category }: Props) {
     return <p>상품 정보 없을 때..!</p>;
   }
 
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClickGoodsCount = (e: React.MouseEvent<HTMLButtonElement>) => {
     const { name } = e.currentTarget;
 
     if (name === 'increase') {
@@ -41,7 +45,11 @@ export default function GoodsDetail({ productId, category }: Props) {
     }
   };
 
-  const handleClickCartBtn = () => {
+  const handleClickMyCart = (e: React.MouseEvent) => {
+    onOpenCart(e);
+  };
+
+  const handleClickAddCart = (e: React.MouseEvent) => {
     try {
       const values = {
         ...goods,
@@ -49,6 +57,8 @@ export default function GoodsDetail({ productId, category }: Props) {
       };
 
       addGoodsToCart({ goods: values, uid });
+      onAddItemToCart(goods);
+      onOpenCart(e);
     } catch (error) {
       console.log(error);
     }
@@ -57,8 +67,8 @@ export default function GoodsDetail({ productId, category }: Props) {
   return (
     <Wrapper className="w-full flex flex-col justify-center items-center p-20">
       <div className="flex justify-center gap-x-6">
-        <div className="w-full max-w-md">
-          <GoodsItemCard src={goods.thumbnail} />
+        <div className="w-full max-w-sm">
+          <GoodsItemCard src={goods.thumbnail} alt={goods.productName} />
         </div>
         <div className="w-1/4 max-w-[576px] min-w-96 border-t border-t-black">
           <div className="pt-10 mb-3">
@@ -90,10 +100,18 @@ export default function GoodsDetail({ productId, category }: Props) {
                   className="float-left w-8 h-8 text-center text-sm border"
                 />
                 <span className="float-left">
-                  <button name="increase" onClick={handleClick} className="w-6 h-4 block leading-tight border">
+                  <button
+                    name="increase"
+                    onClick={handleClickGoodsCount}
+                    className="w-6 h-4 block leading-tight border"
+                  >
                     +
                   </button>
-                  <button name="decrease" onClick={handleClick} className="w-6 h-4 block leading-tight border">
+                  <button
+                    name="decrease"
+                    onClick={handleClickGoodsCount}
+                    className="w-6 h-4 block leading-tight border"
+                  >
                     -
                   </button>
                 </span>
@@ -108,9 +126,18 @@ export default function GoodsDetail({ productId, category }: Props) {
             <strong>{numberFormat(goods.productPrice * goodsCount)}원</strong>
           </div>
           <div>
-            <Button onClick={handleClickCartBtn} className="w-full h-12">
-              장바구니
-            </Button>
+            {cart.some((item) => item.id === productId) ? (
+              <>
+                <small className="float-right mb-1 pr-1">상품이 장바구니에 있습니다</small>
+                <Button onClick={handleClickMyCart} className="w-full h-12">
+                  나의 장바구니
+                </Button>
+              </>
+            ) : (
+              <Button onClick={handleClickAddCart} className="w-full h-12">
+                장바구니 추가
+              </Button>
+            )}
           </div>
         </div>
       </div>
