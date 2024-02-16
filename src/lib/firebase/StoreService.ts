@@ -21,11 +21,12 @@ import { db } from './config';
 
 import extractPathFromUrl from '@src/utils/extract-path-from-url';
 
-import type { Product } from './types';
+import { GOODS_CATEGORIES } from '@constants/goods-categories';
+
+import type { CartGoods, Product } from './types';
 import type { ProductFormSchema } from '../zod/console-product-schema';
 import type { UpdateConsoleProducts } from '@src/types';
-
-import { GOODS_CATEGORIES } from '@constants/goods-categories';
+import { getLocalStorage, setLocalStorage } from '@src/utils/local-storage';
 
 class StoreService {
   async getSellerProducts({
@@ -241,6 +242,23 @@ class StoreService {
     const cartRef = doc(db, 'users', uid, 'cart', cartGoodsId);
 
     await deleteDoc(cartRef);
+  }
+
+  async changeGoodsCountFromCart(cartGoodsId: string, uid: string, goodsCount: number) {
+    const cartRef = doc(db, 'users', uid, 'cart', cartGoodsId);
+
+    await updateDoc(cartRef, {
+      goodsCount,
+    });
+
+    const cart = getLocalStorage({ key: 'cart' }) as CartGoods[];
+
+    const updatedCartGoods = cart.map((cartGoods) =>
+      cartGoods.id === cartGoodsId ? { ...cartGoods, goodsCount } : cartGoods,
+    );
+    setLocalStorage({ key: 'cart', value: updatedCartGoods });
+
+    return updatedCartGoods;
   }
 }
 
