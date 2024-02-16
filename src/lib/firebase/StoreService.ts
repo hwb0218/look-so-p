@@ -232,8 +232,9 @@ class StoreService {
     const cartSnapshot = await getDoc(cartRef);
 
     if (cartSnapshot.exists()) {
-      const data = cartSnapshot.data() as Product;
+      const data = cartSnapshot.data() as CartGoods;
       const { id } = cartSnapshot;
+
       return { ...data, id };
     }
   }

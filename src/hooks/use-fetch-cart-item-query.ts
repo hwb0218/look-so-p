@@ -10,14 +10,16 @@ export default function useAddGoodsToCartQuery() {
 
   return useMutation({
     mutationFn: ({ goods, uid }: { goods: Product; uid: string }) => storeService.addGoodsToCart(goods, uid),
-    onMutate: async ({ goods }) => {
+    onMutate: async () => {
       await queryClient.cancelQueries({ queryKey });
-
       const prevCartItem = queryClient.getQueryData<Product[]>(queryKey) ?? [];
 
-      queryClient.setQueryData(queryKey, [...prevCartItem, goods]);
-
       return { prevCartItem };
+    },
+    onSuccess: async (goods) => {
+      await queryClient.cancelQueries({ queryKey });
+      const prevCartItem = queryClient.getQueryData<Product[]>(queryKey) ?? [];
+      queryClient.setQueryData(queryKey, [...prevCartItem, goods]);
     },
     onError: (err, _, context) => {
       console.error(err);

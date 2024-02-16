@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import useFetchGoodsById from '@hooks/use-fetch-goods-by-id';
 import useFetchRecommend from '@hooks/use-fetch-recommend';
@@ -29,7 +29,14 @@ export default function GoodsDetail({ productId, category }: Props) {
 
   const { data: goods } = useFetchGoodsById(productId);
   const { data: recommend } = useFetchRecommend(category);
-  const { mutate: addGoodsToCart } = useAddGoodsToCartQuery();
+  const { mutate: addGoodsToCart, data, isSuccess } = useAddGoodsToCartQuery();
+
+  useEffect(() => {
+    if (isSuccess && data) {
+      onAddItemToCart(data);
+      onOpenCart();
+    }
+  }, [data, isSuccess]);
 
   if (!goods || !recommend) {
     return <p>상품 정보 없을 때..!</p>;
@@ -45,11 +52,11 @@ export default function GoodsDetail({ productId, category }: Props) {
     }
   };
 
-  const handleClickMyCart = (e: React.MouseEvent) => {
-    onOpenCart(e);
+  const handleClickMyCart = () => {
+    onOpenCart();
   };
 
-  const handleClickAddCart = (e: React.MouseEvent) => {
+  const handleClickAddCart = () => {
     try {
       const values = {
         ...goods,
@@ -57,8 +64,6 @@ export default function GoodsDetail({ productId, category }: Props) {
         goodsCount,
       };
       addGoodsToCart({ goods: values, uid });
-      onAddItemToCart(values);
-      onOpenCart(e);
     } catch (error) {
       console.log(error);
     }
