@@ -2,7 +2,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } f
 import { doc, setDoc, getDoc, serverTimestamp, getDocs, collection, orderBy, query } from 'firebase/firestore';
 import { auth, db } from './config';
 
-import { getLocalStorage, removeLocalStorage, setLocalStorage } from '@src/utils/local-storage';
+import { getLocalStorage, setLocalStorage } from '@src/utils/local-storage';
 
 import type { CreateUserValues, Product, User } from './types';
 

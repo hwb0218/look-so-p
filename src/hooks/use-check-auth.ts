@@ -38,6 +38,7 @@ export default function useCheckAuth() {
     if (accessUid) {
       fetchUser();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accessUid]);
 
   return accessUid;
