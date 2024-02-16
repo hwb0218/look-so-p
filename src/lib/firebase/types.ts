@@ -21,6 +21,7 @@ export interface Product extends DocumentData {
   thumbnail: string;
   createdAt: Timestamp;
   updatedAt: Timestamp;
+  productId: string;
 }
 
 export interface User extends DocumentData {

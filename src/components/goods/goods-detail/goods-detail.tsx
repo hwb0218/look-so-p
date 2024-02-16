@@ -126,7 +126,7 @@ export default function GoodsDetail({ productId, category }: Props) {
             <strong>{numberFormat(goods.productPrice * goodsCount)}원</strong>
           </div>
           <div>
-            {cart.some((item) => item.id === productId) ? (
+            {cart.some((item) => item.productId === productId) ? (
               <>
                 <small className="float-right mb-1 pr-1">상품이 장바구니에 있습니다</small>
                 <Button onClick={handleClickMyCart} className="w-full h-12">
