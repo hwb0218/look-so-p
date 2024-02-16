@@ -19,11 +19,11 @@ function NavItems() {
   const { state } = useAuthContext();
   const { cart, onOpenCart } = useCartContext();
 
-  const handleClickCartBtn = (e: React.MouseEvent) => {
+  const handleClickCartBtn = () => {
     if (!state.auth?.uid) {
       return navigate('/login');
     }
-    onOpenCart(e);
+    onOpenCart();
   };
 
   return (
