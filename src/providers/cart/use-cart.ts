@@ -7,24 +7,23 @@ import { useAuthContext } from '@providers/auth';
 import { getLocalStorage, setLocalStorage } from '@src/utils/local-storage';
 import calcTotalPrice from '@src/utils/calc-total-price';
 
-import { CartGoods } from '@src/lib/firebase/types';
+import type { CartGoods } from '@src/lib/firebase/types';
 
 export default function useCart() {
-  const storedUsers = getLocalStorage({ key: 'auth' });
+  const { state } = useAuthContext();
+  const { auth } = state;
+
   const storedCart = getLocalStorage({ key: 'cart' }) as CartGoods[];
 
   const [cart, setCart] = useState<CartGoods[]>(storedCart ?? []);
   const [checkedGoods, setCheckedGoods] = useState<CartGoods[]>(storedCart ?? []);
   const [totalPrice, setTotalPrice] = useState<number>(calcTotalPrice(storedCart));
 
-  const { state } = useAuthContext();
-  const { auth } = state;
-
   useEffect(() => {
-    if (!storedUsers) {
+    if (!storedCart) {
       setCart([]);
     }
-  }, [storedUsers]);
+  }, [storedCart]);
 
   const onAddItemToCart = useCallback(
     (item: CartGoods) => {
@@ -40,7 +39,7 @@ export default function useCart() {
   const onDeleteItemFromCart = useCallback(
     async (cartGoodsId: string) => {
       try {
-        await storeService.deleteGoodsToCart(cartGoodsId, auth?.uid);
+        await storeService.deleteGoodsToCartById(cartGoodsId, auth?.uid);
         const filteredCart = cart.filter((item) => item.id !== cartGoodsId);
         setCart(filteredCart);
         setLocalStorage({ key: 'cart', value: filteredCart });
@@ -81,22 +80,30 @@ export default function useCart() {
   );
 
   const onChangeGoodsCount = useCallback(
-    async (cartGoodsId: string, goodsCount: number) => {
+    async (cartGoods: CartGoods, goodsCount: number) => {
       try {
-        const updatedCartGoods = await storeService.changeGoodsCountFromCart(cartGoodsId, auth?.uid, goodsCount);
+        const updatedCartGoods = await storeService.changeGoodsCountFromCart(cartGoods, auth?.uid, goodsCount);
         setCart(updatedCartGoods);
-        setTotalPrice(calcTotalPrice(updatedCartGoods));
+
+        const duplicatesCardgoods = updatedCartGoods.filter((updatedItem) =>
+          checkedGoods.some((chckedItem) => updatedItem.id === chckedItem.id),
+        );
+
+        setCheckedGoods(duplicatesCardgoods);
+        setTotalPrice(calcTotalPrice(duplicatesCardgoods));
       } catch (err) {
         console.error(err);
       }
     },
-    [auth?.uid],
+    [auth?.uid, checkedGoods],
   );
 
   return {
     cart,
     checkedGoods,
     totalPrice,
+    setCart,
+    setTotalPrice,
     onAddItemToCart,
     onDeleteItemFromCart,
     onToggleCartGoods,
