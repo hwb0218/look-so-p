@@ -8,12 +8,12 @@ import { getStorage } from 'firebase/storage';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: 'AIzaSyBZs3qBek0oBs9_HlEOkzj0Kzk5K9JHKDU',
-  authDomain: 'looksop-613c5.firebaseapp.com',
-  projectId: 'looksop-613c5',
-  storageBucket: 'looksop-613c5.appspot.com',
-  messagingSenderId: '1049176681992',
-  appId: '1:1049176681992:web:38a5689a27838f453bebbd',
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
 // Initialize Firebase
