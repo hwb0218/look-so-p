@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import useFetchGoodsById from '@hooks/use-fetch-goods-by-id';
-import useFetchRecommend from '@hooks/use-fetch-recommend';
+import useFetchGoodsByIdQuery from '@hooks/use-fetch-goods-by-id-query';
+import useFetchRecommend from '@hooks/use-fetch-recommend-query';
 import useAddGoodsToCartQuery from '@hooks/use-fetch-cart-item-query';
 
 import { useAuthContext } from '@providers/auth';
@@ -27,7 +27,7 @@ export default function GoodsDetail({ productId, category }: Props) {
   const { state } = useAuthContext();
   const { uid } = state.auth;
 
-  const { data: goods } = useFetchGoodsById(productId);
+  const { data: goods } = useFetchGoodsByIdQuery(productId);
   const { data: recommend } = useFetchRecommend(category);
   const { mutate: addGoodsToCart, data, isSuccess } = useAddGoodsToCartQuery();
 

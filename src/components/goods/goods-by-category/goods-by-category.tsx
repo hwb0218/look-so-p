@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import useFetchGoodsByCategory from '@hooks/use-fetch-goods-by-category';
+import useFetchGoodsByCategoryQuery from '@hooks/use-fetch-goods-by-category-query';
 
 import Wrapper from '@components/common/wrapper';
 import { GoodsCategories, GoodsListByCategory, GoodsSorter } from './';
@@ -17,7 +17,7 @@ export default function GoodsByCategory({ category }: Props) {
   const [filterCategory, setFilterCategory] = useState(category);
   const [sortingOption, setSortingOption] = useState('latest');
 
-  const { data: goods, ref } = useFetchGoodsByCategory(filterCategory);
+  const { data: goods, ref } = useFetchGoodsByCategoryQuery(filterCategory);
 
   const goodsContent = goods?.pages ?? [];
 
