@@ -224,10 +224,43 @@ class StoreService {
     return recommend;
   }
 
-  async addGoodsToCart(goods: Product, uid: string) {
+  async getCart(uid: string) {
+    const q = query(collection(db, 'users', uid, 'cart'), orderBy('updatedAt', 'desc'));
+
+    const cartSnapshot = await getDocs(q);
+
+    const cart = cartSnapshot.docs.map((doc) => {
+      return { ...doc.data(), id: doc.id } as CartGoods;
+    });
+
+    setLocalStorage({ key: 'cart', value: cart });
+
+    return cart;
+  }
+
+  async deleteGoodsToCart(checkedGoods: CartGoods[], uid: string) {
+    const goodsToCartUpdator = async (cartGoods: CartGoods) => {
+      const { id } = cartGoods;
+      const cartRef = doc(db, 'users', uid, 'cart', id);
+
+      await deleteDoc(cartRef);
+    };
+
+    const promises = checkedGoods.map(goodsToCartUpdator);
+
+    await Promise.all(promises);
+  }
+
+  async addGoodsToCart(goods: CartGoods, uid: string) {
     const cartRef = doc(collection(db, 'users', uid, 'cart'));
 
-    await setDoc(cartRef, goods);
+    const values = {
+      ...goods,
+      totalPrice: goods.productPrice * goods.goodsCount,
+      updatedAt: serverTimestamp(),
+    };
+
+    await setDoc(cartRef, values);
 
     const cartSnapshot = await getDoc(cartRef);
 
@@ -239,14 +272,16 @@ class StoreService {
     }
   }
 
-  async deleteGoodsToCart(cartGoodsId: string, uid: string) {
+  async deleteGoodsToCartById(cartGoodsId: string, uid: string) {
     const cartRef = doc(db, 'users', uid, 'cart', cartGoodsId);
 
     await deleteDoc(cartRef);
   }
 
-  async changeGoodsCountFromCart(cartGoodsId: string, uid: string, goodsCount: number) {
-    const cartRef = doc(db, 'users', uid, 'cart', cartGoodsId);
+  async changeGoodsCountFromCart(cartGoods: CartGoods, uid: string, goodsCount: number) {
+    const { id } = cartGoods;
+
+    const cartRef = doc(db, 'users', uid, 'cart', id);
 
     await updateDoc(cartRef, {
       goodsCount,
@@ -254,12 +289,54 @@ class StoreService {
 
     const cart = getLocalStorage({ key: 'cart' }) as CartGoods[];
 
-    const updatedCartGoods = cart.map((cartGoods) =>
-      cartGoods.id === cartGoodsId ? { ...cartGoods, goodsCount } : cartGoods,
-    );
+    const updatedCartGoods = cart.map((cartGoods) => (cartGoods.id === id ? { ...cartGoods, goodsCount } : cartGoods));
     setLocalStorage({ key: 'cart', value: updatedCartGoods });
 
     return updatedCartGoods;
+  }
+
+  async updateProductQuantity(checkedGoods: CartGoods[]) {
+    const productQuantityUpdater = async (cartGoods: CartGoods) => {
+      const { productId, goodsCount } = cartGoods;
+
+      const productRef = doc(db, 'products', productId);
+
+      const productSnapshot = await getDoc(productRef);
+
+      if (productSnapshot.exists()) {
+        const { productQuantity } = productSnapshot.data() as Product;
+
+        await updateDoc(productRef, {
+          productQuantity: productQuantity - goodsCount,
+        });
+      }
+    };
+
+    const promises = checkedGoods.map(productQuantityUpdater);
+
+    await Promise.all(promises);
+  }
+
+  async rollbackProductQuantity(checkedGoods: CartGoods[]) {
+    const productQuantityUpdater = async (cartGoods: CartGoods) => {
+      const { productId, goodsCount } = cartGoods;
+
+      const productRef = doc(db, 'products', productId);
+
+      const productSnapshot = await getDoc(productRef);
+
+      if (productSnapshot.exists()) {
+        const { productQuantity } = productSnapshot.data() as Product;
+
+        await updateDoc(productRef, {
+          productQuantity: productQuantity + goodsCount,
+        });
+      }
+    };
+
+    const promises = checkedGoods.map(productQuantityUpdater);
+
+    await Promise.all(promises);
   }
 }
 

@@ -1,10 +1,11 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import { doc, setDoc, getDoc, serverTimestamp, getDocs, collection, orderBy, query } from 'firebase/firestore';
+import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
+import { storeService } from './StoreService';
 import { auth, db } from './config';
 
 import { getLocalStorage, setLocalStorage } from '@src/utils/local-storage';
 
-import type { CreateUserValues, Product, User } from './types';
+import type { CreateUserValues, User } from './types';
 
 class AuthService {
   async signUp(email: string, password: string) {
@@ -56,13 +57,7 @@ class AuthService {
     if (userSnap.exists()) {
       const data = userSnap.data() as User;
 
-      const q = query(collection(userRef, 'cart'), orderBy('updatedAt', 'desc'));
-      const cartSnap = await getDocs(q);
-      const cartItems = cartSnap.docs.map((doc) => {
-        return { ...doc.data(), id: doc.id } as Product;
-      }) as Product[];
-
-      const user = {
+      const user: User = {
         email: data.email,
         isSeller: data.isSeller,
         nickname: data.nickname,
@@ -71,11 +66,11 @@ class AuthService {
       };
 
       setLocalStorage({ key: 'auth', value: user });
-      setLocalStorage({ key: 'cart', value: cartItems });
+
+      await storeService.getCart(data.uid);
 
       return user;
     }
-    return null;
   }
 }
 
