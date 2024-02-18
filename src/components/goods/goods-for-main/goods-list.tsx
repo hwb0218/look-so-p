@@ -1,4 +1,4 @@
-import useFetchAllGoods from '@hooks/use-fetch-All-goods';
+import useFetchAllGoodsQuery from '@hooks/use-fetch-All-goods-query';
 
 import GoodsSection from './goods-section';
 
@@ -11,7 +11,7 @@ interface Props {
 }
 
 export default function GoodsList({ categories }: Props) {
-  const { data: goodsByCategory } = useFetchAllGoods(GOODS_CATEGORIES);
+  const { data: goodsByCategory } = useFetchAllGoodsQuery(GOODS_CATEGORIES);
 
   return (
     <div className="flex-col items-start p-3">
