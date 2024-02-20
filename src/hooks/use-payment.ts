@@ -3,11 +3,12 @@ import { paymentService } from '@src/lib/IMP/PaymentService';
 
 import { useAuthContext } from '@providers/auth';
 
+import { queryClient } from '@src/main';
+import { QUERY_KEYS } from '@constants/query-keys';
+
 import calcTotalPrice from '@src/utils/calc-total-price';
 
 import type { CartGoods } from '@src/lib/firebase/types';
-import { queryClient } from '@src/main';
-import { QUERY_KEYS } from '@constants/query-keys';
 
 export default function usePayment(checkedGoods: CartGoods[]) {
   const { state } = useAuthContext();
@@ -33,13 +34,9 @@ export default function usePayment(checkedGoods: CartGoods[]) {
 
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.GOODS.DETAILS() });
 
-      const cart = await storeService.getCart(auth?.uid);
-
       return {
         merchantId,
         transactionId,
-        newCart: cart,
-        success: true,
       };
     } catch (err) {
       if (err instanceof Error) {
