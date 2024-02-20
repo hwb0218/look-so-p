@@ -5,11 +5,12 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import { AuthProvider } from '@providers/auth';
 import { ModalProvider } from '@providers/modal';
+import { CartProvider } from '@providers/cart';
+import Modal from '@providers/modal/modal';
 
 import App from './App';
 
 import './index.css';
-import Modal from '@providers/modal/modal';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -29,8 +30,10 @@ function main() {
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
           <ModalProvider>
-            <App />
-            <Modal />
+            <CartProvider>
+              <App />
+              <Modal />
+            </CartProvider>
           </ModalProvider>
         </AuthProvider>
         <ReactQueryDevtools initialIsOpen={false} />
