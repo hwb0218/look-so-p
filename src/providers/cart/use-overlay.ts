@@ -8,8 +8,7 @@ export default function useOverlay() {
     const onCloseCart = (e: globalThis.MouseEvent) => {
       const target = e.target as HTMLElement;
 
-      if (expanded && overlayRef.current?.contains(target)) {
-        document.body.classList.remove('overflow-hidden');
+      if (overlayRef.current && overlayRef.current?.contains(target)) {
         setExpanded(false);
       }
     };
@@ -17,17 +16,22 @@ export default function useOverlay() {
     window.addEventListener('click', onCloseCart);
     return () => {
       window.removeEventListener('click', onCloseCart);
+      setExpanded(false);
     };
-  }, [expanded]);
+  }, [overlayRef]);
 
   const onOpenCart = useCallback(() => {
-    document.body.classList.add('overflow-hidden');
     setExpanded(true);
+  }, []);
+
+  const onCloseCart = useCallback(() => {
+    setExpanded(false);
   }, []);
 
   return {
     expanded,
     onOpenCart,
+    onCloseCart,
     overlayRef,
   };
 }

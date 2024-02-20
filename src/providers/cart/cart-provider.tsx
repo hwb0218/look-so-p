@@ -9,12 +9,15 @@ interface CartContext {
   cart: CartGoods[];
   checkedGoods: CartGoods[];
   totalPrice: number;
+  setCart: React.Dispatch<React.SetStateAction<CartGoods[]>>;
+  setTotalPrice: React.Dispatch<React.SetStateAction<number>>;
   onOpenCart: () => void;
+  onCloseCart: () => void;
   onAddItemToCart: (item: CartGoods) => void;
   onDeleteItemFromCart: (cartGoodsId: string) => void;
   onToggleCartGoods: (cartGoods: CartGoods) => void;
   onAllCheckedGoods: (checked: HTMLInputElement['checked']) => void;
-  onChangeGoodsCount: (cartGoodsId: string, goodsCount: number) => void;
+  onChangeGoodsCount: (cartGoods: CartGoods, goodsCount: number) => void;
 }
 
 export const CartContext = createContext<CartContext>({
@@ -22,7 +25,10 @@ export const CartContext = createContext<CartContext>({
   checkedGoods: [],
   cart: [],
   totalPrice: 0,
+  setTotalPrice: () => {},
+  setCart: () => {},
   onOpenCart: () => {},
+  onCloseCart: () => {},
   onAddItemToCart: () => {},
   onDeleteItemFromCart: () => {},
   onToggleCartGoods: () => {},
@@ -35,6 +41,8 @@ export default function CartProvider({ children }: PropsWithChildren) {
     cart,
     checkedGoods,
     totalPrice,
+    setTotalPrice,
+    setCart,
     onAddItemToCart,
     onDeleteItemFromCart,
     onToggleCartGoods,
@@ -42,7 +50,7 @@ export default function CartProvider({ children }: PropsWithChildren) {
     onChangeGoodsCount,
   } = useCart();
 
-  const { expanded, onOpenCart, overlayRef } = useOverlay();
+  const { expanded, onOpenCart, onCloseCart, overlayRef } = useOverlay();
 
   const contextValue = useMemo(
     () => ({
@@ -50,7 +58,10 @@ export default function CartProvider({ children }: PropsWithChildren) {
       cart,
       checkedGoods,
       totalPrice,
+      setTotalPrice,
+      setCart,
       onOpenCart,
+      onCloseCart,
       onAddItemToCart,
       onDeleteItemFromCart,
       onToggleCartGoods,
@@ -62,7 +73,10 @@ export default function CartProvider({ children }: PropsWithChildren) {
       cart,
       checkedGoods,
       totalPrice,
+      setTotalPrice,
+      setCart,
       onOpenCart,
+      onCloseCart,
       onAddItemToCart,
       onDeleteItemFromCart,
       onToggleCartGoods,
