@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
 import { storeService } from './StoreService';
 import { auth, db } from './config';
@@ -8,20 +8,26 @@ import { getLocalStorage, setLocalStorage } from '@src/utils/local-storage';
 import type { CreateUserValues, User } from './types';
 
 class AuthService {
+  firebaseAuth: Auth;
+
+  constructor(firebaseAuth: Auth) {
+    this.firebaseAuth = firebaseAuth;
+  }
+
   async signUp(email: string, password: string) {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const userCredential = await createUserWithEmailAndPassword(this.firebaseAuth, email, password);
 
     return userCredential.user.uid;
   }
 
   async login(email: string, password: string) {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const userCredential = await signInWithEmailAndPassword(this.firebaseAuth, email, password);
 
     return userCredential.user.uid;
   }
 
   async logout() {
-    if (auth.currentUser) {
+    if (this.firebaseAuth.currentUser) {
       localStorage.clear();
       await signOut(auth);
     }
@@ -74,4 +80,4 @@ class AuthService {
   }
 }
 
-export const authService = new AuthService();
+export const authService = new AuthService(auth);
