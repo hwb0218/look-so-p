@@ -10,6 +10,9 @@ export const ROUTE_PATHS = {
 export const AUTH_ROUTE_PATHS = {
   PRIVATE: '/auth',
   MYPAGE: (id?: string) => (id ? `/my-page/${id}` : '/my-page/:id'),
+  ORDER: '/order',
+  ORDER_COMPLETE: '/order/complete',
+  ORDER_LIST: '/order-list',
 };
 
 export const CONSOLE_ROUTE_PATHS = {

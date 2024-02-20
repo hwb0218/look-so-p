@@ -3,6 +3,7 @@ export const QUERY_KEYS = {
     BASE: ['user'] as const,
     USER: () => [...QUERY_KEYS.AUTH.BASE] as const,
     CART: () => [...QUERY_KEYS.AUTH.BASE, 'cart'] as const,
+    ORDER_LIST: () => [...QUERY_KEYS.AUTH.BASE, 'orderList'] as const,
   },
   CONSOLE: {
     BASE: ['console'] as const,
