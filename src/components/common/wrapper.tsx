@@ -1,12 +1,13 @@
-import { PropsWithChildren } from 'react';
+import React from 'react';
 import { cn } from '@src/lib/utils';
 
-interface Props {
-  className?: string;
-}
-
-function Wrapper({ className, children }: PropsWithChildren<Props>) {
-  return <div className={cn(className)}>{children}</div>;
-}
+const Wrapper = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+  ({ className, children, ...props }, ref) => (
+    <div ref={ref} className={cn(className)} {...props}>
+      {children}
+    </div>
+  ),
+);
+Wrapper.displayName = 'Wrapper';
 
 export default Wrapper;
