@@ -1,9 +1,9 @@
 ---
-name: 기능구현 템플릿
+name: "[FEAT] 기능구현 템플릿"
 about: 기능구현 템플릿
 title: "[FEAT]"
-labels: ''
-assignees: ''
+labels: feat
+assignees: hwb0218
 
 ---
 
