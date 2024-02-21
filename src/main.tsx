@@ -6,7 +6,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { AuthProvider } from '@providers/auth';
 import { ModalProvider } from '@providers/modal';
 import { CartProvider } from '@providers/cart';
-import Modal from '@providers/modal/modal';
+import { ModalPortal } from '@providers/modal';
 
 import App from './App';
 
@@ -32,7 +32,7 @@ function main() {
           <ModalProvider>
             <CartProvider>
               <App />
-              <Modal />
+              <ModalPortal />
             </CartProvider>
           </ModalProvider>
         </AuthProvider>
