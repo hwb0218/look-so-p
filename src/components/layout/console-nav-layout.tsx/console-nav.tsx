@@ -7,7 +7,7 @@ import { useAuthContext } from '@providers/auth';
 
 import { Li, Ul } from '@components/common/list';
 
-import { CONSOLE_ROUTE_PATHS } from '@constants/routes';
+import { CONSOLE_ROUTE_PATHS, ROUTE_PATHS } from '@constants/routes';
 
 const CONSOLE_NAVIGATION_ITEMS = [
   {
@@ -50,8 +50,10 @@ function ConsoleNav() {
         <div className="absolute top-0 left-0 bottom-0 right-0">
           <div className="h-full flex flex-col">
             <header className="flex items-center gap-x-6 px-6 py-2 font-black">
-              <span className="overflow-hidden">
-                <img src="/logo.svg" alt="logo" className="w-14 rounded" />
+              <span className="w-14 rounded overflow-hidden">
+                <NavLink to={ROUTE_PATHS.HOME}>
+                  <img src="/logo.svg" />
+                </NavLink>
               </span>
               <div>
                 <span className="text-xl">LookSoPrt</span>

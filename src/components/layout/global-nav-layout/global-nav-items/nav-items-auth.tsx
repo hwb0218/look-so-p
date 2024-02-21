@@ -13,6 +13,10 @@ import { queryClient } from '@src/main';
 const AUTH_NAVIGATION_ITEMS = {
   seller: [
     {
+      title: '마이 페이지',
+      to: AUTH_ROUTE_PATHS.MYPAGE,
+    },
+    {
       title: '판매자 콘솔',
       to: CONSOLE_ROUTE_PATHS.CONSOLE,
     },
