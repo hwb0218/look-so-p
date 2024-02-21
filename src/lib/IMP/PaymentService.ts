@@ -34,7 +34,7 @@ export default class PaymentService {
     const date = now.toISOString().slice(0, 10).replace(/-/g, '');
     const time = now.getTime();
     const nonce = Math.random().toString().slice(-5);
-    const merchantId = `ORDER-${date}-${time}${nonce}`;
+    const merchantId = `${date}-${time}${nonce}`;
 
     const data: RequestPayParams = {
       pg: PG_CODE,
