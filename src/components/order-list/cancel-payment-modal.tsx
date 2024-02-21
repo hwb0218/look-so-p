@@ -4,6 +4,8 @@ import { useModalContext } from '@providers/modal';
 
 import { Modal } from '@components/common/modal';
 
+import { Status } from '@src/lib/firebase/types';
+
 interface Props {
   orderId: string;
   orderListId: string;
@@ -14,7 +16,7 @@ export default function CancelPaymentModal({ orderId, orderListId }: Props) {
   const { mutate } = useCancelOrderListQuery();
 
   const handleClickConfirm = () => {
-    mutate({ orderId, orderListId });
+    mutate({ orderId, orderListId, status: Status.CANCELED });
     closeModal();
   };
 

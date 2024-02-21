@@ -382,18 +382,22 @@ class StoreService {
     return orders;
   }
 
-  async cancelOrderList(orderId: string, orderListId: string) {
+  async updateOrderListStatus(orderId: string, orderListId: string, status: Status) {
     const orderRef = doc(db, 'orders', orderId);
 
     const orderSnapshot = await getDoc(orderRef);
 
-    console.log(orderSnapshot.data());
+    if (orderSnapshot.exists()) {
+      const { orderItems } = orderSnapshot.data() as OrderList;
 
-    console.log(orderListId);
+      const newOrderItems = orderItems?.map((orderItem) =>
+        orderItem.id === orderListId ? { ...orderItem, status } : orderItem,
+      );
 
-    // await updateDoc(orderRef, {
-    //   status: Status.CANCELED,
-    // });
+      await updateDoc(orderRef, {
+        orderItems: newOrderItems,
+      });
+    }
   }
 }
 
