@@ -8,6 +8,7 @@ export const QUERY_KEYS = {
   CONSOLE: {
     BASE: ['console'] as const,
     PRODUCTS: (sellerId: string) => [...QUERY_KEYS.CONSOLE.BASE, sellerId] as const,
+    ORDER_MANAGEMENT: (sellerId: string) => [...QUERY_KEYS.CONSOLE.BASE, sellerId, 'orderManagement'] as const,
   },
   GOODS: {
     BASE: ['goods'] as const,

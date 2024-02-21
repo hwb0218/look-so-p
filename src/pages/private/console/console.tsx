@@ -9,7 +9,10 @@ import { Product } from '@src/lib/firebase/types';
 export default function ConsoleMainPage() {
   const { id } = useParams() as { id: string };
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isFetched } = useGetProductsInfiniteQuery(id);
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isFetched } = useGetProductsInfiniteQuery({
+    sellerId: id,
+    pageLimit: 10,
+  });
 
   const { pages } = (data as { pages: Product[] }) ?? [];
 
