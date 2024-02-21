@@ -10,20 +10,23 @@ import calcTotalPrice from '@src/utils/calc-total-price';
 import type { CartGoods } from '@src/lib/firebase/types';
 
 export default function useCart() {
+  const storedCart = getLocalStorage({ key: 'cart' }) as CartGoods[];
+
   const { state } = useAuthContext();
   const { auth } = state;
-
-  const storedCart = getLocalStorage({ key: 'cart' }) as CartGoods[];
 
   const [cart, setCart] = useState<CartGoods[]>(storedCart ?? []);
   const [checkedGoods, setCheckedGoods] = useState<CartGoods[]>(storedCart ?? []);
   const [totalPrice, setTotalPrice] = useState<number>(calcTotalPrice(storedCart));
 
   useEffect(() => {
-    if (!storedCart) {
+    if (storedCart?.length) {
+      setCart(storedCart);
+    } else {
       setCart([]);
     }
-  }, [storedCart]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [storedCart?.length]);
 
   const onAddItemToCart = useCallback(
     (item: CartGoods) => {
@@ -54,6 +57,7 @@ export default function useCart() {
 
   const onToggleCartGoods = useCallback(
     (cartGoods: CartGoods) => {
+      // FIXME: 결제 성공 후 장바구니 단일 품목 체크 시 가격 데이터 버그 발생
       const isAlreadyChecked = checkedGoods.some((goods) => goods.id === cartGoods.id);
 
       const newCheckedGoods = isAlreadyChecked
