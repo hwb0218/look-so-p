@@ -19,14 +19,14 @@ import {
 } from 'firebase/firestore';
 import { db } from './config';
 
+import { getLocalStorage, setLocalStorage } from '@src/utils/local-storage';
 import extractPathFromUrl from '@src/utils/extract-path-from-url';
 
 import { GOODS_CATEGORIES } from '@constants/goods-categories';
 
-import type { CartGoods, Product } from './types';
+import { type CartGoods, type Product, type Order, type OrderList, Status } from './types';
 import type { ProductFormSchema } from '../zod/console-product-schema';
 import type { UpdateConsoleProducts } from '@src/types';
-import { getLocalStorage, setLocalStorage } from '@src/utils/local-storage';
 
 class StoreService {
   async getSellerProducts({
@@ -285,6 +285,7 @@ class StoreService {
 
     await updateDoc(cartRef, {
       goodsCount,
+      totalPrice: cartGoods.productPrice * goodsCount,
     });
 
     const cart = getLocalStorage({ key: 'cart' }) as CartGoods[];
@@ -337,6 +338,62 @@ class StoreService {
     const promises = checkedGoods.map(productQuantityUpdater);
 
     await Promise.all(promises);
+  }
+
+  async createOrder(values: Order) {
+    const { orderItems } = values;
+
+    const newOrderItems = orderItems?.map((orderItem) => ({
+      id: orderItem.id,
+      productId: orderItem.productId,
+      productName: orderItem.productName,
+      productPrice: orderItem.productPrice,
+      goodsCount: orderItem.goodsCount,
+      totalPrice: orderItem.totalPrice,
+      thumbnail: orderItem.thumbnail,
+      status: Status.CONFIRM,
+    }));
+
+    const orderValues = {
+      ...values,
+      orderItems: newOrderItems,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+    };
+
+    const orderRef = doc(collection(db, 'orders'));
+
+    await setDoc(orderRef, orderValues);
+  }
+
+  async getOrderList(uid: string) {
+    const ordersRef = collection(db, 'orders');
+    const q = query(ordersRef, where('uid', '==', uid), orderBy('updatedAt', 'desc'));
+
+    const docSnapshot = await getDocs(q);
+
+    const orders = docSnapshot.docs.map((doc) => {
+      const { id } = doc;
+      const data = doc.data() as OrderList;
+
+      return { ...data, id };
+    });
+
+    return orders;
+  }
+
+  async cancelOrderList(orderId: string, orderListId: string) {
+    const orderRef = doc(db, 'orders', orderId);
+
+    const orderSnapshot = await getDoc(orderRef);
+
+    console.log(orderSnapshot.data());
+
+    console.log(orderListId);
+
+    // await updateDoc(orderRef, {
+    //   status: Status.CANCELED,
+    // });
   }
 }
 
