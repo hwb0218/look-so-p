@@ -67,14 +67,16 @@ export default function OrderList({ orders }: Props) {
                   <td className="text-lime-600">{numberFormat(orderItem.totalPrice)}원</td>
                   <td>
                     <strong className="block mb-1 text-sm">{orderItem.status}</strong>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      onClick={() => handleClickCancelButton(id, orderItem?.id)}
-                      className="h-8 px-2"
-                    >
-                      구매 취소
-                    </Button>
+                    {orderItem.status !== '주문 취소' && (
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={() => handleClickCancelButton(id, orderItem?.id)}
+                        className="h-8 px-2"
+                      >
+                        주문 취소
+                      </Button>
+                    )}
                   </td>
                 </tr>
               );
