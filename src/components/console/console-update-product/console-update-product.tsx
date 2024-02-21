@@ -58,7 +58,7 @@ export default function ConsoleUpdateProduct({ product }: Props) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="flex justify-center items-center fixed left-0 right-0 top-0 bottom-0 bg-stone-800/80 z-[9999]">
+        <Wrapper className="flex justify-center items-center fixed left-0 right-0 top-0 bottom-0">
           <Wrapper className="p-4 w-1/2 mb-5 bg-white rounded-md overflow-hidden max-xl:h-5/6 max-xl:overflow-y-scroll">
             <h1 className="text-3xl font-bold">상품 정보 수정</h1>
             <FormField
@@ -157,7 +157,7 @@ export default function ConsoleUpdateProduct({ product }: Props) {
               </Button>
             </Wrapper>
           </Wrapper>
-        </div>
+        </Wrapper>
       </form>
     </Form>
   );
