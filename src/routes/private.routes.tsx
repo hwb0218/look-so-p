@@ -5,6 +5,7 @@ import { ProtectedLayout, GlobalNavLayout, ConsoleLayout } from '@components/lay
 import { ConsoleMainPage, ConsoleAddProductPage, MyPage, OrderPage, OrderListPage } from '@pages/private';
 
 import { AUTH_ROUTE_PATHS, CONSOLE_ROUTE_PATHS } from '@constants/routes';
+import { ConsoleOrderManagementPage } from '@pages/private/console';
 
 const privateRoutes: RouteObject[] = [
   {
@@ -30,6 +31,10 @@ const privateRoutes: RouteObject[] = [
       {
         path: CONSOLE_ROUTE_PATHS.PRODUCT_REGISTRATION(),
         element: <ConsoleAddProductPage />,
+      },
+      {
+        path: CONSOLE_ROUTE_PATHS.ORDER_MANAGEMENT(),
+        element: <ConsoleOrderManagementPage />,
       },
     ],
   },
