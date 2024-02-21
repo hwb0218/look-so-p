@@ -1,4 +1,4 @@
-export default function numberFormat(value: number | string) {
+export default function numberFormat(value: number | string = '') {
   if (typeof value === 'string') {
     value = Number(value);
   }
