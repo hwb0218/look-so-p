@@ -32,29 +32,28 @@ class StoreService {
   async getSellerProducts({
     sellerId,
     pageParam,
+    pageLimit = 10,
   }: {
     sellerId: string;
     pageParam?: QueryDocumentSnapshot<DocumentData, DocumentData>;
+    pageLimit?: number;
   }) {
-    const limitNum = 5;
-    const products: Product[] = [];
-
     const collectionRef = collection(db, 'products');
     const q = query(
       collectionRef,
       where('sellerId', '==', sellerId),
       orderBy('updatedAt', 'desc'),
-      limit(limitNum),
+      limit(pageLimit),
       ...(pageParam ? [startAfter(pageParam)] : []),
     );
     const docSnapshot = await getDocs(q);
 
-    const lastVisible = docSnapshot.size >= limitNum ? docSnapshot.docs[docSnapshot.docs.length - 1] : undefined;
+    const lastVisible = docSnapshot.size >= pageLimit ? docSnapshot.docs[docSnapshot.docs.length - 1] : undefined;
 
-    docSnapshot.forEach((doc) => {
+    const products = docSnapshot.docs.map((doc) => {
       const { id } = doc;
-      const data = doc.data() as Product;
-      products.push({ ...data, id });
+      const data = doc.data();
+      return { ...data, id } as Product;
     });
 
     return { products, lastVisible };
@@ -398,6 +397,33 @@ class StoreService {
         orderItems: newOrderItems,
       });
     }
+  }
+
+  async getOrderManagement({
+    pageParam,
+    pageLimit = 10,
+  }: {
+    pageParam?: QueryDocumentSnapshot<DocumentData, DocumentData>;
+    pageLimit?: number;
+  }) {
+    const collectionRef = collection(db, 'orders');
+    const q = query(
+      collectionRef,
+      orderBy('updatedAt', 'desc'),
+      limit(pageLimit),
+      ...(pageParam ? [startAfter(pageParam)] : []),
+    );
+    const docSnapshot = await getDocs(q);
+
+    const lastVisible = docSnapshot.size >= pageLimit ? docSnapshot.docs[docSnapshot.docs.length - 1] : undefined;
+
+    const orders = docSnapshot.docs.map((doc) => {
+      const { id } = doc;
+      const data = doc.data();
+      return { ...data, id } as Product;
+    });
+
+    return { orders, lastVisible };
   }
 }
 

@@ -4,11 +4,11 @@ import { storeService } from '@src/lib/firebase/StoreService';
 import { queryClient } from '@src/main';
 import { DocumentData, QueryDocumentSnapshot } from 'firebase/firestore';
 
-export function useGetProductsInfiniteQuery(sellerId: string) {
+export function useGetProductsInfiniteQuery({ sellerId, pageLimit }: { sellerId: string; pageLimit?: number }) {
   const res = useInfiniteQuery({
     queryKey: QUERY_KEYS.CONSOLE.PRODUCTS(sellerId),
     queryFn: ({ pageParam }: { pageParam?: QueryDocumentSnapshot<DocumentData, DocumentData> }) =>
-      storeService.getSellerProducts({ sellerId, pageParam }),
+      storeService.getSellerProducts({ sellerId, pageParam, pageLimit }),
     initialPageParam: undefined,
     getNextPageParam: ({ lastVisible }) => lastVisible,
     select: (data) => ({
