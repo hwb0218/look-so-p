@@ -50,7 +50,7 @@ export default function CartProvider({ children }: PropsWithChildren) {
     onChangeGoodsCount,
   } = useCart();
 
-  const { expanded, onOpenCart, onCloseCart, overlayRef } = useOverlay();
+  const { expanded, onOpenCart, onCloseCart } = useOverlay();
 
   const contextValue = useMemo(
     () => ({
@@ -85,9 +85,17 @@ export default function CartProvider({ children }: PropsWithChildren) {
     ],
   );
 
+  const handeClickWrapper = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    onCloseCart();
+  };
+
   return (
     <>
-      <div ref={overlayRef} className={`fixed inset-0 z-[9999] ${expanded ? 'bg-stone-800/80' : 'hidden'}`} />
+      <div
+        onClick={handeClickWrapper}
+        className={`fixed inset-0 z-[9999] ${expanded ? 'bg-stone-800/80' : 'hidden'}`}
+      />
       <CartContext.Provider value={contextValue}>{children}</CartContext.Provider>
     </>
   );
