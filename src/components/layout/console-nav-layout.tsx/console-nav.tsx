@@ -1,22 +1,26 @@
 import { NavLink, useNavigate } from 'react-router-dom';
+import { FirebaseError } from 'firebase/app';
+import { authService } from '@src/lib/firebase/AuthService';
+import { queryClient } from '@src/main';
 
 import { useAuthContext } from '@providers/auth';
 
 import { Li, Ul } from '@components/common/list';
 
 import { CONSOLE_ROUTE_PATHS } from '@constants/routes';
-import { authService } from '@src/lib/firebase/AuthService';
-import { queryClient } from '@src/main';
-import { FirebaseError } from 'firebase/app';
 
 const CONSOLE_NAVIGATION_ITEMS = [
   {
-    title: '전체 상품 조회',
+    title: '상품 조회',
     to: CONSOLE_ROUTE_PATHS.CONSOLE,
   },
   {
     title: '상품 등록',
     to: CONSOLE_ROUTE_PATHS.PRODUCT_REGISTRATION,
+  },
+  {
+    title: '주문 관리',
+    to: CONSOLE_ROUTE_PATHS.ORDER_MANAGEMENT,
   },
 ];
 
@@ -81,5 +85,3 @@ function ConsoleNav() {
 }
 
 export default ConsoleNav;
-
-// className="absolute top-0 left-0 bottom-0 w-full px-4 py-3 overflow-y-scroll"
