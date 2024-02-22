@@ -1,1 +1,1 @@
-export { default as ConsoleOrderManagement } from './console-update-order';
+export { default as ConsoleOrderManagement } from './console-order-management';
