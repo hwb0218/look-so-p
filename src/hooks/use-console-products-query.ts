@@ -55,7 +55,7 @@ export function useDeleteProductsMutation() {
       const queryKey = QUERY_KEYS.CONSOLE.PRODUCTS(sellerId);
       queryClient.setQueryData(queryKey, context?.filteredProducts);
     },
-    onSettled: (data, err, { sellerId }) => {
+    onSettled: (_data, _err, { sellerId }) => {
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.CONSOLE.PRODUCTS(sellerId) });
     },
   });
