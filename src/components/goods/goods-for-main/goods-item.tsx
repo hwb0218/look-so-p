@@ -18,7 +18,7 @@ interface Props {
 
 export default function GoodsItem({ goods }: Props) {
   return (
-    <Li className="flex">
+    <Li className="w-full h-full">
       <Link
         to={{
           pathname: ROUTE_PATHS.GOODS_DETAIL(goods.id),
