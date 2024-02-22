@@ -42,23 +42,25 @@ export default function ConsoleMain({ products }: Props) {
       {products?.map(({ createdAt, productName, productDescription, thumbnail, id, sellerId }) => (
         <Li key={id} className="w-full before:h-[2px] before:content-[''] before:block before:bg-slate-100">
           <Wrapper className="w-full rounded-md p-4">
+            <div className="float-right text-sm">등록일 {dateFormat(createdAt.toDate())}</div>
             <Wrapper className="flex justify-between">
               <div>
-                <div>{dateFormat(createdAt.toDate())}</div>
-                <div>
-                  <strong>{productName}</strong>
-                </div>
-                <div>{productDescription}</div>
-              </div>
-              <div className="w-36 h-36 overflow-hidden rounded-md">
-                <img src={thumbnail} alt="대표 이미지" className="object-cover w-full h-full" />
+                <Wrapper className="flex">
+                  <div className="w-36 h-36 mr-3 overflow-hidden rounded-md">
+                    <img src={thumbnail} alt="대표 이미지" className="object-cover w-full h-full" />
+                  </div>
+                  <div>
+                    <strong>{productName}</strong>
+                    <div>{productDescription}</div>
+                  </div>
+                </Wrapper>
               </div>
             </Wrapper>
-            <Wrapper className="flex gap-x-2">
-              <Button type="button" onClick={() => onClickEditButton(id)}>
+            <Wrapper className="flex justify-end gap-x-2">
+              <Button type="button" variant="outline" onClick={() => onClickEditButton(id)}>
                 수정
               </Button>
-              <Button type="button" onClick={() => onClickDeleteButton(id, sellerId)}>
+              <Button type="button" variant="destructive" onClick={() => onClickDeleteButton(id, sellerId)}>
                 삭제
               </Button>
             </Wrapper>
