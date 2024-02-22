@@ -420,7 +420,7 @@ class StoreService {
     const orders = docSnapshot.docs.map((doc) => {
       const { id } = doc;
       const data = doc.data();
-      return { ...data, id } as Product;
+      return { ...data, id } as OrderList;
     });
 
     return { orders, lastVisible };
