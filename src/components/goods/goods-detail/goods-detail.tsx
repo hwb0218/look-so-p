@@ -36,6 +36,7 @@ export default function GoodsDetail({ productId, category }: Props) {
       onAddItemToCart(data);
       onOpenCart();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, isSuccess]);
 
   if (!goods || !recommend) {
@@ -62,6 +63,7 @@ export default function GoodsDetail({ productId, category }: Props) {
         ...goods,
         productId,
         goodsCount,
+        totalPrice: goodsCount * goods.productPrice,
       };
       addGoodsToCart({ goods: values, uid });
     } catch (error) {
