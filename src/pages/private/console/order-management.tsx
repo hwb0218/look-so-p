@@ -12,7 +12,7 @@ export default function ConsoleOrderManagementPage() {
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isFetched } = useFetchOrderManagementQuery({
     sellerId: id,
-    pageLimit: 10,
+    pageLimit: 5,
   });
 
   const { pages } = (data as { pages: OrderList[] }) ?? [];
@@ -28,7 +28,7 @@ export default function ConsoleOrderManagementPage() {
 
   return (
     <>
-      <ConsoleOrderManagement orders={pages} />
+      <ConsoleOrderManagement orders={pages} sellerId={id} />
       {hasNextPage && isFetched && <div ref={observerRef} className="h-40" />}
       {hasNextPage && isFetchingNextPage && <h2 className="text-blue-600 col-span-full m-auto">로딩 중...</h2>}
     </>
