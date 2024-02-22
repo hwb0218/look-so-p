@@ -1,14 +1,15 @@
-import { Li, Ul } from '@components/common/list';
-import Wrapper from '@components/common/wrapper';
-import { Button } from '@components/ui/button';
-
 import { useDeleteProductsMutation } from '@hooks/use-console-products-query';
-
 import { useModalContext } from '@providers/modal';
 
-import type { Product } from '@src/lib/firebase/types';
-import ConsoleUpdateProduct from '../console-update-product/console-update-product';
+import { ConsoleUpdateProduct } from '..';
+
+import Wrapper from '@components/common/wrapper';
+import { Li, Ul } from '@components/common/list';
+import { Button } from '@components/ui/button';
+
 import dateFormat from '@src/utils/date-format';
+
+import type { Product } from '@src/lib/firebase/types';
 
 interface Props {
   products: Product[];
@@ -37,7 +38,7 @@ export default function ConsoleMain({ products }: Props) {
 
   return (
     <Ul className="flex-col items-start space-y-4">
-      <h1 className="px-4 text-2xl font-bold">전체 상품 조회</h1>
+      <h1 className="px-4 text-2xl font-bold">상품 조회</h1>
       {products?.map(({ createdAt, productName, productDescription, thumbnail, id, sellerId }) => (
         <Li key={id} className="w-full before:h-[2px] before:content-[''] before:block before:bg-slate-100">
           <Wrapper className="w-full rounded-md p-4">
