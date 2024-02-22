@@ -5,9 +5,9 @@ export default function useOverlay() {
 
   useEffect(() => {
     if (expanded) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflowY = 'hidden';
     } else {
-      document.body.style.overflow = 'scroll';
+      document.body.style.overflowY = '';
     }
   }, [expanded]);
 
