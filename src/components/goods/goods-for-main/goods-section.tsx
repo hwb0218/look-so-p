@@ -34,7 +34,7 @@ export default function GoodsSection({ category, title, goodsByCategory }: Props
           + More
         </span>
       </div>
-      <Ul className="gap-x-6">
+      <Ul className="grid grid-cols-4 gap-x-6">
         {goodsByCategory && goodsByCategory[category]?.map((goods) => <GoodsItem key={goods.id} goods={goods} />)}
       </Ul>
     </section>
