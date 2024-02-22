@@ -1,6 +1,10 @@
-export { default as MyPage } from './my-page';
-export { default as ConsoleMainPage } from './console/console';
-export { default as ConsoleAddProductPage } from './console/add-product';
-export { default as ConsoleOrderManagementPage } from './console/order-management';
-export { default as OrderPage } from './order';
-export { default as OrderListPage } from './order-list';
+import { lazy } from 'react';
+
+const MyPage = lazy(() => import('./my-page'));
+const ConsoleMainPage = lazy(() => import('./console/console'));
+const ConsoleAddProductPage = lazy(() => import('./console/add-product'));
+const ConsoleOrderManagementPage = lazy(() => import('./console/order-management'));
+const OrderPage = lazy(() => import('./order'));
+const OrderListPage = lazy(() => import('./order-list'));
+
+export { MyPage, ConsoleMainPage, ConsoleAddProductPage, ConsoleOrderManagementPage, OrderPage, OrderListPage };
