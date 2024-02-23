@@ -1,4 +1,6 @@
 import { Link, createSearchParams } from 'react-router-dom';
+import { storeService } from '@src/lib/firebase/StoreService';
+import { queryClient } from '@src/main';
 
 import { Li, Ul } from '@components/common/list';
 import { GoodsItemCard } from '../goods-item-card';
@@ -9,6 +11,7 @@ import { Product } from '@src/lib/firebase/types';
 import numberFormat from '@src/utils/number-format';
 
 import { ROUTE_PATHS } from '@constants/routes';
+import { QUERY_KEYS } from '@constants/query-keys';
 
 interface Props {
   goods?: Product[];
@@ -16,7 +19,7 @@ interface Props {
 
 export default function GoodsListByCategory({ goods }: Props) {
   return (
-    <Ul className="grid grid-cols-4 gap-x-5 gap-y-20">
+    <Ul className="justify-normal items-baseline grid grid-cols-4 gap-x-5 gap-y-20">
       {goods?.map((item) => (
         <Li key={item.id} className="w-full">
           <Link
@@ -25,6 +28,12 @@ export default function GoodsListByCategory({ goods }: Props) {
               search: `?${createSearchParams({ category: item.productCategory.trim() })}`,
             }}
             key={item.id}
+            onMouseEnter={async () => {
+              await queryClient.prefetchQuery({
+                queryKey: QUERY_KEYS.GOODS.BY_ID(item.id),
+                queryFn: () => storeService.getGoodsById(item.id),
+              });
+            }}
           >
             <GoodsItemCard src={item.thumbnail} alt={item.productName} />
             <Wrapper className="pt-4">
