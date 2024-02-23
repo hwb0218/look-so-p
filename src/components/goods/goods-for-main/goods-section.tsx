@@ -27,14 +27,14 @@ export default function GoodsSection({ category, title, goodsByCategory }: Props
   };
 
   return (
-    <section className="mb-10">
+    <section className="mb-24">
       <div className="relative">
-        <h3 className="pb-10 text-2xl text-center">{title}</h3>
+        <h3 className="px-2 pb-4 text-2xl">{title}</h3>
         <span className="absolute top-0 right-0 cursor-pointer" onClick={() => handleClickMore(category)}>
           + More
         </span>
       </div>
-      <Ul className="grid grid-cols-4 gap-x-6">
+      <Ul className="justify-normal items-baseline grid grid-cols-4 gap-x-5">
         {goodsByCategory && goodsByCategory[category]?.map((goods) => <GoodsItem key={goods.id} goods={goods} />)}
       </Ul>
     </section>

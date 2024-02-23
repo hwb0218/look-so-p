@@ -14,7 +14,7 @@ export default function GoodsList({ categories }: Props) {
   const { data: goodsByCategory } = useFetchAllGoodsQuery(GOODS_CATEGORIES);
 
   return (
-    <div className="flex-col items-start p-3">
+    <div className="flex-col items-start py-3">
       {categories.map(({ value, title }) => (
         <GoodsSection key={value} goodsByCategory={goodsByCategory} category={value} title={title} />
       ))}

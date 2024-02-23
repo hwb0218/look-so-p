@@ -24,7 +24,7 @@ export default function GoodsByCategory({ category }: Props) {
   const sortedGoods = sortbyOptions(goodsContent, sortingOption);
 
   return (
-    <Wrapper className="w-10/12 m-auto pb-20">
+    <Wrapper className="w-9/12 m-auto pb-20">
       <GoodsCategories
         categories={GOODS_CATEGORIES}
         filterCategory={filterCategory}
