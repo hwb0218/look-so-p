@@ -3,7 +3,6 @@ import { storeService } from '@src/lib/firebase/StoreService';
 
 import { GoodsItemCard } from '../goods-item-card';
 
-import Wrapper from '@components/common/wrapper';
 import { Li } from '@components/common/list';
 import { Carousel, CarouselContent, CarouselItem } from '@components/ui/carousel';
 
@@ -44,10 +43,10 @@ export default function GoodsItem({ goods }: Props) {
             ))}
           </CarouselContent>
         </Carousel>
-        <span className="text-sm">{goods.productName}</span>
-        <Wrapper>
-          <span>{`${numberFormat(Number(goods.productPrice))}원`}</span>
-        </Wrapper>
+        <div className="mt-1 text-sm">{goods.productName}</div>
+        <div className="mt-1">
+          <strong>{numberFormat(Number(goods.productPrice))}</strong>원
+        </div>
       </Link>
     </Li>
   );

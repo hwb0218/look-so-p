@@ -28,9 +28,9 @@ export default function GoodsSection({ category, title, goodsByCategory }: Props
 
   return (
     <section className="mb-24">
-      <div className="relative">
-        <h3 className="px-2 pb-4 text-2xl">{title}</h3>
-        <span className="absolute top-0 right-0 cursor-pointer" onClick={() => handleClickMore(category)}>
+      <div className="mx-1 mb-2 flex justify-between items-center">
+        <h3 className="text-2xl">{title}</h3>
+        <span className="cursor-pointer" onClick={() => handleClickMore(category)}>
           + More
         </span>
       </div>
