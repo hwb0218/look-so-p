@@ -1,18 +1,21 @@
+import React from 'react';
+
+import useFetchRecommend from '@hooks/use-fetch-recommend-query';
+
 import GoodsDetailRecommendItem from './goods-detail-recommend-item';
 
-import { Product } from '@src/lib/firebase/types';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@components/ui/carousel';
-import Wrapper from '@components/common/wrapper';
 
 interface Props {
-  recommend: Product[];
+  category: string;
 }
 
-export default function GoodsDetailRecommend({ recommend }: Props) {
+const GoodsDetailRecommend = ({ category }: Props) => {
+  const { data: recommend } = useFetchRecommend(category);
+
   return (
-    <Wrapper className="flex flex-col justify-center items-center mt-14">
-      <h3 className="text-lg font-bold py-4 mr-auto">비슷한 상품</h3>
-      <Carousel className="w-full max-w-3xl">
+    <>
+      <Carousel className="w-full">
         <CarouselContent className="-ml-1">
           {recommend.map((recommendItem) => (
             <CarouselItem key={recommendItem.id} className="pl-1 basis-1/3">
@@ -23,6 +26,8 @@ export default function GoodsDetailRecommend({ recommend }: Props) {
         <CarouselPrevious />
         <CarouselNext />
       </Carousel>
-    </Wrapper>
+    </>
   );
-}
+};
+
+export default React.memo(GoodsDetailRecommend);
