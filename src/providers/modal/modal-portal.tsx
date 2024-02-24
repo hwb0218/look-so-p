@@ -1,7 +1,7 @@
 import { createPortal } from 'react-dom';
 
 import useModalContext from '@providers/modal/use-modal-context';
-import Wrapper from '@components/common/wrapper';
+import Wrapper from '@components/common/ui/wrapper';
 import { PropsWithChildren } from 'react';
 
 export default function ModalPortal() {

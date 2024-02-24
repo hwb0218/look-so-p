@@ -2,7 +2,6 @@ export const ROUTE_PATHS = {
   HOME: '/',
   LOGIN: '/login',
   SIGNUP: '/sign-up',
-  PRODUCT_ALL: '/product-all',
   GOODS_LIST: '/goods/goods-list',
   GOODS_DETAIL: (productId?: string) => (productId ? `/goods/goods-detail/${productId}` : '/goods/goods-detail/:id'),
 } as const;
