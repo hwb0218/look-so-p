@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite --mode development",
-    "build": "tsc && vite build",
+    "build": "node generate-sitemap.js && tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
@@ -25,6 +25,7 @@
     "lucide-react": "^0.314.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-helmet-async": "^2.0.4",
     "react-hook-form": "^7.49.3",
     "react-intersection-observer": "^9.6.0",
     "react-router-dom": "^6.21.3",
@@ -51,6 +52,7 @@
     "postcss": "^8.4.33",
     "prettier": "^3.2.4",
     "rollup-plugin-visualizer": "^5.12.0",
+    "sitemap": "^7.1.1",
     "tailwind-scrollbar": "^3.1.0",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.2.2",
