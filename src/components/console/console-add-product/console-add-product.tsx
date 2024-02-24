@@ -13,9 +13,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Input } from '@components/ui/input';
 import { Button } from '@components/ui/button';
 import { Textarea } from '@components/ui/textarea';
-import Wrapper from '@components/common/wrapper';
+import Wrapper from '@components/common/ui/wrapper';
 
 import formatNumber from '@src/utils/format-number';
+import { queryClient } from '@src/main';
+import { QUERY_KEYS } from '@constants/query-keys';
 
 export default function ConsoleProductRegistration() {
   const { state } = useAuthContext();
@@ -35,6 +37,7 @@ export default function ConsoleProductRegistration() {
   const onSubmit = async (values: ProductFormSchema) => {
     await createConsoleProducts(values, state?.auth.uid);
     alert('상품 등록 완료!');
+    queryClient.invalidateQueries({ queryKey: QUERY_KEYS.GOODS.MAIN() });
   };
 
   return (
