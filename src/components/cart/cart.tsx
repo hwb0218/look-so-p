@@ -3,8 +3,8 @@ import { useCartContext } from '@providers/cart';
 import { Select, SelectContent, SelectTrigger, SelectValue, SelectItem } from '@components/ui/select';
 import { Checkbox } from '@components/ui/checkbox';
 import { Button } from '@components/ui/button';
-import { Li, Ul } from '@components/common/list';
-import Wrapper from '@components/common/wrapper';
+import { Li, Ul } from '@components/common/ui/list';
+import Wrapper from '@components/common/ui/wrapper';
 import { GoodsItemCard } from '@components/goods/goods-item-card';
 
 import numberFormat from '@src/utils/number-format';
