@@ -1,4 +1,6 @@
-import { Li, Ul } from '@components/common/list';
+import { useSearchParams } from 'react-router-dom';
+
+import { Li, Ul } from '@components/common/ui/list';
 
 import { GOODS_CATEGORIES } from '@constants/goods-categories';
 
@@ -9,7 +11,11 @@ interface Props {
 }
 
 export default function GoodsCategories({ categories, filterCategory, setFilterCategory }: Props) {
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const handleClickCategory = (category: string) => {
+    searchParams.set('category', category);
+    setSearchParams(searchParams);
     setFilterCategory(category);
   };
 
