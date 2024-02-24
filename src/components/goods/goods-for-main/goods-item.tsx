@@ -3,7 +3,7 @@ import { storeService } from '@src/lib/firebase/StoreService';
 
 import { GoodsItemCard } from '../goods-item-card';
 
-import { Li } from '@components/common/list';
+import { Li } from '@components/common/ui/list';
 import { Carousel, CarouselContent, CarouselItem } from '@components/ui/carousel';
 
 import { Product } from '@src/lib/firebase/types';

@@ -3,7 +3,7 @@ import { FirebaseError } from 'firebase/app';
 
 import { useAuthContext } from '@providers/auth';
 
-import { Li } from '@components/common/list';
+import { Li } from '@components/common/ui/list';
 
 import { authService } from '@src/lib/firebase/AuthService';
 
@@ -14,7 +14,7 @@ const AUTH_NAVIGATION_ITEMS = {
   seller: [
     {
       title: '마이 페이지',
-      to: AUTH_ROUTE_PATHS.MYPAGE,
+      to: AUTH_ROUTE_PATHS.ORDER_LIST,
     },
     {
       title: '판매자 콘솔',
@@ -24,7 +24,7 @@ const AUTH_NAVIGATION_ITEMS = {
   common: [
     {
       title: '마이 페이지',
-      to: AUTH_ROUTE_PATHS.MYPAGE,
+      to: AUTH_ROUTE_PATHS.ORDER_LIST,
     },
   ],
 };
@@ -58,7 +58,7 @@ function NavItemsAuth({ renderIf, isSeller = false }: Props) {
     <>
       {AUTH_NAVIGATION_ITEMS[isSeller ? 'seller' : 'common'].map(({ title, to }) => (
         <Li key={title} className="ml-3">
-          <NavLink to={to(uid)}>{title}</NavLink>
+          <NavLink to={typeof to === 'string' ? to : to(uid)}>{title}</NavLink>
         </Li>
       ))}
       <Li className="ml-3">

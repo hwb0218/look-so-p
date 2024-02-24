@@ -1,12 +1,12 @@
 import GoodsItemSkeletonCard from '../goods-item-card/goods-item-skeleton-card';
 
-import { Li, Ul } from '@components/common/list';
+import { Li, Ul } from '@components/common/ui/list';
 import { Skeleton } from '@components/ui/skeleton';
 
 export default function GoodsSkeleton() {
   return (
     <>
-      {[...Array(5)].map((item) => (
+      {[...Array(2)].map((item) => (
         <section key={item} className="mb-24">
           <div className="mx-1 mb-2 flex justify-between items-center">
             <Skeleton className="w-[110px] h-[32px]" />

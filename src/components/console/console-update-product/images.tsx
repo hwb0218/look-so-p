@@ -7,7 +7,7 @@ import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@compo
 import { Button } from '@components/ui/button';
 import { Input } from '@components/ui/input';
 import { Badge } from '@components/ui/badge';
-import Wrapper from '@components/common/wrapper';
+import Wrapper from '@components/common/ui/wrapper';
 
 import { type UpdateProductFormSchema } from '@src/lib/zod/update-console-product-schama';
 import extractPathFromUrl from '@src/utils/extract-path-from-url';

@@ -1,4 +1,4 @@
-import Wrapper from '@components/common/wrapper';
+import Wrapper from '@components/common/ui/wrapper';
 import { CartGoods } from '@src/lib/firebase/types';
 import numberFormat from '@src/utils/number-format';
 

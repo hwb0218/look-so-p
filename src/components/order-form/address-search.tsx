@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-import Wrapper from '@components/common/wrapper';
+import Wrapper from '@components/common/ui/wrapper';
 import { UseFormReturn } from 'react-hook-form';
 import { OrderFormSchema } from '@src/lib/zod/order-schema';
 

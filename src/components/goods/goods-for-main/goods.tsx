@@ -3,7 +3,7 @@ import { Suspense } from 'react';
 import GoodsList from './goods-list';
 import GoodsSkeleton from './goods-skeleton';
 
-import Wrapper from '@components/common/wrapper';
+import Wrapper from '@components/common/ui/wrapper';
 
 import { GOODS_CATEGORIES } from '@constants/goods-categories';
 

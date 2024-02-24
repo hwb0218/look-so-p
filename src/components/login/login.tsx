@@ -12,7 +12,7 @@ import { useAuthContext } from '@providers/auth';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@components/ui/form';
 import { Input } from '@components/ui/input';
 import { Button } from '@components/ui/button';
-import Wrapper from '@components/common/wrapper';
+import Wrapper from '@components/common/ui/wrapper';
 
 import { ROUTE_PATHS } from '@constants/routes';
 

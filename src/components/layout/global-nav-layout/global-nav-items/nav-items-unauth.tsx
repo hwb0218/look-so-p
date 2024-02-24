@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 
-import { Li } from '@components/common/list';
+import { Li } from '@components/common/ui/list';
 
 import { ROUTE_PATHS } from '@constants/routes';
 

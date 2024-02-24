@@ -1,18 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 
-import { Li } from '@components/common/list';
+import { Li } from '@components/common/ui/list';
 
 import { useCartContext } from '@providers/cart';
 import { useAuthContext } from '@providers/auth';
-
-// import { ROUTE_PATHS } from '@constants/routes';
-
-// const NAVIGATION_ITEMS = [
-//   {
-//     title: '전체상품',
-//     to: ROUTE_PATHS.PRODUCT_ALL,
-//   },
-// ];
 
 function NavItems() {
   const navigate = useNavigate();

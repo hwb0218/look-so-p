@@ -2,9 +2,9 @@ import { Link, createSearchParams } from 'react-router-dom';
 import { storeService } from '@src/lib/firebase/StoreService';
 import { queryClient } from '@src/main';
 
-import { Li, Ul } from '@components/common/list';
+import { Li, Ul } from '@components/common/ui/list';
 import { GoodsItemCard } from '../goods-item-card';
-import Wrapper from '@components/common/wrapper';
+import Wrapper from '@components/common/ui/wrapper';
 
 import { Product } from '@src/lib/firebase/types';
 

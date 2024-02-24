@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import useFetchGoodsByCategoryQuery from '@hooks/use-fetch-goods-by-category-query';
 
-import Wrapper from '@components/common/wrapper';
+import Wrapper from '@components/common/ui/wrapper';
 import { GoodsCategories, GoodsListByCategory, GoodsSorter } from './';
 
 import sortbyOptions from '@src/utils/sort-by-options';

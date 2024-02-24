@@ -15,7 +15,7 @@ import { Button } from '@components/ui/button';
 import { Checkbox } from '@components/ui/checkbox';
 import { Avatar, AvatarFallback, AvatarImage } from '@components/ui/avatar';
 import { Label } from '@components/ui/label';
-import Wrapper from '@components/common/wrapper';
+import Wrapper from '@components/common/ui/wrapper';
 
 import { getImageData } from '@src/utils/set-image-data';
 

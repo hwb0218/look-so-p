@@ -2,8 +2,8 @@ import { useState } from 'react';
 
 import { useUpdateOrderManageMentMutation } from '@hooks/use-fetch-order-management-query';
 
-import { Li, Ul } from '@components/common/list';
-import Wrapper from '@components/common/wrapper';
+import { Li, Ul } from '@components/common/ui/list';
+import Wrapper from '@components/common/ui/wrapper';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@components/ui/select';
 
 import dateFormat from '@src/utils/date-format';

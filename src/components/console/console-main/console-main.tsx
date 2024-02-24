@@ -3,8 +3,8 @@ import { useModalContext } from '@providers/modal';
 
 import { ConsoleUpdateProduct } from '..';
 
-import Wrapper from '@components/common/wrapper';
-import { Li, Ul } from '@components/common/list';
+import Wrapper from '@components/common/ui/wrapper';
+import { Li, Ul } from '@components/common/ui/list';
 import { Button } from '@components/ui/button';
 
 import dateFormat from '@src/utils/date-format';

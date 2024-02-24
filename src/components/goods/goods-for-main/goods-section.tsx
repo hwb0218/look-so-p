@@ -2,7 +2,7 @@ import { createSearchParams, useNavigate } from 'react-router-dom';
 
 import { GoodsItem } from '.';
 
-import { Ul } from '@components/common/list';
+import { Ul } from '@components/common/ui/list';
 
 import { Product } from '@src/lib/firebase/types';
 

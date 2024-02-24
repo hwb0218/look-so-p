@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 
 import ConsoleNav from './console-nav';
-import Wrapper from '@components/common/wrapper';
+import Wrapper from '@components/common/ui/wrapper';
 
 function ConsoleLayout() {
   return (

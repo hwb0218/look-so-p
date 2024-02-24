@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 
-import { Ul, Li } from '@components/common/list';
+import { Ul, Li } from '@components/common/ui/list';
 
 import { NavItems, NavItemsAuth, NavItemsUnauth } from './global-nav-items';
 

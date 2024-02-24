@@ -1,4 +1,4 @@
-import Wrapper from './wrapper';
+import Wrapper from '../ui/wrapper';
 
 export default function Loading() {
   return (

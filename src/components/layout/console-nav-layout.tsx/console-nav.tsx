@@ -5,7 +5,7 @@ import { queryClient } from '@src/main';
 
 import { useAuthContext } from '@providers/auth';
 
-import { Li, Ul } from '@components/common/list';
+import { Li, Ul } from '@components/common/ui/list';
 
 import { CONSOLE_ROUTE_PATHS, ROUTE_PATHS } from '@constants/routes';
 
