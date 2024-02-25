@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 
 import { getImageData } from '@src/utils/set-image-data';
+import resizeImages from '@src/utils/resize-images';
 
 export default function useAddConsoleImage() {
   const [previewThumbnailUrls, setPreveiwThumbnailUrls] = useState<string[]>([]);
@@ -16,13 +17,19 @@ export default function useAddConsoleImage() {
     }
   };
 
-  const onChangeThumbnailInput = (e: React.ChangeEvent<HTMLInputElement>, onChange: (...event: FileList[]) => void) => {
-    const { files, previewUrls } = getImageData({ selectedImages: e.target?.files as FileList });
+  const onChangeThumbnailInput = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+    onChange: (...event: FileList[]) => void,
+  ) => {
+    const resizedImages = await resizeImages(e.target?.files as FileList);
+
+    const { files, previewUrls } = getImageData({ selectedImages: resizedImages as FileList });
+
     setPreveiwThumbnailUrls(previewUrls);
     onChange(files);
   };
 
-  const onChangeFileInput = (
+  const onChangeFileInput = async (
     e: React.ChangeEvent<HTMLInputElement>,
     onChange: (...event: FileList[]) => void,
     value?: FileList,
@@ -37,8 +44,10 @@ export default function useAddConsoleImage() {
       return alert(`최대 ${limitedFileLength}개의 파일만 선택할 수 있습니다.`);
     }
 
+    const resizedImages = await resizeImages(e.target?.files as FileList);
+
     const { files, previewUrls } = getImageData({
-      selectedImages: e.target?.files as FileList,
+      selectedImages: resizedImages as FileList,
       prevImages: value,
       multiple: true,
     });
@@ -46,11 +55,6 @@ export default function useAddConsoleImage() {
     setPreviewImageUrls(previewUrls);
     onChange(files);
   };
-
-  // const onResetFileInput = ({ targetImage, images }: { targetImage: number; images: FileList }) => {
-  //   const { files, previewUrls } = resetImageData({ selectedImages: images, index: targetImage });
-  //   return { files, previewUrls };
-  // };
 
   return {
     previewImageUrls,
@@ -60,7 +64,6 @@ export default function useAddConsoleImage() {
     setPreviewImageUrls,
     setPreveiwThumbnailUrls,
     onClickInput,
-    // onResetFileInput,
     onChangeThumbnailInput,
     onChangeFileInput,
   };
