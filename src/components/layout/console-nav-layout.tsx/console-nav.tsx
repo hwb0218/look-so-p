@@ -49,14 +49,16 @@ function ConsoleNav() {
       <nav className="fixed top-0 left-0 min-h-screen w-60 bg-gray-900 text-gray-100 z-20">
         <div className="absolute top-0 left-0 bottom-0 right-0">
           <div className="h-full flex flex-col">
-            <header className="flex items-center gap-x-6 px-6 py-2 font-black">
+            <header className="flex items-center px-6 py-2 font-black">
               <span className="w-14 rounded overflow-hidden">
                 <NavLink to={ROUTE_PATHS.HOME}>
                   <img src="/logo.svg" />
                 </NavLink>
               </span>
               <div>
-                <span className="text-xl">LookSoPrt</span>
+                <NavLink to={ROUTE_PATHS.HOME} className="pl-6">
+                  <span className="text-xl">LookSoPrt</span>
+                </NavLink>
               </div>
             </header>
             <div className="p-4 text-xl border-b-2 border-slate-400">
