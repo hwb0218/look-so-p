@@ -47,7 +47,7 @@ export default function ConsoleMain({ products }: Props) {
               <div>
                 <Wrapper className="flex">
                   <div className="w-36 h-36 mr-3 overflow-hidden rounded-md">
-                    <img src={thumbnail} alt="대표 이미지" className="object-cover w-full h-full" />
+                    <img src={thumbnail} alt="대표 이미지" className="aspect-auto w-full h-full" />
                   </div>
                   <div>
                     <strong>{productName}</strong>

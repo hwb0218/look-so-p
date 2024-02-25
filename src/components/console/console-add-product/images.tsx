@@ -112,7 +112,7 @@ export default function Images({ form }: Props) {
                       setPreveiwThumbnailUrls([]);
                     }
                   }}
-                  className="object-cover w-full h-full cursor-pointer"
+                  className="aspect-square w-full h-full cursor-pointer"
                 />
               )}
             </div>
@@ -141,7 +141,7 @@ export default function Images({ form }: Props) {
                       setPreviewImageUrls(previewUrls);
                     }
                   }}
-                  className="absolute inset-0 object-cover w-full h-full cursor-pointer"
+                  className="absolute inset-0 aspect-square w-full h-full cursor-pointer"
                 />
               )}
             </div>
