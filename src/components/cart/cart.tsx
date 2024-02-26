@@ -82,7 +82,7 @@ export default function Cart() {
                       id={`goods-${cartGoods.id}`}
                       checked={checkedGoods.some((goods) => goods.id === cartGoods.id)}
                       onCheckedChange={() => handleToggleCartGoods(cartGoods)}
-                      className="absolute left-0 top-0 rounded-md border-slate-100 bg-white h-6 w-6 data-[state=checked]:bg-lime-400 data-[state=checked]:border-none"
+                      className="absolute left-0 top-0 rounded-md border-slate-100 bg-white h-6 w-6 data-[state=checked]:bg-lime-400 data-[state=checked]:border-none z-[1]"
                     />
                     <Wrapper className="w-[100px] h-[100px]">
                       <GoodsItemCard src={cartGoods.thumbnail} alt={cartGoods.productName} />
