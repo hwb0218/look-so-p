@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 import { storeService } from '@src/lib/firebase/StoreService';
 
 import { queryClient } from '@src/main';
@@ -8,7 +8,7 @@ import { QUERY_KEYS } from '@constants/query-keys';
 import { Status, type OrderList } from '@src/lib/firebase/types';
 
 export function useFetchOrderListQuery(uid: string) {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: QUERY_KEYS.AUTH.ORDERS(),
     queryFn: () => storeService.getOrderList(uid),
   });
