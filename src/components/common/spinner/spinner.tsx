@@ -1,9 +1,9 @@
 import Wrapper from '../ui/wrapper';
 
-export default function Loading() {
+export default function Spinner() {
   return (
-    <Wrapper className="absolute top-4 left-4">
-      <img src="/spinner.gif" alt="로딩" width="60%" />
+    <Wrapper className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]">
+      <img src="/spinner.svg" alt="로딩" />
     </Wrapper>
   );
 }

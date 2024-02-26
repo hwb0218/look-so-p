@@ -1,7 +1,9 @@
 import { useParams, useSearchParams } from 'react-router-dom';
 
 import { GoodsDetail as GoodsDetailComponent } from '@components/goods/goods-detail';
-import WithQueryAsyncBoundary from '@components/common/with-query-async-boundary/with-query-async-boundary';
+import { WithQueryAsyncBoundary } from '@components/common/with-query-async-boundary';
+import Spinner from '@components/common/spinner/spinner';
+import useFetchGoodsByIdQuery from '@hooks/use-fetch-goods-by-id-query';
 
 function GoodsDetail() {
   const { id } = useParams() as { id: string };
@@ -9,11 +11,18 @@ function GoodsDetail() {
 
   const category = params.get('category') ?? '';
 
-  return <GoodsDetailComponent productId={id} category={category} />;
+  const { data: goods } = useFetchGoodsByIdQuery(id);
+
+  if (!goods) {
+    return null;
+  }
+
+  return <GoodsDetailComponent goods={goods} productId={id} category={category} />;
 }
 
 const GoodsDetailPage = WithQueryAsyncBoundary(GoodsDetail, {
-  pendingFallback: <div>GoodsDetailPage 로딩 중...</div>,
+  pendingFallback: <Spinner />,
+  rejectedFallback: <span>에러가 발생했습니다</span>,
 });
 
 export default GoodsDetailPage;
