@@ -7,7 +7,7 @@ export default function GoodsDetailRecommendSkeleton() {
   return (
     <Wrapper className="w-full">
       <Ul className="justify-normal items-baseline grid grid-cols-3 gap-x-[1px]">
-        {[...Array(3)].map((item) => (
+        {Array.from({ length: 3 }, (_, i) => i).map((item) => (
           <GoodsItemSkeletonCard key={item} />
         ))}
       </Ul>
