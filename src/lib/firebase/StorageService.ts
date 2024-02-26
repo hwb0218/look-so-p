@@ -1,4 +1,4 @@
-import { ref, getDownloadURL, uploadBytes, deleteObject } from 'firebase/storage';
+import { ref, getDownloadURL, uploadBytes, deleteObject, getStorage, updateMetadata, listAll } from 'firebase/storage';
 import { storage } from './config';
 
 import { v4 as uuidv4 } from 'uuid';
@@ -8,7 +8,8 @@ class StorageService {
     const name = uuidv4();
 
     const storageRef = ref(storage, `${path}/${name}`);
-    await uploadBytes(storageRef, file);
+
+    await uploadBytes(storageRef, file, { cacheControl: 'public, max-age=86400' });
 
     const downloadURL = await getDownloadURL(storageRef);
     return downloadURL;
@@ -49,6 +50,26 @@ class StorageService {
     });
 
     await Promise.all(deletePromises);
+  }
+
+  async updateMetadatas(path: string = '') {
+    const storage = getStorage();
+    const folderRef = ref(storage, path);
+
+    const res = await listAll(folderRef);
+
+    const newMetadata = { cacheControl: 'public, max-age=86400' };
+
+    for (let i = 0; i < res.prefixes.length; i++) {
+      const subfolderRef = res.prefixes[i];
+      console.log(subfolderRef);
+      await this.updateMetadatas(subfolderRef.fullPath);
+    }
+
+    for (let i = 0; i < res.items.length; i++) {
+      const fileRef = res.items[i];
+      await updateMetadata(fileRef, newMetadata);
+    }
   }
 }
 
