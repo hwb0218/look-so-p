@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link, createSearchParams } from 'react-router-dom';
 import { storeService } from '@src/lib/firebase/StoreService';
 import { queryClient } from '@src/main';
@@ -17,7 +18,7 @@ interface Props {
   goods?: Product[];
 }
 
-export default function GoodsListByCategory({ goods }: Props) {
+function GoodsListByCategory({ goods }: Props) {
   return (
     <Ul className="justify-normal items-baseline grid grid-cols-4 gap-x-5 gap-y-20">
       {goods?.map((item) => (
@@ -46,3 +47,5 @@ export default function GoodsListByCategory({ goods }: Props) {
     </Ul>
   );
 }
+
+export default React.memo(GoodsListByCategory);

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { FieldValues, UseFormReturn } from 'react-hook-form';
 import { getImageData } from '@src/utils/set-image-data';
@@ -41,30 +41,30 @@ export default function useUpdateConsoleImage<T extends RequiredFields>(form: Us
     onChange(files);
   };
 
-  const onChangeFileInput = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    onChange: (...event: FileList[]) => void,
-    value?: FileList,
-  ) => {
-    const limitedFileLength = 3;
-    const prevFileList = value?.length ?? 0;
-    const fileList = e.target.files?.length ?? 0;
-    const isOverMaxFiles = prevFileList + fileList > limitedFileLength || previewImageUrls.length >= limitedFileLength;
+  const onChangeFileInput = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>, onChange: (...event: FileList[]) => void, value?: FileList) => {
+      const limitedFileLength = 3;
+      const prevFileList = value?.length ?? 0;
+      const fileList = e.target.files?.length ?? 0;
+      const isOverMaxFiles =
+        prevFileList + fileList > limitedFileLength || previewImageUrls.length >= limitedFileLength;
 
-    if (isOverMaxFiles) {
-      e.target.value = '';
-      return alert('최대 3개의 파일을 선택할 수 있습니다.');
-    }
+      if (isOverMaxFiles) {
+        e.target.value = '';
+        return alert('최대 3개의 파일을 선택할 수 있습니다.');
+      }
 
-    const { files, previewUrls } = getImageData({
-      selectedImages: e.target?.files as FileList,
-      prevImages: value,
-      multiple: true,
-    });
+      const { files, previewUrls } = getImageData({
+        selectedImages: e.target?.files as FileList,
+        prevImages: value,
+        multiple: true,
+      });
 
-    setPreviewImageUrls((prev) => [...prev, ...previewUrls].slice(-limitedFileLength));
-    onChange(files);
-  };
+      setPreviewImageUrls((prev) => [...prev, ...previewUrls].slice(-limitedFileLength));
+      onChange(files);
+    },
+    [previewImageUrls.length],
+  );
 
   return {
     previewImageUrls,

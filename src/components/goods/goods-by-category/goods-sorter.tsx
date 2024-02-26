@@ -1,3 +1,5 @@
+import React from 'react';
+
 import Wrapper from '@components/common/ui/wrapper';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@components/ui/select';
 
@@ -8,7 +10,7 @@ interface Props {
   setSortingOption: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export default function GoodsSorter({ sortingOption, setSortingOption }: Props) {
+const GoodsSorter = ({ sortingOption, setSortingOption }: Props) => {
   return (
     <Wrapper className="my-4">
       <Select value={sortingOption} defaultValue={sortingOption} onValueChange={setSortingOption}>
@@ -25,4 +27,6 @@ export default function GoodsSorter({ sortingOption, setSortingOption }: Props) 
       </Select>
     </Wrapper>
   );
-}
+};
+
+export default React.memo(GoodsSorter);

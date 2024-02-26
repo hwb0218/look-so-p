@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { useSearchParams } from 'react-router-dom';
 
 import { Li, Ul } from '@components/common/ui/list';
@@ -10,7 +12,7 @@ interface Props {
   setFilterCategory: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export default function GoodsCategories({ categories, filterCategory, setFilterCategory }: Props) {
+function GoodsCategories({ categories, filterCategory, setFilterCategory }: Props) {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const handleClickCategory = (category: string) => {
@@ -33,3 +35,5 @@ export default function GoodsCategories({ categories, filterCategory, setFilterC
     </Ul>
   );
 }
+
+export default React.memo(GoodsCategories);

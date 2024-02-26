@@ -17,7 +17,7 @@ export default function GoodsByCategory({ category }: Props) {
   const [filterCategory, setFilterCategory] = useState(category);
   const [sortingOption, setSortingOption] = useState('latest');
 
-  const { data: goods, ref } = useFetchGoodsByCategoryQuery(filterCategory);
+  const { data: goods, ref, hasNextPage, isFetchingNextPage } = useFetchGoodsByCategoryQuery(filterCategory);
 
   const goodsContent = goods?.pages ?? [];
 
@@ -32,7 +32,7 @@ export default function GoodsByCategory({ category }: Props) {
       />
       <GoodsSorter sortingOption={sortingOption} setSortingOption={setSortingOption} />
       <GoodsListByCategory goods={sortedGoods} />
-      {goods && <div ref={ref} />}
+      {hasNextPage && !isFetchingNextPage && <div ref={ref} />}
     </Wrapper>
   );
 }
