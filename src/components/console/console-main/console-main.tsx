@@ -6,6 +6,7 @@ import { ConsoleUpdateProduct } from '..';
 import Wrapper from '@components/common/ui/wrapper';
 import { Li, Ul } from '@components/common/ui/list';
 import { Button } from '@components/ui/button';
+import { GoodsItemCard } from '@components/goods/goods-item-card';
 
 import dateFormat from '@src/utils/date-format';
 
@@ -47,7 +48,7 @@ export default function ConsoleMain({ products }: Props) {
               <div>
                 <Wrapper className="flex">
                   <div className="w-36 h-36 mr-3 overflow-hidden rounded-md">
-                    <img src={thumbnail} alt="대표 이미지" className="aspect-auto w-full h-full" />
+                    <GoodsItemCard src={thumbnail} alt={productName} />
                   </div>
                   <div>
                     <strong>{productName}</strong>
