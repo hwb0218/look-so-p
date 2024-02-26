@@ -1,7 +1,5 @@
 import { Suspense } from 'react';
 
-import useFetchGoodsByIdQuery from '@hooks/use-fetch-goods-by-id-query';
-
 import { GoodsDetailRecommend, GoodsDetailImages, GoodsDetailMetadata, GoodsDetailRecommendSkeleton } from '.';
 
 import { Meta } from '@components/common/meta';
@@ -9,18 +7,15 @@ import Wrapper from '@components/common/ui/wrapper';
 
 import { ROUTE_PATHS } from '@constants/routes';
 
+import { type Product } from '@src/lib/firebase/types';
+
 interface Props {
+  goods: Product;
   productId: string;
   category: string;
 }
 
-export default function GoodsDetail({ productId, category }: Props) {
-  const { data: goods } = useFetchGoodsByIdQuery(productId);
-
-  if (!goods) {
-    return null;
-  }
-
+export default function GoodsDetail({ goods, productId, category }: Props) {
   return (
     <>
       <Meta
