@@ -425,6 +425,19 @@ class StoreService {
 
     return { orders, lastVisible };
   }
+
+  async getAllSearchGoods() {
+    const collectionRef = collection(db, 'products');
+    const docSnapshot = await getDocs(collectionRef);
+
+    const goods = docSnapshot.docs.map((doc) => {
+      const { id } = doc;
+      const data = doc.data();
+      return { ...data, id } as Product;
+    });
+
+    return goods;
+  }
 }
 
 export const storeService = new StoreService();

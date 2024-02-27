@@ -17,5 +17,6 @@ export const QUERY_KEYS = {
     BY_ID: (productId?: string) => [...QUERY_KEYS.GOODS.DETAILS(), productId] as const,
     BY_CATEGORY: (category: string) => [...QUERY_KEYS.GOODS.BASE, category] as const,
     RECOMMEND: (category: string) => [...QUERY_KEYS.GOODS.BASE, 'recommend', category] as const,
+    SEARCH: () => [...QUERY_KEYS.GOODS.BASE, 'search'] as const,
   },
 };

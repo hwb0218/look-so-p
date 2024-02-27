@@ -4,13 +4,16 @@ import { HelmetProvider } from 'react-helmet-async';
 import { AuthProvider } from './auth';
 import { ModalPortal, ModalProvider } from './modal';
 import { CartProvider } from './cart';
+import { SearchBarProvider } from './search-bar';
 
 export default function Providers({ children }: PropsWithChildren) {
   return (
     <HelmetProvider>
       <AuthProvider>
         <ModalProvider>
-          <CartProvider>{children}</CartProvider>
+          <CartProvider>
+            <SearchBarProvider>{children}</SearchBarProvider>
+          </CartProvider>
           <ModalPortal />
         </ModalProvider>
       </AuthProvider>
