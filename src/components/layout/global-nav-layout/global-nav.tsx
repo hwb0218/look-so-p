@@ -3,8 +3,10 @@ import { NavLink } from 'react-router-dom';
 import { Ul, Li } from '@components/common/ui/list';
 
 import { NavItems, NavItemsAuth, NavItemsUnauth } from './global-nav-items';
+import { SearchBar } from './goods-search-bar';
 
 import { ROUTE_PATHS } from '@constants/routes';
+
 import { getLocalStorage } from '@src/utils/local-storage';
 
 function GlobalNav() {
@@ -24,7 +26,8 @@ function GlobalNav() {
           </NavLink>
         </Li>
       </Ul>
-      <Ul className="gap-x-2">
+      <Ul className="*:mx-2 gap-x-2">
+        <SearchBar />
         <NavItems />
         <NavItemsAuth renderIf={() => auth} isSeller={auth?.isSeller} />
         <NavItemsUnauth renderIf={() => !auth} />
