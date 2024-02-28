@@ -43,7 +43,7 @@ export default function ConsoleMain({ products }: Props) {
       {products?.map(({ createdAt, productName, productDescription, thumbnail, id, sellerId }) => (
         <Li key={id} className="w-full before:h-[2px] before:content-[''] before:block before:bg-slate-100">
           <Wrapper className="w-full rounded-md p-4">
-            <div className="float-right text-sm">등록일 {dateFormat(createdAt.toDate())}</div>
+            <div className="float-right text-sm">등록일 {dateFormat(createdAt?.toDate())}</div>
             <Wrapper className="flex justify-between">
               <div>
                 <Wrapper className="flex">

@@ -25,7 +25,7 @@ export default function GoodsItemCard({ src, alt = '' }: Props) {
     <Wrapper ref={ref} className="pt-[100%] relative w-full rounded-lg">
       <Card className="absolute inset-0 border-0 shadow-none bg-muted overflow-hidden">
         <CardContent className="p-0 aspect-square flex items-center justify-center bg-transparent">
-          {isVisible && <img src={src} alt={alt} draggable={false} className="w-full h-full" />}
+          {isVisible && <img src={src ?? ''} alt={alt} draggable={false} className="w-full h-full" />}
         </CardContent>
       </Card>
     </Wrapper>
