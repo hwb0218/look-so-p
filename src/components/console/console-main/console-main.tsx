@@ -11,6 +11,7 @@ import { GoodsItemCard } from '@components/goods/goods-item-card';
 import dateFormat from '@src/utils/date-format';
 
 import type { Product } from '@src/lib/firebase/types';
+import DeleteGoodsAlert from './delete-goods-alert';
 
 interface Props {
   products: Product[];
@@ -20,7 +21,7 @@ export default function ConsoleMain({ products }: Props) {
   const { mutate: deleteProduct } = useDeleteProductsMutation();
   const { openModal } = useModalContext();
 
-  const onClickEditButton = (productId: string) => {
+  const handleClickEditButton = (productId: string) => {
     const product = products.find((p) => p.id === productId);
 
     if (!product) {
@@ -30,11 +31,8 @@ export default function ConsoleMain({ products }: Props) {
     openModal(<ConsoleUpdateProduct product={product} />);
   };
 
-  const onClickDeleteButton = async (productId: string, sellerId: string) => {
-    const confirm = window.confirm('정말로 삭제하겠습니까?');
-    if (confirm) {
-      deleteProduct({ sellerId, productId });
-    }
+  const handleDeleteButton = (productId: string, sellerId: string) => {
+    openModal(<DeleteGoodsAlert onDeleteGoods={() => deleteProduct({ sellerId, productId })} />);
   };
 
   return (
@@ -58,10 +56,10 @@ export default function ConsoleMain({ products }: Props) {
               </div>
             </Wrapper>
             <Wrapper className="flex justify-end gap-x-2">
-              <Button type="button" variant="outline" onClick={() => onClickEditButton(id)}>
+              <Button type="button" variant="outline" onClick={() => handleClickEditButton(id)}>
                 수정
               </Button>
-              <Button type="button" variant="destructive" onClick={() => onClickDeleteButton(id, sellerId)}>
+              <Button type="button" variant="destructive" onClick={() => handleDeleteButton(id, sellerId)}>
                 삭제
               </Button>
             </Wrapper>
