@@ -7,18 +7,8 @@ import Spinner from '@components/common/spinner/spinner';
 import { ROUTE_PATHS } from '@constants/routes';
 
 import ComponentThatMayError from '@components/common/error-boundary/test';
-import { useEffect } from 'react';
-// import { storageService } from '@src/lib/firebase/StorageService';
 
 function Home() {
-  useEffect(() => {
-    const updateMeta = async () => {
-      // await storageService.updateMetadatas('products');
-    };
-
-    updateMeta();
-  }, []);
-
   return (
     <>
       <Meta title="LookSoPrt" url={ROUTE_PATHS.HOME} desc="LookSoPrt" />
