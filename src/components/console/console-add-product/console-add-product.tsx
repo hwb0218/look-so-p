@@ -14,12 +14,16 @@ import { Input } from '@components/ui/input';
 import { Button } from '@components/ui/button';
 import { Textarea } from '@components/ui/textarea';
 import Wrapper from '@components/common/ui/wrapper';
+import { toast } from 'sonner';
 
 import formatNumber from '@src/utils/format-number';
 import { queryClient } from '@src/main';
 import { QUERY_KEYS } from '@constants/query-keys';
+import { useNavigate } from 'react-router-dom';
+import { CONSOLE_ROUTE_PATHS } from '@constants/routes';
 
 export default function ConsoleProductRegistration() {
+  const navigate = useNavigate();
   const { state } = useAuthContext();
   const { createConsoleProducts } = useFetchProducts();
 
@@ -35,9 +39,13 @@ export default function ConsoleProductRegistration() {
   });
 
   const onSubmit = async (values: ProductFormSchema) => {
-    await createConsoleProducts(values, state?.auth.uid);
-    alert('상품 등록 완료!');
-    queryClient.invalidateQueries({ queryKey: QUERY_KEYS.GOODS.MAIN() });
+    toast.promise(createConsoleProducts(values, state?.auth.uid), {
+      loading: '상품을 등록하고 있습니다',
+      success: '상품이 정상 등록됐습니다',
+      error: '등록에 실패했습니다',
+    });
+    await queryClient.invalidateQueries({ queryKey: QUERY_KEYS.GOODS.MAIN() });
+    navigate(CONSOLE_ROUTE_PATHS.CONSOLE(state?.auth.uid));
   };
 
   return (
