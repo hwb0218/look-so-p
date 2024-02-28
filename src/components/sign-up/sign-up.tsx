@@ -82,120 +82,120 @@ function SignUp() {
   };
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="flex justify-center items-center flex-col space-y-4">
-        <Label>프로필</Label>
-        <Avatar className="w-24 h-24 cursor-pointer" onClick={onClickFileInput}>
-          <AvatarImage src={preview} onClick={onResetFileInput} />
-          <AvatarFallback className="bg-stone-300">
-            <img src="/user_add.svg" className="w-3/4" />
-          </AvatarFallback>
-        </Avatar>
-        <Wrapper>
-          <FormField
-            control={form.control}
-            name="profile"
-            render={({ field: { onChange } }) => (
-              <FormItem>
-                <FormControl>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    hidden
-                    disabled={form.formState.isSubmitting}
-                    onChange={(e) => {
-                      const { files, previewUrls } = getImageData({ selectedImages: e.target?.files as FileList });
+    <Wrapper className="px-6 max-w-96 w-full fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="flex justify-center items-center flex-col space-y-4">
+          <Label>프로필</Label>
+          <Avatar className="w-24 h-24 cursor-pointer" onClick={onClickFileInput}>
+            <AvatarImage src={preview} onClick={onResetFileInput} />
+            <AvatarFallback className="bg-stone-300">
+              <img src="/user_add.svg" className="w-3/4" />
+            </AvatarFallback>
+          </Avatar>
+          <div className="min-w-40 w-full">
+            <FormField
+              control={form.control}
+              name="profile"
+              render={({ field: { onChange } }) => (
+                <FormItem>
+                  <FormControl>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      hidden
+                      disabled={form.formState.isSubmitting}
+                      onChange={(e) => {
+                        const { files, previewUrls } = getImageData({ selectedImages: e.target?.files as FileList });
 
-                      const [imageUrl] = previewUrls;
+                        const [imageUrl] = previewUrls;
 
-                      onChange(files);
-                      setPreview(imageUrl);
-                    }}
-                    ref={inputRef}
-                  />
-                </FormControl>
-                <FormMessage className="text-center space-y-2" />
-              </FormItem>
-            )}
-          />
+                        onChange(files);
+                        setPreview(imageUrl);
+                      }}
+                      ref={inputRef}
+                    />
+                  </FormControl>
+                  <FormMessage className="text-center space-y-2" />
+                </FormItem>
+              )}
+            />
 
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem className="mt-2">
-                <FormLabel className="pl-2">아이디</FormLabel>
-                <FormControl>
-                  <Input placeholder="아이디(이메일)" {...field} className="w-96" />
-                </FormControl>
-                <FormMessage className="ml-2" />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="nickname"
-            render={({ field }) => (
-              <FormItem className="mt-2">
-                <FormLabel className="pl-2">닉네임</FormLabel>
-                <FormControl>
-                  <Input placeholder="닉네임" {...field} className="w-96" />
-                </FormControl>
-                <FormMessage className="ml-2" />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem className="mt-2">
-                <FormLabel className="pl-2">비밀번호</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="비밀번호(영문, 숫자, 특수문자 조합)"
-                    type="password"
-                    className="w-96"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage className="ml-2" />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="checkPassword"
-            render={({ field }) => (
-              <FormItem className="mt-2">
-                <FormLabel className="pl-2">비밀번호 확인</FormLabel>
-                <FormControl>
-                  <Input placeholder="비밀번호 확인" type="password" className="w-96" {...field} />
-                </FormControl>
-                <FormMessage className="flex-none" />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="isSeller"
-            render={({ field }) => (
-              <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md pl-2 py-4">
-                <FormControl>
-                  <Checkbox checked={field.value} onCheckedChange={field.onChange} />
-                </FormControl>
-                <div className="space-y-1 leading-none">
-                  <FormLabel>판매자 입니다</FormLabel>
-                </div>
-              </FormItem>
-            )}
-          />
-          <Button type="submit" disabled={form.formState.isSubmitting} className="w-full">
-            회원가입
-          </Button>
-        </Wrapper>
-      </form>
-    </Form>
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem className="mt-2">
+                  <FormLabel className="pl-2">아이디</FormLabel>
+                  <FormControl>
+                    <Input placeholder="아이디(이메일)" {...field} className="w-full" />
+                  </FormControl>
+                  <FormMessage className="ml-2" />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="nickname"
+              render={({ field }) => (
+                <FormItem className="mt-2">
+                  <FormLabel className="pl-2">닉네임</FormLabel>
+                  <FormControl>
+                    <Input placeholder="닉네임" {...field} className="w-full" />
+                  </FormControl>
+                  <FormMessage className="ml-2" />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem className="mt-2">
+                  <FormLabel className="pl-2">비밀번호</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="비밀번호(영문, 숫자, 특수문자 조합)"
+                      type="password"
+                      className="w-full"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage className="ml-2" />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="checkPassword"
+              render={({ field }) => (
+                <FormItem className="mt-2">
+                  <FormLabel className="pl-2">비밀번호 확인</FormLabel>
+                  <FormControl>
+                    <Input placeholder="비밀번호 확인" type="password" className="w-full" {...field} />
+                  </FormControl>
+                  <FormMessage className="flex-none" />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="isSeller"
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md pl-2 py-4">
+                  <FormControl>
+                    <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                  </FormControl>
+                  <FormLabel className="leading-1">판매자 입니다</FormLabel>
+                </FormItem>
+              )}
+            />
+            <Button type="submit" disabled={form.formState.isSubmitting} className="mt-2 w-full">
+              회원가입
+            </Button>
+          </div>
+        </form>
+      </Form>
+    </Wrapper>
   );
 }
 
