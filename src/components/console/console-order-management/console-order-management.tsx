@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import { useUpdateOrderManageMentMutation } from '@hooks/use-fetch-order-management-query';
 
 import { Li, Ul } from '@components/common/ui/list';
@@ -17,21 +15,10 @@ interface Props {
 }
 
 export default function ConsoleOrderManagement({ orders, sellerId }: Props) {
-  const [statusSelectView, setStatusSelectView] = useState('');
-
   const { mutate } = useUpdateOrderManageMentMutation(sellerId);
 
   const handleChange = (status: Status, orderId: string, orderListId: string = '') => {
     mutate({ orderId, orderListId, status });
-    setStatusSelectView('');
-  };
-
-  const handleClickStatusSelectView = (orderListId: string = '') => {
-    if (statusSelectView !== '') {
-      setStatusSelectView('');
-    } else {
-      setStatusSelectView(orderListId);
-    }
   };
 
   return (
@@ -51,7 +38,7 @@ export default function ConsoleOrderManagement({ orders, sellerId }: Props) {
             <th>상품</th>
             <th>수량</th>
             <th>주문금액</th>
-            <th>상태</th>
+            <th>주문 상태 설정</th>
           </tr>
         </thead>
         {orders?.map(({ orderItems, id, merchantId, createdAt, uid }) => (
@@ -79,30 +66,22 @@ export default function ConsoleOrderManagement({ orders, sellerId }: Props) {
                   </td>
                   <td>{orderItem.goodsCount}</td>
                   <td className="text-lime-600">{numberFormat(orderItem.totalPrice)}원</td>
-                  <td className="h-full">
-                    <strong
-                      className="inline-block p-2 text-sm cursor-pointer"
-                      onClick={() => handleClickStatusSelectView(orderItem.id)}
+                  <td>
+                    <Select
+                      defaultValue={orderItem.status}
+                      onValueChange={(value: Status) => handleChange(value, id, orderItem.id)}
                     >
-                      {orderItem.status}
-                    </strong>
-                    {statusSelectView === orderItem.id && (
-                      <Select
-                        defaultValue={orderItem.status}
-                        onValueChange={(value: Status) => handleChange(value, id, orderItem.id)}
-                      >
-                        <SelectTrigger className="w-full">
-                          <SelectValue>{orderItem.status}</SelectValue>
-                        </SelectTrigger>
-                        <SelectContent className="min-w-[100px] z-[1000000]">
-                          {Object.entries(Status).map(([key, value]) => (
-                            <SelectItem key={key} value={value}>
-                              {value}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    )}
+                      <SelectTrigger>
+                        <SelectValue>{orderItem.status}</SelectValue>
+                      </SelectTrigger>
+                      <SelectContent className="min-w-[100px] z-[1000000]">
+                        {Object.entries(Status).map(([key, value]) => (
+                          <SelectItem key={key} value={value}>
+                            {value}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </td>
                 </tr>
               );
