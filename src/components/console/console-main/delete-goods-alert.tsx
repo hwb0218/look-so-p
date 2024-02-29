@@ -8,7 +8,7 @@ interface Props {
 }
 
 export default function DeleteGoodsAlert({ onDeleteGoods }: Props) {
-  const { closeModal } = useModalContext();
+  const { isOpen, closeModal } = useModalContext();
 
   const handleClickConfirm = async () => {
     onDeleteGoods();
@@ -20,7 +20,7 @@ export default function DeleteGoodsAlert({ onDeleteGoods }: Props) {
   };
 
   return (
-    <Modal>
+    <Modal data-state={isOpen}>
       <Modal.Header>
         <WarningIcon fill="#000" className="relative -top-[2px]" />
         <span>정말 상품을 삭제하시겠습니까?</span>

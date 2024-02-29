@@ -5,7 +5,7 @@ import Wrapper from '@components/common/ui/wrapper';
 import { PropsWithChildren } from 'react';
 
 export default function ModalPortal() {
-  const { modalContent } = useModalContext();
+  const { modalContent, isOpen } = useModalContext();
 
   if (!modalContent) {
     return null;
@@ -13,7 +13,12 @@ export default function ModalPortal() {
 
   const ModalWrapper = ({ children }: PropsWithChildren) => {
     return (
-      <Wrapper className="flex justify-center items-center fixed inset-0 bg-stone-800/80 z-[9999]">{children}</Wrapper>
+      <Wrapper
+        data-state={isOpen}
+        className="fixed inset-0 z-50 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
+      >
+        {children}
+      </Wrapper>
     );
   };
 

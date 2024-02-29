@@ -19,7 +19,7 @@ const ModalMain = ({ children, className, ...props }: React.HTMLAttributes<HTMLD
 
 const ModalHeader = ({ children, className, ...props }: React.HTMLAttributes<HTMLDivElement>) => {
   return (
-    <div className={cn('flex items-center space-x-2 text-center sm:text-left', className)} {...props}>
+    <div className={cn('flex item space-x-2 text-center sm:text-left', className)} {...props}>
       {children}
     </div>
   );

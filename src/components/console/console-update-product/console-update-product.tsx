@@ -21,12 +21,14 @@ import formatNumber from '@src/utils/format-number';
 import Images from './images';
 
 import type { ImagesToBeUpdated } from './types';
+import { Modal } from '@components/common/modal';
 
 interface Props {
   product: Product;
 }
 
 export default function ConsoleUpdateProduct({ product }: Props) {
+  const { isOpen } = useModalContext();
   const [imagesToBeUpdated, setImagesToBeUpdated] = useState<ImagesToBeUpdated>({
     thumbnail: '',
     images: [],
@@ -56,10 +58,10 @@ export default function ConsoleUpdateProduct({ product }: Props) {
   };
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
-        <Wrapper className="flex justify-center items-center fixed left-0 right-0 top-0 bottom-0">
-          <Wrapper className="p-4 w-1/2 mb-5 bg-white rounded-md overflow-hidden max-xl:h-5/6 max-xl:overflow-y-scroll">
+    <Modal data-state={isOpen} className="max-xl:overflow-y-scroll max-xl:h-5/6">
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <Wrapper className="w-full">
             <h1 className="text-3xl font-bold">상품 정보 수정</h1>
             <FormField
               control={form.control}
@@ -157,8 +159,8 @@ export default function ConsoleUpdateProduct({ product }: Props) {
               </Button>
             </Wrapper>
           </Wrapper>
-        </Wrapper>
-      </form>
-    </Form>
+        </form>
+      </Form>
+    </Modal>
   );
 }
