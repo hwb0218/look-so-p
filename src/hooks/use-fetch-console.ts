@@ -56,10 +56,9 @@ export default function useFetchConsoleProducts() {
       });
 
       await storageService.deleteFiles([...imagesToBeUpdated, ...thumbnailToBeUpdated] as string[]);
-      // FIXME: 추후 낙관적 업데이트로 수정
       await queryClient.invalidateQueries({ queryKey: QUERY_KEYS.CONSOLE.PRODUCTS(sellerId) });
 
-      return '상품 추가 완료';
+      return Promise.resolve();
     } catch (err) {
       if (err instanceof FirebaseError) {
         console.error(err);

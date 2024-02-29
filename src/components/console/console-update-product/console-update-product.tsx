@@ -22,6 +22,7 @@ import Images from './images';
 
 import type { ImagesToBeUpdated } from './types';
 import { Modal } from '@components/common/modal';
+import { toast } from 'sonner';
 
 interface Props {
   product: Product;
@@ -53,8 +54,11 @@ export default function ConsoleUpdateProduct({ product }: Props) {
   });
 
   const onSubmit = async (values: UpdateProductFormSchema) => {
-    await updateConsoleProducts({ ...values, imagesToBeUpdated }, state?.auth.uid, product.id);
-    alert('상품 수정 완료!');
+    toast.promise(updateConsoleProducts({ ...values, imagesToBeUpdated }, state?.auth.uid, product.id), {
+      loading: '상품 정보를 수정하고 있습니다',
+      success: '상품 정보가 수정됐습니다',
+      error: '수정에 실패했습니다',
+    });
   };
 
   return (
