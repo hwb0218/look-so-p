@@ -149,7 +149,12 @@ class StoreService {
   async getAllGoods(categories: typeof GOODS_CATEGORIES, limitNum: number = 4) {
     const getCategoryDocs = async (category: string) => {
       const productsRef = collection(db, 'products');
-      const q = query(productsRef, where('productCategory', '==', category), limit(limitNum));
+      const q = query(
+        productsRef,
+        where('productCategory', '==', category),
+        orderBy('updatedAt', 'desc'),
+        limit(limitNum),
+      );
 
       const querySnapshot = await getDocs(q);
       const docs = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
