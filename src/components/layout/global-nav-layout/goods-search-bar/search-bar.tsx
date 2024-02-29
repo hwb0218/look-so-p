@@ -29,7 +29,7 @@ export default function SearchBar() {
   return (
     <form
       onSubmit={handleSubmit}
-      className={`flex ${isOpen ? 'w-96 outline-none ring-2 ring-ring' : 'w-[30px]'} h-10 px-1 relative rounded-full transition-all duration-500 overflow-hidden`}
+      className={`flex ${isOpen ? 'w-[450px] outline-none ring-2 ring-ring' : 'w-[32px]'} h-10 px-1 relative rounded-full transition-all duration-500 overflow-hidden`}
     >
       <div
         onClick={() => openSearchBar()}
