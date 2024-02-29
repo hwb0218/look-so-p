@@ -222,4 +222,31 @@ const CarouselNext = React.forwardRef<HTMLButtonElement, React.ComponentProps<ty
 );
 CarouselNext.displayName = 'CarouselNext';
 
-export { type CarouselApi, Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext };
+interface CarouselDotsProps {
+  count: number;
+  current: number;
+  onScrollTo: (index: number) => void;
+}
+
+const CarouselDots = ({
+  className,
+  count,
+  current,
+  onScrollTo,
+}: React.HTMLAttributes<HTMLDivElement> & CarouselDotsProps) => (
+  <div className="mt-2 text-center">
+    {[...Array(count)].map((_, i) => (
+      <div
+        key={i}
+        className={cn(
+          current === i + 1 ? 'bg-lime-500' : 'bg-slate-100',
+          'inline-block mx-[6px] w-[10px] h-[10px] rounded-full cursor-pointer',
+          className,
+        )}
+        onClick={() => onScrollTo(i)}
+      />
+    ))}
+  </div>
+);
+
+export { type CarouselApi, Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, CarouselDots };
