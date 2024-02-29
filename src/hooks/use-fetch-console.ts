@@ -9,8 +9,11 @@ import { storeService } from '@src/lib/firebase/StoreService';
 import { type ProductFormSchema } from '@src/lib/zod/console-product-schema';
 
 import { UpdateConsoleProducts } from '@src/types';
+import { useModalContext } from '@providers/modal';
 
 export default function useFetchConsoleProducts() {
+  const { closeModal } = useModalContext();
+
   const createConsoleProducts = async (values: ProductFormSchema, sellerId: string) => {
     try {
       const docRef = await storeService.createProducts(values, sellerId);
@@ -57,6 +60,8 @@ export default function useFetchConsoleProducts() {
 
       await storageService.deleteFiles([...imagesToBeUpdated, ...thumbnailToBeUpdated] as string[]);
       await queryClient.invalidateQueries({ queryKey: QUERY_KEYS.CONSOLE.PRODUCTS(sellerId) });
+
+      closeModal();
 
       return Promise.resolve();
     } catch (err) {
