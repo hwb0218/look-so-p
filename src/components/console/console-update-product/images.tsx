@@ -91,7 +91,7 @@ export default function Images({ form, setImagesToBeUpdated }: Props) {
           </FormItem>
         )}
       />
-      <Wrapper className="mt-2 p-2 flex gap-3 border rounded-md max-xl:flex-col">
+      <Wrapper className="mt-2 p-2 grid grid-cols-2 gap-3 border rounded-md">
         {[...Array(1)].map((_, index) => {
           const url = previewThumbnailUrls[index];
           return (

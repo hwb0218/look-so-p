@@ -62,7 +62,7 @@ export default function ConsoleUpdateProduct({ product }: Props) {
   };
 
   return (
-    <Modal data-state={isOpen} className="max-xl:overflow-y-scroll max-xl:h-5/6">
+    <Modal data-state={isOpen} className="overflow-y-scroll max-h-[800px]">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <Wrapper className="w-full">
@@ -104,12 +104,12 @@ export default function ConsoleUpdateProduct({ product }: Props) {
                 </FormItem>
               )}
             />
-            <Wrapper className="grid grid-flow-col gap-3">
+            <Wrapper className="flex gap-x-3">
               <FormField
                 control={form.control}
                 name="productQuantity"
                 render={({ field }) => (
-                  <FormItem className="mt-2">
+                  <FormItem className="mt-2 w-1/2">
                     <FormLabel className="pl-1">상품 수량</FormLabel>
                     <FormControl>
                       <Input
@@ -126,7 +126,7 @@ export default function ConsoleUpdateProduct({ product }: Props) {
                 control={form.control}
                 name="productPrice"
                 render={({ field }) => (
-                  <FormItem className="mt-2">
+                  <FormItem className="mt-2 w-1/2">
                     <FormLabel className="pl-1">상품 가격</FormLabel>
                     <FormControl>
                       <Input
