@@ -25,8 +25,6 @@ export default function ModalProvider({ children }: Props) {
   useEffect(() => {
     let timerId: NodeJS.Timeout;
 
-    console.log(isOpen);
-
     if (isOpen === 'closed') {
       timerId = setTimeout(() => {
         setModalContent(null);
