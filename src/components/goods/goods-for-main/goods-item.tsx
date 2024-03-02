@@ -34,11 +34,11 @@ export default function GoodsItem({ goods }: Props) {
           });
         }}
       >
-        <Carousel className="w-full">
+        <Carousel opts={{ loop: true }} className="w-full">
           <CarouselContent>
             {[goods.thumbnail, ...goods.images].map((src) => (
               <CarouselItem key={src}>
-                <GoodsItemCard src={src} alt="" />
+                <GoodsItemCard src={src} alt="" className="transform-gpu duration-200 hover:scale-105" />
               </CarouselItem>
             ))}
           </CarouselContent>
