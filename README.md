@@ -1,26 +1,25 @@
-# look-so-p
+# LookSoPrt
+> React + Typescript + Firebase Cosmetic E-commerce   
+> https://www.looksoprt.store
+> #### Project setup  
+> **`yarn install`**
+> #### Compiles and hot-reloads for development
+> **`yarn run dev`**
+> #### Compiles and minifies for production
+> **`yarn run build`**
 
-## Demo Link
 
-Demo Page :
+</br>
 
-## 프로젝트 개요
+## 1. 제작 기간 & 참여 인원
+- 2024/01/25 ~ 2024/02/29 - 1차 배포
+- 2024/02/29 ~ ing - 현재 진행 중
+- 개인 프로젝트
 
-React + Typescript 화장품 쇼핑몰
+</br>
 
-## 실행 방법
+## 2. 실행 방법
 
-#### Project setup
-
-`npm install`
-
-#### Compiles and hot-reloads for development
-
-`npm run dev`
-
-#### Compiles and minifies for production
-
-`npm run build`
 
 <p align="center">
 <img width="75%" src="https://github.com/hwb0218/look-so-p/assets/52212226/cf51ce52-01ab-4efe-ab1c-187907ff81d2">
