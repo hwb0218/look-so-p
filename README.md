@@ -1,14 +1,21 @@
 # LookSoPrt
 > React + Typescript + Firebase Cosmetic E-commerce   
 > https://www.looksoprt.store
-> #### Project setup  
-> **`yarn install`**
-> #### Compiles and hot-reloads for development
-> **`yarn run dev`**
-> #### Compiles and minifies for production
-> **`yarn run build`**
 
+`npm`
+```Shell
+$ git clone git@github.com:hwb0218/look-so-p.git
+$ npm install
+$ npm run dev
+```  
 
+`yarn`
+```Shell
+$ git clone git@github.com:hwb0218/look-so-p.git
+$ yarn install
+$ yarn run dev
+```  
+ 
 </br>
 
 ## 1. 제작 기간 & 참여 인원
