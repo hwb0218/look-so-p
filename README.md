@@ -5,6 +5,7 @@
 `npm`
 ```Shell
 $ git clone git@github.com:hwb0218/look-so-p.git
+$ cd look-so-p
 $ npm install
 $ npm run dev
 ```  
@@ -12,6 +13,7 @@ $ npm run dev
 `yarn`
 ```Shell
 $ git clone git@github.com:hwb0218/look-so-p.git
+$ cd look-so-p
 $ yarn install
 $ yarn run dev
 ```  
