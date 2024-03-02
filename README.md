@@ -41,3 +41,17 @@ $ yarn run dev
 </div>
 
 </br>
+
+## 3. 데모 영상
+
+<details>
+<summary><b>펼치기</b></summary>
+<div markdown="1">
+
+### 3.1 옵션 및 검색에 따른 상품 출력 
+![](https://user-images.githubusercontent.com/52212226/120294979-aecd3600-c301-11eb-9b25-28f1588298da.gif)
+
+</div>
+</details>
+
+</br>
