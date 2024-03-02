@@ -21,3 +21,7 @@ React + Typescript 화장품 쇼핑몰
 #### Compiles and minifies for production
 
 `npm run build`
+
+<p align="center">
+<img width="75%" src="https://github.com/hwb0218/look-so-p/assets/52212226/cf51ce52-01ab-4efe-ab1c-187907ff81d2">
+</p>
