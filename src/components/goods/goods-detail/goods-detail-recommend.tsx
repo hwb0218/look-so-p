@@ -15,6 +15,9 @@ import {
 import { Link, createSearchParams } from 'react-router-dom';
 import { ROUTE_PATHS } from '@constants/routes';
 import useCarouselApi from '@hooks/use-carousel-api';
+import { queryClient } from '@src/main';
+import { QUERY_KEYS } from '@constants/query-keys';
+import { storeService } from '@src/lib/firebase/StoreService';
 
 interface Props {
   category: string;
@@ -27,14 +30,21 @@ const GoodsDetailRecommend = ({ category }: Props) => {
 
   return (
     <>
-      <Carousel setApi={setApi} className="w-full">
+      <Carousel setApi={setApi} opts={{ skipSnaps: true, loop: true }} className="w-full">
         <CarouselContent className="-ml-1">
-          {recommend.map((recommendItem) => (
+          {recommend?.map((recommendItem) => (
             <CarouselItem key={recommendItem.id} className="pl-1 basis-1/3">
               <Link
                 to={{
                   pathname: ROUTE_PATHS.GOODS_DETAIL(recommendItem.id),
                   search: `?${createSearchParams({ category: recommendItem.productCategory.trim() })}`,
+                }}
+                replace={true}
+                onMouseEnter={async () => {
+                  await queryClient.prefetchQuery({
+                    queryKey: QUERY_KEYS.GOODS.BY_ID(recommendItem.id),
+                    queryFn: () => storeService.getGoodsById(recommendItem.id),
+                  });
                 }}
               >
                 <GoodsDetailRecommendItem recommendItem={recommendItem} />
