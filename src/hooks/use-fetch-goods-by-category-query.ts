@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useSuspenseInfiniteQuery } from '@tanstack/react-query';
 import { useInView } from 'react-intersection-observer';
 
 import { DocumentData, QueryDocumentSnapshot } from 'firebase/firestore';
@@ -8,7 +8,7 @@ import { storeService } from '@src/lib/firebase/StoreService';
 import { QUERY_KEYS } from '@constants/query-keys';
 
 export default function useFetchGoodsByCategory(category: string) {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isFetched } = useInfiniteQuery({
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isFetched } = useSuspenseInfiniteQuery({
     queryKey: QUERY_KEYS.GOODS.BY_CATEGORY(category),
     queryFn: ({ pageParam }: { pageParam?: QueryDocumentSnapshot<DocumentData, DocumentData> }) =>
       storeService.getAllGoodsByCategory(category, { pageParam, limitNum: 12 }),
