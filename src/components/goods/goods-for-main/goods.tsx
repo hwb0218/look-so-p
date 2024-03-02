@@ -9,8 +9,8 @@ import { GOODS_CATEGORIES } from '@constants/goods-categories';
 
 export default function Goods() {
   return (
-    <Wrapper className="w-9/12 pt-6 m-auto">
-      <Wrapper className="flex-col items-start py-3">
+    <Wrapper className="w-9/12 m-auto">
+      <Wrapper className="flex-col items-start">
         <Suspense fallback={<GoodsSkeleton />}>
           <GoodsList categories={GOODS_CATEGORIES} />
         </Suspense>

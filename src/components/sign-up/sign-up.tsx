@@ -82,9 +82,12 @@ function SignUp() {
   };
 
   return (
-    <Wrapper className="px-6 max-w-96 w-full fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+    <Wrapper className="py-20 w-full flex justify-center">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="flex justify-center items-center flex-col space-y-4">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="p-6 w-full max-w-96 flex justify-center items-center flex-col space-y-4 border rounded-md ring-2 ring-ring ring-offset-2"
+        >
           <Label>프로필</Label>
           <Avatar className="w-24 h-24 cursor-pointer" onClick={onClickFileInput}>
             <AvatarImage src={preview} onClick={onResetFileInput} />

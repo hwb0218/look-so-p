@@ -1,9 +1,11 @@
 import { Outlet } from 'react-router-dom';
 
+import useCheckAuth from '@hooks/use-check-auth';
+
 import GlobalNav from './global-nav';
+
 import Wrapper from '@components/common/ui/wrapper';
 import { Cart } from '@components/cart';
-import useCheckAuth from '@hooks/use-check-auth';
 
 function GlobalLayout() {
   useCheckAuth();
@@ -12,7 +14,7 @@ function GlobalLayout() {
     <>
       <GlobalNav />
       <Cart />
-      <Wrapper className="mt-[72px]">
+      <Wrapper className="pt-[72px]">
         <Outlet />
       </Wrapper>
     </>

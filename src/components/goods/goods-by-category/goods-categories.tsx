@@ -22,7 +22,7 @@ function GoodsCategories({ categories, filterCategory, setFilterCategory }: Prop
   };
 
   return (
-    <Ul className="w-full py-6 text-center relative px-12 break-keep">
+    <Ul className="w-full pt-12 pb-6 text-center relative px-12 break-keep">
       {categories.map(({ value, title }) => (
         <Li
           key={value}

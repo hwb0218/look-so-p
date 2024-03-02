@@ -42,7 +42,7 @@ export default function SearchBar() {
           onChange={handleChangeQuery}
           type="text"
           placeholder="상품을 검색하세요"
-          className={`w-full h-full border-none outline-none`}
+          className={`w-full h-full border-none outline-none bg-transparent`}
         />
       </div>
       <div
