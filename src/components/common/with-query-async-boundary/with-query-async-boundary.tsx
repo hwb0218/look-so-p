@@ -1,11 +1,10 @@
-import type { ComponentType, ReactNode } from 'react';
+import type { PropsWithChildren, ReactNode } from 'react';
 import { Suspense } from 'react';
 import { useQueryErrorResetBoundary } from '@tanstack/react-query';
 
 import { ErrorBoundary } from '../error-boundary';
-
-export default function WithQueryAsyncBoundary(
-  Component: ComponentType<Record<string, unknown>>,
+export default function WithQueryAsyncBoundary<T>(
+  Component: React.ComponentType<T>,
   {
     pendingFallback,
     rejectedFallback,
@@ -14,7 +13,7 @@ export default function WithQueryAsyncBoundary(
     rejectedFallback: ReactNode;
   },
 ) {
-  const Wrapped = (props: Record<string, unknown>) => {
+  const Wrapped = (props: PropsWithChildren<T>) => {
     const { reset } = useQueryErrorResetBoundary();
 
     return (
