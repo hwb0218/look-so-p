@@ -1,23 +1,26 @@
 import { useParams, useSearchParams } from 'react-router-dom';
 
+import useScrollToTop from '@hooks/use-scroll-to-top';
+
 import { GoodsDetail as GoodsDetailComponent } from '@components/goods/goods-detail';
 import { WithQueryAsyncBoundary } from '@components/common/with-query-async-boundary';
 import Spinner from '@components/common/spinner/spinner';
-import useFetchGoodsByIdQuery from '@hooks/use-fetch-goods-by-id-query';
+import { Footer } from '@components/footer';
 
 function GoodsDetail() {
   const { id } = useParams() as { id: string };
   const [params] = useSearchParams();
 
+  useScrollToTop();
+
   const category = params.get('category') ?? '';
 
-  const { data: goods } = useFetchGoodsByIdQuery(id);
-
-  if (!goods) {
-    return null;
-  }
-
-  return <GoodsDetailComponent goods={goods} productId={id} category={category} />;
+  return (
+    <>
+      <GoodsDetailComponent productId={id} category={category} />
+      <Footer />
+    </>
+  );
 }
 
 const GoodsDetailPage = WithQueryAsyncBoundary(GoodsDetail, {
