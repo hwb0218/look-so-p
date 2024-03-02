@@ -14,11 +14,24 @@ import { ROUTE_PATHS } from '@constants/routes';
 import { queryClient } from '@src/main';
 import { QUERY_KEYS } from '@constants/query-keys';
 
+import Autoplay from 'embla-carousel-autoplay';
+import { useRef } from 'react';
+
 interface Props {
   goods: Product;
 }
 
 export default function GoodsItem({ goods }: Props) {
+  const plugin = useRef(Autoplay({ delay: 2000, playOnInit: false }));
+
+  const handleMouseEnter = () => {
+    plugin.current.play();
+  };
+
+  const handleMouseLeave = () => {
+    plugin.current.stop();
+  };
+
   return (
     <Li className="w-full h-full">
       <Link
@@ -34,7 +47,13 @@ export default function GoodsItem({ goods }: Props) {
           });
         }}
       >
-        <Carousel opts={{ loop: true }} className="w-full">
+        <Carousel
+          opts={{ loop: true }}
+          plugins={[plugin.current]}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          className="w-full"
+        >
           <CarouselContent>
             {[goods.thumbnail, ...goods.images].map((src) => (
               <CarouselItem key={src}>
