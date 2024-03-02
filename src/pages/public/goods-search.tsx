@@ -1,9 +1,11 @@
 import { GoodsSearch as GoodsSearchComponent } from '@components/goods/goods-serach';
 
-import Spinner from '@components/common/spinner/spinner';
-import { WithQueryAsyncBoundary } from '@components/common/with-query-async-boundary';
-import useFetchSearchGoodsQuery from '@hooks/use-fetch-search-goods-query';
 import { useSearchBarContext } from '@providers/search-bar';
+import useFetchSearchGoodsQuery from '@hooks/use-fetch-search-goods-query';
+
+import { Footer } from '@components/footer';
+import { WithQueryAsyncBoundary } from '@components/common/with-query-async-boundary';
+import Spinner from '@components/common/spinner/spinner';
 
 function GoodsSearch() {
   const { data: firstGoods } = useFetchSearchGoodsQuery();
@@ -16,7 +18,12 @@ function GoodsSearch() {
     return null;
   }
 
-  return <GoodsSearchComponent goods={goods} />;
+  return (
+    <>
+      <GoodsSearchComponent goods={goods} />
+      <Footer />
+    </>
+  );
 }
 
 const GoodsSearchPage = WithQueryAsyncBoundary(GoodsSearch, {
