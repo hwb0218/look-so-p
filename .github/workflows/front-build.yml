@@ -1,0 +1,81 @@
+name: front-deployment
+# action trigger를 입력한다
+# develop branch에 push가 발생하면 actions를 실행함
+on:
+  push:
+    branches:
+      - develop
+      - feature/*
+# action trigger로 실행될 목록 
+jobs:
+  build: 
+    name: react build & deploy
+    # runner가 실행될 환경
+    runs-on: ubuntu-latest
+
+    # name 단계별로 실행되는 액션을 설명함, 이후 github action의 workflow에 표시됨
+    # uses 키워드로 action을 불러옴
+    steps:
+      - name: checkout Github Action
+        uses: actions/checkout@v4.1.1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18.17.1
+          cache: 'yarn'
+
+      - name: .env setting
+        run: |
+          echo "VITE_FIREBASE_API_KEY=${{ secrets.VITE_FIREBASE_API_KEY }}" >> .env
+          echo "VITE_FIREBASE_PROJECT_ID=${{ secrets.VITE_FIREBASE_PROJECT_ID }}" >> .env
+          echo "VITE_FIREBASE_STORAGE_BUCKET=${{ secrets.VITE_FIREBASE_STORAGE_BUCKET }}" >> .env
+          echo "VITE_FIREBASE_MESSAGING_SENDER_ID=${{ secrets.VITE_FIREBASE_MESSAGING_SENDER_ID }}" >> .env
+          echo "VITE_FIREBASE_APP_ID=${{ secrets.VITE_FIREBASE_APP_ID }}" >> .env
+          echo "VITE_PORTONE_IMP=${{ secrets.VITE_PORTONE_IMP }}" >> .env
+          echo "VITE_PORTONE_PG_CODE=${{ secrets.VITE_PORTONE_PG_CODE }}" >> .env
+        env:
+          VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
+          VITE_FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
+          VITE_FIREBASE_STORAGE_BUCKET: ${{ secrets.VITE_FIREBASE_STORAGE_BUCKET }}
+          VITE_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.VITE_FIREBASE_MESSAGING_SENDER_ID }}
+          VITE_FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID }}
+          VITE_PORTONE_IMP: ${{ secrets.VITE_PORTONE_IMP }}
+          VITE_PORTONE_PG_CODE: ${{ secrets.VITE_PORTONE_PG_CODE }}
+
+      - name: Get yarn cache directory
+        id: yarn-cache-dir-path
+        run: |
+          echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
+
+      - name: Yarn cache     
+        uses: actions/cache@v3
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+              
+      - name: install dependencies
+        run: yarn install
+        
+      - name: react build
+        run: yarn run build 
+        
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_S3_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_S3_SECRET_ACCESS_KEY_ID }}
+          aws-region: ap-northeast-2
+
+      - name: Upload to S3
+        env:
+          BUCKET_NAME: ${{ secrets.AWS_S3_BUCKET_NAME}}
+        run: |
+          aws s3 sync ./dist s3://$BUCKET_NAME --profile=hanwookong
+
+      - name: CloudFront Invalidation
+        env:
+          CLOUD_FRONT_ID: ${{ secrets.AWS_CLOUDFRONT_ID}}
+        run: |
+          aws cloudfront create-invalidation --profile=hanwookong --distribution-id $CLOUDFRONT_ID --paths /*
