@@ -6,7 +6,7 @@ import { useInView } from 'react-intersection-observer';
 interface Props {
   src: string;
   alt: string;
-  className: string;
+  className?: string;
 }
 
 export default function GoodsItemCard({ src, alt = '', className }: Props) {
