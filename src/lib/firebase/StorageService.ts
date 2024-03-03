@@ -41,7 +41,7 @@ class StorageService {
 
   async deleteFiles(fileURLs: string[]) {
     if (!Array.isArray(fileURLs) || !fileURLs) {
-      return console.log('String type 배열이 아닙니다.');
+      return console.error('String type 배열이 아닙니다.');
     }
 
     const deletePromises = fileURLs.map((url) => {
@@ -62,7 +62,6 @@ class StorageService {
 
     for (let i = 0; i < res.prefixes.length; i++) {
       const subfolderRef = res.prefixes[i];
-      console.log(subfolderRef);
       await this.updateMetadatas(subfolderRef.fullPath);
     }
 
