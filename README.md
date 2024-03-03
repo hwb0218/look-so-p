@@ -44,6 +44,10 @@ $ yarn run dev
   <img src="https://img.shields.io/badge/Amazon_Route53-8C4FFF?style=flat-square&logo=amazonroute53&logoColor=white"/>
 </div>
 
+<div>
+   <img src="https://github.com/hwb0218/look-so-p/assets/52212226/bc40320a-f00b-4d20-a0b8-0bf3d0edfd6e" alt="Image 1" width="80%" style="display:inline-block;">
+</div>
+
 </br>
 
 ## 3. 데모 영상
@@ -53,7 +57,7 @@ $ yarn run dev
 <div markdown="1">
 
 ### 3.1 옵션 및 검색에 따른 상품 출력 
-![](https://user-images.githubusercontent.com/52212226/120294979-aecd3600-c301-11eb-9b25-28f1588298da.gif)
+![architecture](https://user-images.githubusercontent.com/52212226/120294979-aecd3600-c301-11eb-9b25-28f1588298da.gif)
 
 </div>
 </details>
