@@ -45,7 +45,7 @@ $ yarn run dev
 </div>
 
 <div>
-   <img src="https://github.com/hwb0218/look-so-p/assets/52212226/bc40320a-f00b-4d20-a0b8-0bf3d0edfd6e" alt="Image 1" width="80%" style="display:inline-block;">
+   <img src="https://github.com/hwb0218/look-so-p/assets/52212226/bc40320a-f00b-4d20-a0b8-0bf3d0edfd6e" alt="Image 1" width="80%" height="500px" style="display:inline-block; aspect-ratio: auto 1 / 1;">
 </div>
 
 </br>
