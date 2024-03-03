@@ -118,7 +118,6 @@ export default function Images({ form, setImagesToBeUpdated }: Props) {
                         thumbnail: extractedThumbnialPath,
                       }));
                     }
-                    form.setValue('thumbnail', []);
                     setPreveiwThumbnailUrls([]);
                   }}
                   className="object-cover w-full h-full cursor-pointer"
@@ -157,7 +156,8 @@ export default function Images({ form, setImagesToBeUpdated }: Props) {
                         .filter((_, i) => i !== index)
                         .forEach((image) => dataTransfer.items.add(image));
                     }
-                    form.setValue('images', []);
+                    const files = dataTransfer.files;
+                    form.setValue('images', files);
                   }}
                   className="absolute inset-0 object-cover w-full h-full cursor-pointer"
                 />
