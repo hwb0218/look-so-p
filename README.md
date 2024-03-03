@@ -45,10 +45,14 @@ $ yarn run dev
 </div>
 
 <details>
-<summary><b>펼치기</b></summary>
+<summary><b>아키텍처</b></summary>
 <div markdown="1">
 
-<img src="https://github.com/hwb0218/look-so-p/assets/52212226/bc40320a-f00b-4d20-a0b8-0bf3d0edfd6e" alt="Image 1" width="85%" style="display:inline-block; aspect-ratio: auto 1 / 1;">
+</br>
+
+<p>
+   <img src="https://github.com/hwb0218/look-so-p/assets/52212226/fd253aa3-80fd-43b2-9bf9-8539fd141bc4" alt="Image 1" width="75%" style="display:inline-block; aspect-ratio: auto 1 / 1;">
+</p>
 
 </div>
 </details>
