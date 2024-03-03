@@ -21,6 +21,6 @@ export default async function resizeImages(images: FileList) {
 
     return dataTransfer.files;
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }

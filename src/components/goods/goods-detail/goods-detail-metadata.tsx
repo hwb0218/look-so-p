@@ -58,7 +58,7 @@ export default function GoodsDetailMetadata({ goods, productId }: Props) {
       };
       addGoodsToCart({ goods: values, uid });
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
