@@ -44,18 +44,10 @@ $ yarn run dev
   <img src="https://img.shields.io/badge/Amazon_Route53-8C4FFF?style=flat-square&logo=amazonroute53&logoColor=white"/>
 </div>
 
-<details>
-<summary><b>아키텍처</b></summary>
-<div markdown="1">
-
 </br>
 
-<p>
-   <img src="https://github.com/hwb0218/look-so-p/assets/52212226/fd253aa3-80fd-43b2-9bf9-8539fd141bc4" alt="Image 1" width="75%" style="display:inline-block; aspect-ratio: auto 1 / 1;">
-</p>
+<img src="https://github.com/hwb0218/look-so-p/assets/52212226/fd253aa3-80fd-43b2-9bf9-8539fd141bc4" alt="Image 1" width="75%" style="object-fit:cover;">
 
-</div>
-</details>
 
 </br>
 
