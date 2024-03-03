@@ -21,7 +21,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18.17.1
-          cache: 'yarn'
+          cache: yarn
 
       - name: .env setting
         run: |
@@ -41,20 +41,21 @@ jobs:
           VITE_PORTONE_IMP: ${{ secrets.VITE_PORTONE_IMP }}
           VITE_PORTONE_PG_CODE: ${{ secrets.VITE_PORTONE_PG_CODE }}
 
-      - name: Get yarn cache directory
+
+
+      - name: Get yarn cache directory path
         id: yarn-cache-dir-path
-        run: |
-          echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
+        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
 
       - name: Yarn cache     
         uses: actions/cache@v3
         id: yarn-cache
         with:
-          path: ${{ steps.yarn-cache-dir.outputs.dir }}
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
-              
+        
       - name: install dependencies
         run: yarn install
         
@@ -70,12 +71,12 @@ jobs:
 
       - name: Upload to S3
         env:
-          BUCKET_NAME: ${{ secrets.AWS_S3_BUCKET_NAME}}
+          BUCKET_NAME: ${{ secrets.AWS_S3_BUCKET_NAME }}
         run: |
           aws s3 sync ./dist s3://$BUCKET_NAME --profile=hanwookong
 
       - name: CloudFront Invalidation
         env:
-          CLOUD_FRONT_ID: ${{ secrets.AWS_CLOUDFRONT_ID}}
+          CLOUD_FRONT_ID: ${{ secrets.AWS_CLOUDFRONT_ID }}
         run: |
           aws cloudfront create-invalidation --profile=hanwookong --distribution-id $CLOUDFRONT_ID --paths /*
