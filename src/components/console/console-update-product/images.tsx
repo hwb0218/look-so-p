@@ -1,4 +1,3 @@
-// import { useRef } from 'react';
 import { type UseFormReturn } from 'react-hook-form';
 
 import useUpdateConsoleImage from '@components/console/console-update-product/update-console-images.hooks';
@@ -34,6 +33,25 @@ export default function Images({ form, setImagesToBeUpdated }: Props) {
 
   return (
     <>
+      <FormItem className="mt-2">
+        <FormLabel className="pl-1">상품 이미지</FormLabel>
+        <Button
+          type="button"
+          className="ml-2 p-2 h-8"
+          disabled={form.formState.isSubmitting}
+          onClick={() => onClickInput(thumbnailInputRef)}
+        >
+          썸네일 +
+        </Button>
+        <Button
+          type="button"
+          className="ml-2 p-2 h-8"
+          disabled={form.formState.isSubmitting}
+          onClick={() => onClickInput(inputRef)}
+        >
+          보조 이미지 +
+        </Button>
+      </FormItem>
       <FormField
         control={form.control}
         name="thumbnail"
@@ -50,6 +68,7 @@ export default function Images({ form, setImagesToBeUpdated }: Props) {
                 onChange={(e) => onChangeThumbnailInput(e, onChange)}
               />
             </FormControl>
+            <FormMessage className="pl-1 space-y-2" />
           </FormItem>
         )}
       />
@@ -58,24 +77,6 @@ export default function Images({ form, setImagesToBeUpdated }: Props) {
         name="images"
         render={({ field: { onChange, value } }) => (
           <FormItem className="mt-2">
-            <FormLabel className="pl-1">상품 이미지</FormLabel>
-            <Button
-              type="button"
-              className="ml-2 p-2 h-8"
-              disabled={form.formState.isSubmitting}
-              onClick={() => onClickInput(thumbnailInputRef)}
-            >
-              썸네일 +
-            </Button>
-            <Button
-              type="button"
-              className="ml-2 p-2 h-8"
-              disabled={form.formState.isSubmitting}
-              onClick={() => onClickInput(inputRef)}
-            >
-              보조 이미지 +
-            </Button>
-            <FormMessage className="space-y-2" />
             <FormControl>
               <Input
                 ref={inputRef}
@@ -88,6 +89,7 @@ export default function Images({ form, setImagesToBeUpdated }: Props) {
                 onChange={(e) => onChangeFileInput(e, onChange, value as FileList)}
               />
             </FormControl>
+            <FormMessage className="pl-1 space-y-2" />
           </FormItem>
         )}
       />
@@ -96,7 +98,7 @@ export default function Images({ form, setImagesToBeUpdated }: Props) {
           const url = previewThumbnailUrls[index];
           return (
             <div
-              key={url}
+              key={index}
               className="relative w-full h-52 rounded-md hover:ring-2 hover:ring-ring hover:ring-offset-2 bg-slate-100 overflow-hidden"
             >
               <Badge className="absolute ml-2 mt-2 px-3 break-keep text-xs">
@@ -116,7 +118,7 @@ export default function Images({ form, setImagesToBeUpdated }: Props) {
                         thumbnail: extractedThumbnialPath,
                       }));
                     }
-                    form.setValue('thumbnail', undefined);
+                    form.setValue('thumbnail', []);
                     setPreveiwThumbnailUrls([]);
                   }}
                   className="object-cover w-full h-full cursor-pointer"
@@ -155,8 +157,7 @@ export default function Images({ form, setImagesToBeUpdated }: Props) {
                         .filter((_, i) => i !== index)
                         .forEach((image) => dataTransfer.items.add(image));
                     }
-                    const files = dataTransfer.files;
-                    form.setValue('images', files);
+                    form.setValue('images', []);
                   }}
                   className="absolute inset-0 object-cover w-full h-full cursor-pointer"
                 />

@@ -16,7 +16,7 @@ class StorageService {
   }
 
   async uploadThumbnail(thumbnail: FileList, path: string = '') {
-    if (!thumbnail) {
+    if (!thumbnail.length) {
       return undefined;
     }
 
@@ -27,7 +27,7 @@ class StorageService {
   }
 
   async uploadFiles(images: FileList, path: string = '') {
-    if (!images) {
+    if (!images.length) {
       return undefined;
     }
 

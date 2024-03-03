@@ -110,27 +110,26 @@ class StoreService {
 
     const { images: imagesToBeUpdated, thumbnail: thumbnailToBeUpdated } = values.imagesToBeUpdated;
 
-    if (docSnapshot.exists()) {
-      const { thumbnail, images } = docSnapshot.data() as Product;
+    const { thumbnail, images } = docSnapshot.data() as Product;
 
-      const extractedThumbnailPath = extractPathFromUrl(thumbnail);
-      const newThumbnailPath = extractedThumbnailPath !== thumbnailDownloadURL && thumbnailDownloadURL;
+    const extractedThumbnailPath = extractPathFromUrl(thumbnail);
+    const newThumbnailPath = extractedThumbnailPath !== thumbnailDownloadURL && thumbnailDownloadURL;
 
-      const filteredImagesPath = images.filter((image) => {
-        if (image) {
-          const extractedImagesPath = extractPathFromUrl(image) ?? '';
-          return !imagesToBeUpdated.includes(extractedImagesPath);
-        }
-      });
+    const filteredImagesPath = images.filter((image) => {
+      if (image) {
+        const extractedImagesPath = extractPathFromUrl(image) ?? '';
+        return !imagesToBeUpdated.includes(extractedImagesPath);
+      }
+    });
 
-      const newImagesPath = [...filteredImagesPath, ...downloadUrls];
-      await updateDoc(docRef, {
-        ...updateProductsValues,
-        updatedAt: serverTimestamp(),
-        ...(newThumbnailPath && { thumbnail: newThumbnailPath }),
-        ...(newImagesPath.length && { images: newImagesPath }),
-      });
-    }
+    const newImagesPath = [...filteredImagesPath, ...downloadUrls];
+
+    await updateDoc(docRef, {
+      ...updateProductsValues,
+      updatedAt: serverTimestamp(),
+      ...(newThumbnailPath && { thumbnail: newThumbnailPath }),
+      ...(newImagesPath.length && { images: newImagesPath }),
+    });
 
     return {
       imagesToBeUpdated,
