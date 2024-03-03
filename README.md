@@ -46,8 +46,7 @@ $ yarn run dev
 
 </br>
 
-<img src="https://github.com/hwb0218/look-so-p/assets/52212226/fd253aa3-80fd-43b2-9bf9-8539fd141bc4" alt="Image 1" width="75%" style="object-fit:cover;">
-
+<img src="https://github.com/hwb0218/look-so-p/assets/52212226/84c64020-97dc-4b24-a8b7-9ba9a6fce0a3" alt="Image 1" width="90%">
 
 </br>
 
