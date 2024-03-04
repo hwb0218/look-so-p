@@ -13,7 +13,7 @@ import { queryClient } from '@src/main';
 const AUTH_NAVIGATION_ITEMS = {
   seller: [
     {
-      title: '마이 페이지',
+      title: '마이페이지',
       to: AUTH_ROUTE_PATHS.ORDER_LIST,
     },
     {
@@ -23,7 +23,7 @@ const AUTH_NAVIGATION_ITEMS = {
   ],
   common: [
     {
-      title: '마이 페이지',
+      title: '마이페이지',
       to: AUTH_ROUTE_PATHS.ORDER_LIST,
     },
   ],
