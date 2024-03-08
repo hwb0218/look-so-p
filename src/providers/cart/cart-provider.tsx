@@ -9,8 +9,6 @@ interface CartContext {
   cart: CartGoods[];
   checkedGoods: CartGoods[];
   totalPrice: number;
-  setCart: React.Dispatch<React.SetStateAction<CartGoods[]>>;
-  setTotalPrice: React.Dispatch<React.SetStateAction<number>>;
   onOpenCart: () => void;
   onCloseCart: () => void;
   onAddItemToCart: (item: CartGoods) => void;
@@ -18,36 +16,22 @@ interface CartContext {
   onToggleCartGoods: (cartGoods: CartGoods) => void;
   onAllCheckedGoods: (checked: HTMLInputElement['checked']) => void;
   onChangeGoodsCount: (cartGoods: CartGoods, goodsCount: number) => void;
+  onResetCart: (cart: CartGoods[]) => void;
 }
 
-export const CartContext = createContext<CartContext>({
-  expanded: false,
-  checkedGoods: [],
-  cart: [],
-  totalPrice: 0,
-  setTotalPrice: () => {},
-  setCart: () => {},
-  onOpenCart: () => {},
-  onCloseCart: () => {},
-  onAddItemToCart: () => {},
-  onDeleteItemFromCart: () => {},
-  onToggleCartGoods: () => {},
-  onAllCheckedGoods: () => {},
-  onChangeGoodsCount: () => {},
-});
+export const CartContext = createContext<CartContext | undefined>(undefined);
 
 export default function CartProvider({ children }: PropsWithChildren) {
   const {
     cart,
     checkedGoods,
     totalPrice,
-    setTotalPrice,
-    setCart,
     onAddItemToCart,
     onDeleteItemFromCart,
     onToggleCartGoods,
     onAllCheckedGoods,
     onChangeGoodsCount,
+    onResetCart,
   } = useCart();
 
   const { expanded, onOpenCart, onCloseCart } = useOverlay();
@@ -58,8 +42,6 @@ export default function CartProvider({ children }: PropsWithChildren) {
       cart,
       checkedGoods,
       totalPrice,
-      setTotalPrice,
-      setCart,
       onOpenCart,
       onCloseCart,
       onAddItemToCart,
@@ -67,14 +49,13 @@ export default function CartProvider({ children }: PropsWithChildren) {
       onToggleCartGoods,
       onAllCheckedGoods,
       onChangeGoodsCount,
+      onResetCart,
     }),
     [
       expanded,
       cart,
       checkedGoods,
       totalPrice,
-      setTotalPrice,
-      setCart,
       onOpenCart,
       onCloseCart,
       onAddItemToCart,
@@ -82,6 +63,7 @@ export default function CartProvider({ children }: PropsWithChildren) {
       onToggleCartGoods,
       onAllCheckedGoods,
       onChangeGoodsCount,
+      onResetCart,
     ],
   );
 
