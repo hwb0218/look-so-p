@@ -26,11 +26,10 @@ import { type CartGoods, type Order } from '@src/lib/firebase/types';
 
 interface Props {
   checkedGoods: CartGoods[];
-  setCart: React.Dispatch<React.SetStateAction<CartGoods[]>>;
-  setTotalPrice: React.Dispatch<React.SetStateAction<number>>;
+  onResetCart: (cart: CartGoods[]) => void;
 }
 
-export default function ShippingForm({ checkedGoods, setCart, setTotalPrice }: Props) {
+export default function ShippingForm({ checkedGoods, onResetCart }: Props) {
   const navigate = useNavigate();
   const [searching, setSearching] = useState(false);
 
@@ -69,8 +68,7 @@ export default function ShippingForm({ checkedGoods, setCart, setTotalPrice }: P
       await storeService.createOrder(orderValues);
 
       const newCart = await storeService.getCart(auth?.uid);
-      setCart(newCart);
-      setTotalPrice(calcTotalPrice(newCart));
+      onResetCart(newCart);
 
       navigate(AUTH_ROUTE_PATHS.ORDER_LIST);
     } catch (err) {

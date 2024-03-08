@@ -28,6 +28,12 @@ export default function useCart() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [storedCart?.length]);
 
+  const onResetCart = useCallback((cart: CartGoods[]) => {
+    setCart(cart);
+    setCheckedGoods(cart);
+    setTotalPrice(calcTotalPrice(cart));
+  }, []);
+
   const onAddItemToCart = useCallback(
     (item: CartGoods) => {
       const newCartGoods = [item, ...cart];
@@ -106,12 +112,11 @@ export default function useCart() {
     cart,
     checkedGoods,
     totalPrice,
-    setCart,
-    setTotalPrice,
     onAddItemToCart,
     onDeleteItemFromCart,
     onToggleCartGoods,
     onAllCheckedGoods,
     onChangeGoodsCount,
+    onResetCart,
   };
 }
