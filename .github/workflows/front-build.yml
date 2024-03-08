@@ -4,8 +4,7 @@ name: front-deployment
 on:
   push:
     branches:
-      - develop
-      - feature/*
+      - main
 # action trigger로 실행될 목록 
 jobs:
   build: 
