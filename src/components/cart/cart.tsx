@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { Link, createSearchParams, useNavigate } from 'react-router-dom';
 
 import { useModalContext } from '@providers/modal';
 import { useCartContext } from '@providers/cart';
@@ -14,7 +14,7 @@ import { GoodsItemCard } from '@components/goods/goods-item-card';
 
 import numberFormat from '@src/utils/number-format';
 
-import { AUTH_ROUTE_PATHS } from '@constants/routes';
+import { AUTH_ROUTE_PATHS, ROUTE_PATHS } from '@constants/routes';
 
 import type { CartGoods } from '@src/lib/firebase/types';
 
@@ -97,7 +97,14 @@ export default function Cart() {
                         <img src="/close_MD.svg" alt="close" />
                       </button>
                     </Wrapper>
-                    <span>{cartGoods.productName}</span>
+                    <Link
+                      to={{
+                        pathname: ROUTE_PATHS.GOODS_DETAIL(cartGoods.productId),
+                        search: `?${createSearchParams({ category: cartGoods.productCategory.trim() })}`,
+                      }}
+                    >
+                      <span>{cartGoods.productName}</span>
+                    </Link>
                   </Wrapper>
                 </Wrapper>
                 <Wrapper className="pt-3 pb-4 flex items-center justify-between">
