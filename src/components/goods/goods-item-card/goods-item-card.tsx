@@ -12,7 +12,7 @@ interface Props {
 export default function GoodsItemCard({ src, alt = '', className }: Props) {
   const [isVisible, setIsVisible] = useState(false);
   const { ref, inView } = useInView({
-    rootMargin: '200px',
+    rootMargin: '400px',
     triggerOnce: true,
   });
 
