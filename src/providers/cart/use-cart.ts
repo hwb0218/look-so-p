@@ -22,6 +22,7 @@ export default function useCart() {
   useEffect(() => {
     if (storedCart?.length) {
       setCart(storedCart);
+      setCheckedGoods(storedCart);
     } else {
       setCart([]);
     }
