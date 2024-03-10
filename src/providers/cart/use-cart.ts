@@ -23,8 +23,11 @@ export default function useCart() {
     if (storedCart?.length) {
       setCart(storedCart);
       setCheckedGoods(storedCart);
+      setTotalPrice(calcTotalPrice(storedCart));
     } else {
       setCart([]);
+      setCheckedGoods([]);
+      setTotalPrice(0);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [storedCart?.length]);
