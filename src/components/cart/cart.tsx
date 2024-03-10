@@ -1,23 +1,28 @@
+import { useNavigate } from 'react-router-dom';
+
+import { useModalContext } from '@providers/modal';
 import { useCartContext } from '@providers/cart';
 
+import CartDeleteGoodsAlert from './cart-delete-goods-alert';
+
+import Wrapper from '@components/common/ui/wrapper';
 import { Select, SelectContent, SelectTrigger, SelectValue, SelectItem } from '@components/ui/select';
 import { Checkbox } from '@components/ui/checkbox';
 import { Button } from '@components/ui/button';
 import { Li, Ul } from '@components/common/ui/list';
-import Wrapper from '@components/common/ui/wrapper';
 import { GoodsItemCard } from '@components/goods/goods-item-card';
 
 import numberFormat from '@src/utils/number-format';
 
-import type { CartGoods } from '@src/lib/firebase/types';
-import { useNavigate } from 'react-router-dom';
 import { AUTH_ROUTE_PATHS } from '@constants/routes';
+
+import type { CartGoods } from '@src/lib/firebase/types';
 
 const SELECT_ITEMS = Array.from({ length: 10 }, (_, i) => String(i + 1));
 
 export default function Cart() {
   const navigate = useNavigate();
-
+  const { openModal } = useModalContext();
   const {
     expanded,
     cart,
@@ -39,9 +44,7 @@ export default function Cart() {
   };
 
   const handleClickDeleteItem = (cartGoodsId: string) => {
-    if (window.confirm('상품을 삭제 하시겠습니까?')) {
-      onDeleteItemFromCart(cartGoodsId);
-    }
+    openModal(<CartDeleteGoodsAlert onDeleteGoods={() => onDeleteItemFromCart(cartGoodsId)} />);
   };
 
   const handleGoodsCountChange = (cartGoods: CartGoods, goodsCount: string) => {
