@@ -20,7 +20,7 @@ function NavItems() {
   return (
     <>
       <Li onClick={handleClickCartBtn} className="relative ml-3 leading-4 cursor-pointer">
-        <img src="/shopping_cart_01.svg" alt="장바구니" />
+        <img src="/shopping_cart_01.svg" alt="장바구니" className="w-full h-full" />
         {cart?.length > 0 && (
           <strong className="w-5 h-5 absolute -top-2 -right-2 leading-[23px] text-center text-sm text-gray-50 bg-lime-500 rounded-full">
             {cart.length}

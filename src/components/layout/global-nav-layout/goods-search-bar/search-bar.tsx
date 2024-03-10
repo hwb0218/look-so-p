@@ -35,7 +35,7 @@ export default function SearchBar() {
         onClick={() => openSearchBar()}
         className="flex justify-center items-center w-10 h-full bg-inherit rounded-full z-[1] cursor-pointer"
       >
-        <img src="/search.svg" alt="검색" draggable={false} />
+        <img src="/search.svg" alt="검색" draggable={false} className="w-6 h-6" />
       </div>
       <div className={`${isOpen ? 'inline-block' : 'hidden'} flex justify-center w-full h-full items-center`}>
         <input

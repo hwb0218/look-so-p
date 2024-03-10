@@ -17,7 +17,7 @@ function GlobalNav() {
       <Ul className="flex items-center font-black">
         <Li className="w-14 rounded overflow-hidden">
           <NavLink to={ROUTE_PATHS.HOME}>
-            <img src="/logo.svg" />
+            <img src="/logo.svg" className="w-full h-full" />
           </NavLink>
         </Li>
         <Li>
