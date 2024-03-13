@@ -1,4 +1,4 @@
-import { DocumentData, Timestamp } from 'firebase/firestore';
+import { DocumentData, Timestamp } from 'firebase/firestore/lite';
 import { OrderFormSchema } from '../zod/order-schema';
 
 export interface CreateUserValues {

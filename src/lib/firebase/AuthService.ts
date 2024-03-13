@@ -1,5 +1,5 @@
 import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
+import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore/lite';
 import { storeService } from './StoreService';
 import { auth, db } from './config';
 

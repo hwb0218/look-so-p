@@ -2,7 +2,7 @@ import { QUERY_KEYS } from '@constants/query-keys';
 import { useMutation, useInfiniteQuery } from '@tanstack/react-query';
 import { storeService } from '@src/lib/firebase/StoreService';
 import { queryClient } from '@src/main';
-import { DocumentData, QueryDocumentSnapshot } from 'firebase/firestore';
+import { DocumentData, QueryDocumentSnapshot } from 'firebase/firestore/lite';
 
 export function useGetProductsInfiniteQuery({ sellerId, pageLimit }: { sellerId: string; pageLimit?: number }) {
   const res = useInfiniteQuery({

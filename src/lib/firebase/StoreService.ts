@@ -16,7 +16,7 @@ import {
   DocumentReference,
   where,
   setDoc,
-} from 'firebase/firestore';
+} from 'firebase/firestore/lite';
 import { db } from './config';
 
 import { getLocalStorage, setLocalStorage } from '@src/utils/local-storage';
