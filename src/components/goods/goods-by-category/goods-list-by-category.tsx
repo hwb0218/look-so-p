@@ -14,13 +14,15 @@ import { QUERY_KEYS } from '@constants/query-keys';
 
 import useFetchGoodsByCategoryQuery from '@hooks/use-fetch-goods-by-category-query';
 import sortbyOptions from '@src/utils/sort-by-options';
+import { WithQueryAsyncBoundary } from '@components/common/with-query-async-boundary';
+import GoodsByCategorySkeleton from './goods-by-category-skeleton';
 
 interface Props {
   sortingOption: string;
   filterCategory: string;
 }
 
-function GoodsListByCategory({ sortingOption, filterCategory }: Props) {
+function GoodsListByCategoryComponent({ sortingOption, filterCategory }: Props) {
   const { data: goods, ref, hasNextPage, isFetchingNextPage } = useFetchGoodsByCategoryQuery(filterCategory);
 
   const goodsContent = goods?.pages ?? [];
@@ -56,5 +58,10 @@ function GoodsListByCategory({ sortingOption, filterCategory }: Props) {
     </Ul>
   );
 }
+
+const GoodsListByCategory = WithQueryAsyncBoundary(GoodsListByCategoryComponent, {
+  pendingFallback: <GoodsByCategorySkeleton />,
+  rejectedFallback: <span>에러가 발생했습니다</span>,
+});
 
 export default React.memo(GoodsListByCategory);

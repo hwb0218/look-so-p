@@ -1,15 +1,13 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
+import './index.css';
+
 import App from './app';
 
 import Providers from './providers';
-
-import Spinner from '@components/common/spinner/spinner';
-
-import './index.css';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -20,28 +18,13 @@ export const queryClient = new QueryClient({
   },
 });
 
-function main() {
-  const { IMP } = window;
-  IMP?.init(import.meta.env.VITE_PORTONE_IMP);
-
-  const container = document.getElementById('root');
-  if (!container) {
-    return;
-  }
-
-  const root = ReactDOM.createRoot(container);
-  root.render(
-    <React.StrictMode>
-      <QueryClientProvider client={queryClient}>
-        <Providers>
-          <Suspense fallback={<Spinner />}>
-            <App />
-          </Suspense>
-        </Providers>
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
-    </React.StrictMode>,
-  );
-}
-
-main();
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <Providers>
+        <App />
+      </Providers>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
+  </React.StrictMode>,
+);
