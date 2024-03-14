@@ -22,13 +22,43 @@ const routes: RouteObject[] = [
     element: <GlobalNavLayout />,
     children: [
       { index: true, element: <HomePage /> },
-      { path: ROUTE_PATHS.SIGNUP, element: <SignUpPage /> },
-      { path: ROUTE_PATHS.SEARCH, element: <GoodsSearchPage /> },
-      { path: ROUTE_PATHS.GOODS_LIST, element: <GoodsByCategory /> },
-      { path: ROUTE_PATHS.GOODS_DETAIL(), element: <GoodsDetailPage /> },
+      {
+        path: ROUTE_PATHS.SIGNUP,
+        lazy: async () => {
+          const { default: Component } = await SignUpPage();
+          return { Component };
+        },
+      },
+      {
+        path: ROUTE_PATHS.SEARCH,
+        lazy: async () => {
+          const { default: Component } = await GoodsSearchPage();
+          return { Component };
+        },
+      },
+      {
+        path: ROUTE_PATHS.GOODS_LIST,
+        lazy: async () => {
+          const { default: Component } = await GoodsByCategory();
+          return { Component };
+        },
+      },
+      {
+        path: ROUTE_PATHS.GOODS_DETAIL(),
+        lazy: async () => {
+          const { default: Component } = await GoodsDetailPage();
+          return { Component };
+        },
+      },
     ],
   },
-  { path: ROUTE_PATHS.LOGIN, element: <LoginPage /> },
+  {
+    path: ROUTE_PATHS.LOGIN,
+    lazy: async () => {
+      const { default: Component } = await LoginPage();
+      return { Component };
+    },
+  },
   {
     element: (
       <ProtectedLayout>
@@ -36,8 +66,20 @@ const routes: RouteObject[] = [
       </ProtectedLayout>
     ),
     children: [
-      { path: AUTH_ROUTE_PATHS.ORDER, element: <OrderPage /> },
-      { path: AUTH_ROUTE_PATHS.ORDER_LIST, element: <OrderListPage /> },
+      {
+        path: AUTH_ROUTE_PATHS.ORDER,
+        lazy: async () => {
+          const { default: Component } = await OrderPage();
+          return { Component };
+        },
+      },
+      {
+        path: AUTH_ROUTE_PATHS.ORDER_LIST,
+        lazy: async () => {
+          const { default: Component } = await OrderListPage();
+          return { Component };
+        },
+      },
     ],
   },
   {
@@ -47,14 +89,26 @@ const routes: RouteObject[] = [
       </ProtectedAdminLayout>
     ),
     children: [
-      { path: CONSOLE_ROUTE_PATHS.CONSOLE(), element: <ConsoleMainPage /> },
+      {
+        path: CONSOLE_ROUTE_PATHS.CONSOLE(),
+        lazy: async () => {
+          const { default: Component } = await ConsoleMainPage();
+          return { Component };
+        },
+      },
       {
         path: CONSOLE_ROUTE_PATHS.PRODUCT_REGISTRATION(),
-        element: <ConsoleAddProductPage />,
+        lazy: async () => {
+          const { default: Component } = await ConsoleAddProductPage();
+          return { Component };
+        },
       },
       {
         path: CONSOLE_ROUTE_PATHS.ORDER_MANAGEMENT(),
-        element: <ConsoleOrderManagementPage />,
+        lazy: async () => {
+          const { default: Component } = await ConsoleOrderManagementPage();
+          return { Component };
+        },
       },
     ],
   },
