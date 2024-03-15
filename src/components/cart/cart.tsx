@@ -65,6 +65,7 @@ export default function Cart() {
           <Wrapper className="mb-3 px-8 py-4 flex items-center gap-x-2">
             <Checkbox
               id="all"
+              aria-label="checkbox"
               checked={checkedGoods.length === cart.length && checkedGoods.length > 0}
               onCheckedChange={handleAllCheck}
               className="rounded-md border-slate-100 bg-white h-6 w-6 data-[state=checked]:bg-lime-400 data-[state=checked]:border-none"
@@ -83,6 +84,7 @@ export default function Cart() {
                   >
                     <Checkbox
                       id={`goods-${cartGoods.id}`}
+                      aria-label="checkbox"
                       checked={checkedGoods.some((goods) => goods.id === cartGoods.id)}
                       onCheckedChange={() => handleToggleCartGoods(cartGoods)}
                       className="absolute left-0 top-0 rounded-md border-slate-100 bg-white h-6 w-6 data-[state=checked]:bg-lime-400 data-[state=checked]:border-none z-[1]"
@@ -113,7 +115,7 @@ export default function Cart() {
                     value={cartGoods.goodsCount.toString()}
                     onValueChange={(goodsCount) => handleGoodsCountChange(cartGoods, goodsCount)}
                   >
-                    <SelectTrigger className="w-[100px]">
+                    <SelectTrigger aria-label="checkbox" className="w-[100px]">
                       <SelectValue>{cartGoods.goodsCount}</SelectValue>
                     </SelectTrigger>
                     <SelectContent className="min-w-[100px] z-[1000000]">
