@@ -52,7 +52,7 @@ function ConsoleNav() {
             <header className="flex items-center px-6 py-2 font-black">
               <span className="w-14 rounded overflow-hidden">
                 <NavLink to={ROUTE_PATHS.HOME}>
-                  <img src="/logo.svg" className="w-full h-full" />
+                  <img src="/logo.svg" alt="logo" className="w-full h-full" />
                 </NavLink>
               </span>
               <div>

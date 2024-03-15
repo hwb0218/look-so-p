@@ -93,7 +93,7 @@ export default function Cart() {
                   </label>
                   <Wrapper className="ml-3 w-full flex flex-col items-start">
                     <Wrapper className="ml-auto">
-                      <button onClick={() => handleClickDeleteItem(cartGoods.id)}>
+                      <button title="close" onClick={() => handleClickDeleteItem(cartGoods.id)}>
                         <img src="/close_MD.svg" alt="close" />
                       </button>
                     </Wrapper>
@@ -128,18 +128,18 @@ export default function Cart() {
                 </Wrapper>
               </Li>
             ))}
-            <Wrapper className="absolute bottom-0 left-0 right-0 bg-white py-6 px-8 w-full rounded-b-md border-t border-stone-200 ">
-              <Wrapper className="flex justify-between">
-                <span>최종 결제금액</span>
-                <strong className="text-lg">{numberFormat(totalPrice)}원</strong>
-              </Wrapper>
-              <Wrapper className="pt-3">
-                <Button className="w-full" onClick={handleClickPayment}>
-                  주문하기
-                </Button>
-              </Wrapper>
-            </Wrapper>
           </Ul>
+          <Wrapper className="absolute bottom-0 left-0 right-0 bg-white py-6 px-8 w-full rounded-b-md border-t border-stone-200 z-[1]">
+            <Wrapper className="flex justify-between">
+              <span>최종 결제금액</span>
+              <strong className="text-lg">{numberFormat(totalPrice)}원</strong>
+            </Wrapper>
+            <Wrapper className="pt-3">
+              <Button className="w-full" onClick={handleClickPayment}>
+                주문하기
+              </Button>
+            </Wrapper>
+          </Wrapper>
         </Wrapper>
       </aside>
     </Wrapper>

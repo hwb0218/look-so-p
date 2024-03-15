@@ -12,13 +12,13 @@ export default function Footer() {
         <strong>Look So Pretty</strong>
       </Wrapper>
       <Wrapper className="*:inline-block *:w-9 *:h-9 *:mx-3 *:cursor-pointer">
-        <Link to="https://litt.ly/hwb0218/" target="_blank" rel="noopener noreferrer">
+        <Link to="https://litt.ly/hwb0218/" target="_blank" rel="noopener noreferrer" aria-label="navigation menu">
           <IconLink className="w-full h-full" />
         </Link>
-        <Link to="https://github.com/hwb0218/" target="_blank" rel="noopener noreferrer">
+        <Link to="https://github.com/hwb0218/" target="_blank" rel="noopener noreferrer" aria-label="navigation menu">
           <IconGithub className="w-full h-full" />
         </Link>
-        <Link to="https://hwb0218.tistory.com/" target="_blank" rel="noopener noreferrer">
+        <Link to="https://hwb0218.tistory.com/" target="_blank" rel="noopener noreferrer" aria-label="navigation menu">
           <IconBlog className="w-full h-full" />
         </Link>
       </Wrapper>

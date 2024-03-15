@@ -2,10 +2,7 @@ import { RouteObject } from 'react-router-dom';
 
 import { GlobalNavLayout } from '@components/layout/global-nav-layout';
 
-import { HomePage, LoginPage, SignUpPage, GoodsSearchPage, GoodsByCategory, GoodsDetailPage } from '@pages/public';
-
-import { AUTH_ROUTE_PATHS, CONSOLE_ROUTE_PATHS, ROUTE_PATHS } from '@constants/routes';
-import { ConsoleLayout, ProtectedAdminLayout, ProtectedLayout } from '@components/layout';
+import { HomePage, LoginPage, SignUpPage, GoodsSearchPage, GoodsByCategoryPage, GoodsDetailPage } from '@pages/public';
 import {
   ConsoleAddProductPage,
   ConsoleMainPage,
@@ -13,6 +10,9 @@ import {
   OrderListPage,
   OrderPage,
 } from '@pages/private';
+
+import { AUTH_ROUTE_PATHS, CONSOLE_ROUTE_PATHS, ROUTE_PATHS } from '@constants/routes';
+import { ConsoleLayout, ProtectedAdminLayout, ProtectedLayout } from '@components/layout';
 
 import NotFound from './not-found';
 
@@ -39,7 +39,7 @@ const routes: RouteObject[] = [
       {
         path: ROUTE_PATHS.GOODS_LIST,
         lazy: async () => {
-          const { default: Component } = await GoodsByCategory();
+          const { default: Component } = await GoodsByCategoryPage();
           return { Component };
         },
       },
