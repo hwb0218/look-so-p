@@ -67,6 +67,8 @@ yarn run dev
 | react-hook-form | 비제어 컴포넌트를 이용한 입력 form을 다루기 때문에 리렌더링 최소화로 인한 앱 성능 향상, 작은 사이즈로 번들 사이즈 축소  |
 | zod | react-hook-form과 결합하여 사용시 form 유효성 검사 코드를 줄일 수 있고 직관적인 API 제공으로 유효성 검사 규칙을 간결하게 표현 가능 |
 
+</br>
+
 ## 3. 트러블슈팅
 
 <details>
@@ -119,28 +121,83 @@ yarn run dev
 </div>
 </details>
 
-<!-- <details>
-<summary><b>3. </b></summary>
+<details>
+<summary><b>3. 장바구니 체크박스 동작 오류</b></summary>
 <div markdown="1">
 
-- 문제 상황
-- 원인
-- 해결 방법
+#### 문제
+
+- 장바구니 상품 수량 변경 시 개별 체크박스가 동작하지 않음
+- checkedGoods 배열 요소가 객체인데 참조를 비교하고 있어 버그가 발생한 것으로 판단
+
+#### 원인
+
+- checkedGoods.includes(cartGoods) 코드는 checkedGoods 배열 내의 객체가 cartGoods와 정확히 동일한 참조를 가지고 있는지 확인
+- 수량을 변경하면 checkedGoods 배열 요소의 goodsCount를 업데이트하고 새로운 배열을 반환하므로 객체 참조가 변경됨
+
+<img width="750" alt="스크린샷 2024-02-16 오후 7 07 13" src="https://github.com/hwb0218/look-so-p/assets/52212226/2bf8b92b-ffb0-46dd-821d-81c0ac2dc243">
+
+<img width="750" alt="스크린샷 2024-02-16 오후 7 15 05" src="https://github.com/hwb0218/look-so-p/assets/52212226/88e7f743-e638-48d6-97f6-0f6983f8f747">
+
+#### 해결
+
+- checkedGoods.some((goods) => goods.id === cartGoods.id) 코드는 checkedGoods 배열 내의 각 객체의 id 프로퍼티와 cartGoods.id를 직접 비교
+
+<img width="750" alt="스크린샷 2024-02-16 오후 7 05 51" src="https://github.com/hwb0218/look-so-p/assets/52212226/ebf5a00e-a36c-426d-874d-6c875fbf91ee">
+
+<img width="750" alt="스크린샷 2024-02-16 오후 7 14 44" src="https://github.com/hwb0218/look-so-p/assets/52212226/7a106240-aa79-460d-929d-c7690ebd36fa">
 
 </div>
 </details>
 
 <details>
-<summary><b>4. </b></summary>
+<summary><b>4. Protected Route 미동작</b></summary>
 <div markdown="1">
 
-- 문제 상황
-- 원인
-- 해결 방법
+#### 문제
+
+- seller가 아니거나 비로그인 유저임에도 특정 페이지에 방문할 수 있음
+- 어드민 권한이 필요한 라우트에 접속할 수 있는 현상이 발생  
+
+#### 원인
+
+- 권한에 따른 분기처리가 미적용됨
+- 분기처리 코드 내부에서 Naviagete 컴포넌트를 반환하지 않아 children이 렌더링됨
+
+#### 해결
+
+- 어드민 권한에 따른 분기처리를 추가
+- if 블럭에서 Navigate 컴포넌트를 반환하지 않을 경우 chilren이 렌더링 되는 현상을 수정
+
+<img width="750" alt="스크린샷 2024-02-28 오전 6 07 31" src="https://github.com/hwb0218/look-so-p/assets/52212226/85796e69-ee3a-4bba-b885-9c3c86f5ae95">
+
+<img width="750" alt="스크린샷 2024-02-28 오전 6 07 25" src="https://github.com/hwb0218/look-so-p/assets/52212226/5615c22b-b4e2-4cdb-a418-64039071c597">
 
 </div>
-</details> -->
+</details>
 
+<details>
+<summary><b>5. 상품 상세 페이지의 스크롤 위치</b></summary>
+<div markdown="1">
+
+#### 문제
+
+- 상세 페이지로 진입했을 경우 이전 페이지의 스크롤 위치에 따라 고정되는 문제
+
+#### 원인
+
+- 데이터 pre-fetch를 통해 페이지 전환을 수행할 경우 이전 페이지의 스크롤 위치가 고정되었음
+
+<img width="500" alt="스크린샷 2024-03-16 오전 1 03 15" src="https://github.com/hwb0218/look-so-p/assets/52212226/36a32733-7a5a-4884-b6de-65bdab0544e4">
+
+#### 해결
+
+- 의존성 배열요소 pathname의 변화가 발생할 경우 스크롤을 최상단으로 이동시킴
+
+<img width="500" alt="스크린샷 2024-03-16 오전 1 04 10" src="https://github.com/hwb0218/look-so-p/assets/52212226/b0ca662c-9207-4a6e-89b0-d61c69cea6b0">
+
+</div>
+</details>
 
 <!-- ## 3. 데모 영상
 
