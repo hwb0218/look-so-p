@@ -167,7 +167,7 @@ yarn run dev
 #### 해결
 
 - 어드민 권한에 따른 분기처리를 추가
-- if 블럭에서 Navigate 컴포넌트를 반환하지 않을 경우 chilren이 렌더링 되는 현상을 수정
+- if 블럭에서 Navigate 컴포넌트를 반환하지 않을 경우 children이 렌더링 되는 현상을 수정
 
 <img width="750" alt="스크린샷 2024-02-28 오전 6 07 31" src="https://github.com/hwb0218/look-so-p/assets/52212226/85796e69-ee3a-4bba-b885-9c3c86f5ae95">
 
