@@ -67,6 +67,81 @@ yarn run dev
 | react-hook-form | 비제어 컴포넌트를 이용한 입력 form을 다루기 때문에 리렌더링 최소화로 인한 앱 성능 향상, 작은 사이즈로 번들 사이즈 축소  |
 | zod | react-hook-form과 결합하여 사용시 form 유효성 검사 코드를 줄일 수 있고 직관적인 API 제공으로 유효성 검사 규칙을 간결하게 표현 가능 |
 
+## 3. 트러블슈팅
+
+<details>
+<summary><b>1. throw Error의 에러 전파</b></summary>
+<div markdown="1">
+
+#### 문제
+
+- 등록 상품 수정 시 이미지를 제외한 입력 필드만 변경했을 경우 invalidateQueries가 호출되지 않음
+  
+#### 원인
+
+- throw된 에러는 catch block에서 처리하지 않으면 호출자 방향으로 점진적 전파된다.
+- storageService.deleteFiles 메소드 내부에서 fileURLs 인자가 배열이 아니거나 undefined일 경우 throw Error를 던지므로
+다음 코드가 실행되지 않고 호출자의 catch block으로 코드 흐름이 넘어갔음
+
+<img width="500" alt="스크린샷 2024-02-06 오후 8 49 43" src="https://github.com/hwb0218/look-so-p/assets/52212226/81e32c2e-0ed4-41fb-9c80-d3ff1df373d2">
+
+#### 해결
+
+- 에러를 던지지 않도록 throw Error 코드를 제거
+
+<img width="500" alt="스크린샷 2024-02-06 오후 8 49 59" src="https://github.com/hwb0218/look-so-p/assets/52212226/4293e49d-8760-4dbd-a654-2cda8fa032db">
+
+</div>
+</details>
+
+<details>
+<summary><b>2. 장바구니에 새로 추가된 상품의 수량 변경</b></summary>
+<div markdown="1">
+
+#### 문제
+
+- 장바구니에 새롭게 추가된 상품의 수량 변경 시 고정적으로 표시됨
+- 낙관적 업데이트를 수행하는 코드에서 문제가 발생
+
+#### 원인
+
+- 상품 수량 변경은 파이어스토어와 통신하여 DB의 goodsCount 필드값을 변경하고 있음
+- useMutation의 onMuation에서 새롭게 추가된 장바구니 상품은 파이어스토어의 document id값이 아직 생성되지 않은 상태이므로 수량 변경이 불가능
+
+![스크린샷 2024-02-17 오전 5 34 52](https://github.com/hwb0218/look-so-p/assets/52212226/e4c3ed00-728d-450c-8697-3e2da3842f0e)
+
+#### 해결
+
+- onSuccess를 이용해 응답 데이터를 받아오도록 수정
+
+![스크린샷 2024-02-17 오전 5 34 42](https://github.com/hwb0218/look-so-p/assets/52212226/931e3816-1c7a-4f9a-aab5-4b94a44aff1a)
+
+</div>
+</details>
+
+<!-- <details>
+<summary><b>3. </b></summary>
+<div markdown="1">
+
+- 문제 상황
+- 원인
+- 해결 방법
+
+</div>
+</details>
+
+<details>
+<summary><b>4. </b></summary>
+<div markdown="1">
+
+- 문제 상황
+- 원인
+- 해결 방법
+
+</div>
+</details> -->
+
+
 <!-- ## 3. 데모 영상
 
 <details>
