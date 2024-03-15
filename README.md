@@ -83,13 +83,13 @@ yarn run dev
 - storageService.deleteFiles 메소드 내부에서 fileURLs 인자가 배열이 아니거나 undefined일 경우 throw Error를 던지므로
 다음 코드가 실행되지 않고 호출자의 catch block으로 코드 흐름이 넘어갔음
 
-<img width="500" alt="스크린샷 2024-02-06 오후 8 49 43" src="https://github.com/hwb0218/look-so-p/assets/52212226/81e32c2e-0ed4-41fb-9c80-d3ff1df373d2">
+<img width="750" alt="스크린샷 2024-02-06 오후 8 49 43" src="https://github.com/hwb0218/look-so-p/assets/52212226/81e32c2e-0ed4-41fb-9c80-d3ff1df373d2">
 
 #### 해결
 
 - 에러를 던지지 않도록 throw Error 코드를 제거
 
-<img width="500" alt="스크린샷 2024-02-06 오후 8 49 59" src="https://github.com/hwb0218/look-so-p/assets/52212226/4293e49d-8760-4dbd-a654-2cda8fa032db">
+<img width="750" alt="스크린샷 2024-02-06 오후 8 49 59" src="https://github.com/hwb0218/look-so-p/assets/52212226/4293e49d-8760-4dbd-a654-2cda8fa032db">
 
 </div>
 </details>
@@ -108,13 +108,13 @@ yarn run dev
 - 상품 수량 변경은 파이어스토어와 통신하여 DB의 goodsCount 필드값을 변경하고 있음
 - useMutation의 onMuation에서 새롭게 추가된 장바구니 상품은 파이어스토어의 document id값이 아직 생성되지 않은 상태이므로 수량 변경이 불가능
 
-![스크린샷 2024-02-17 오전 5 34 52](https://github.com/hwb0218/look-so-p/assets/52212226/e4c3ed00-728d-450c-8697-3e2da3842f0e)
+<img width="750" alt="스크린샷 2024-02-17 오전 5 34 52" src="https://github.com/hwb0218/look-so-p/assets/52212226/e4c3ed00-728d-450c-8697-3e2da3842f0e">
 
 #### 해결
 
 - onSuccess를 이용해 응답 데이터를 받아오도록 수정
 
-![스크린샷 2024-02-17 오전 5 34 42](https://github.com/hwb0218/look-so-p/assets/52212226/931e3816-1c7a-4f9a-aab5-4b94a44aff1a)
+<img width="750" alt="스크린샷 2024-02-17 오전 5 34 52" src="https://github.com/hwb0218/look-so-p/assets/52212226/931e3816-1c7a-4f9a-aab5-4b94a44aff1a">
 
 </div>
 </details>
