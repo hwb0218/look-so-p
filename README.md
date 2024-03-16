@@ -1,7 +1,6 @@
 # LookSoPrt
 >
 > React + Typescript + Firebase Cosmetic E-commerce
-> <https://www.looksoprt.store>
 
 `npm`
 
@@ -25,6 +24,7 @@ yarn run dev
 
 ## 1. 제작 기간 & 참여 인원
 
+- <https://www.looksoprt.store>
 - 1차 배포: 2024/01/25 ~ 2024/02/29
 - 2차 배포: 2024/02/29 ~
 - 개인 프로젝트
