@@ -1,21 +1,21 @@
+import { useRef } from 'react';
 import { Link, createSearchParams } from 'react-router-dom';
 import { storeService } from '@src/lib/firebase/StoreService';
+import Autoplay from 'embla-carousel-autoplay';
+
+import { queryClient } from '@providers/index';
 
 import { GoodsItemCard } from '../goods-item-card';
 
 import { Li } from '@components/common/ui/list';
 import { Carousel, CarouselContent, CarouselItem } from '@components/ui/carousel';
 
-import { Product } from '@src/lib/firebase/types';
-
 import numberFormat from '@src/utils/number-format';
 
 import { ROUTE_PATHS } from '@constants/routes';
-import { queryClient } from '@src/main';
 import { QUERY_KEYS } from '@constants/query-keys';
 
-import Autoplay from 'embla-carousel-autoplay';
-import { useRef } from 'react';
+import type { Product } from '@src/lib/firebase/types';
 
 interface Props {
   goods: Product;

@@ -4,7 +4,7 @@ import { Footer } from '@components/footer';
 
 import { ROUTE_PATHS } from '@constants/routes';
 
-function HomePage() {
+export default function HomePage() {
   return (
     <>
       <Meta title="LookSoPrt" url={ROUTE_PATHS.HOME} desc="LookSoPrt" />
@@ -13,5 +13,3 @@ function HomePage() {
     </>
   );
 }
-
-export default HomePage;

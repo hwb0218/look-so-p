@@ -1,9 +1,12 @@
+import { storeService } from '@src/lib/firebase/StoreService';
+
 import { useMutation } from '@tanstack/react-query';
 
-import { storeService } from '@src/lib/firebase/StoreService';
-import { CartGoods } from '@src/lib/firebase/types';
+import { queryClient } from '@providers/index';
+
 import { QUERY_KEYS } from '@constants/query-keys';
-import { queryClient } from '@src/main';
+
+import type { CartGoods } from '@src/lib/firebase/types';
 
 export default function useAddGoodsToCartQuery() {
   const queryKey = QUERY_KEYS.AUTH.CART();

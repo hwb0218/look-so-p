@@ -1,7 +1,7 @@
 import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 import { storeService } from '@src/lib/firebase/StoreService';
 
-import { queryClient } from '@src/main';
+import { queryClient } from '@providers/index';
 
 import { QUERY_KEYS } from '@constants/query-keys';
 

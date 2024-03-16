@@ -1,14 +1,13 @@
 import { NavLink } from 'react-router-dom';
 import { FirebaseError } from 'firebase/app';
+import { authService } from '@src/lib/firebase/AuthService';
 
 import { useAuthContext } from '@providers/auth';
+import { queryClient } from '@providers/index';
 
 import { Li } from '@components/common/ui/list';
 
-import { authService } from '@src/lib/firebase/AuthService';
-
 import { AUTH_ROUTE_PATHS, CONSOLE_ROUTE_PATHS } from '@constants/routes';
-import { queryClient } from '@src/main';
 
 const AUTH_NAVIGATION_ITEMS = {
   seller: [

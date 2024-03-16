@@ -1,8 +1,8 @@
 import { useInfiniteQuery, useMutation } from '@tanstack/react-query';
 import { storeService } from '@src/lib/firebase/StoreService';
-import { DocumentData, QueryDocumentSnapshot } from 'firebase/firestore/lite';
+import { DocumentData, QueryDocumentSnapshot } from 'firebase/firestore';
 
-import { queryClient } from '@src/main';
+import { queryClient } from '@providers/index';
 
 import { QUERY_KEYS } from '@constants/query-keys';
 

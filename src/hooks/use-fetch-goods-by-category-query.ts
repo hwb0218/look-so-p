@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useSuspenseInfiniteQuery } from '@tanstack/react-query';
 import { useInView } from 'react-intersection-observer';
 
-import { DocumentData, QueryDocumentSnapshot } from 'firebase/firestore/lite';
+import { DocumentData, QueryDocumentSnapshot } from 'firebase/firestore';
 import { storeService } from '@src/lib/firebase/StoreService';
 
 import { QUERY_KEYS } from '@constants/query-keys';

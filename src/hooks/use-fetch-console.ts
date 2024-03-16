@@ -1,15 +1,15 @@
-import { FirebaseError } from 'firebase/app';
-
-import { queryClient } from '@src/main';
-import { QUERY_KEYS } from '@constants/query-keys';
-
 import { storageService } from '@src/lib/firebase/StorageService';
 import { storeService } from '@src/lib/firebase/StoreService';
+import { FirebaseError } from 'firebase/app';
+
+import { useModalContext } from '@providers/modal';
+
+import { queryClient } from '@providers/index';
+
+import { QUERY_KEYS } from '@constants/query-keys';
 
 import { type ProductFormSchema } from '@src/lib/zod/console-product-schema';
-
 import { UpdateConsoleProducts } from '@src/types';
-import { useModalContext } from '@providers/modal';
 
 export default function useFetchConsoleProducts() {
   const { closeModal } = useModalContext();

@@ -18,10 +18,9 @@ import NotFound from './not-found';
 
 const routes: RouteObject[] = [
   {
-    path: '/',
     element: <GlobalNavLayout />,
     children: [
-      { index: true, element: <HomePage /> },
+      { path: ROUTE_PATHS.HOME, element: <HomePage /> },
       {
         path: ROUTE_PATHS.SIGNUP,
         lazy: async () => {
@@ -113,7 +112,7 @@ const routes: RouteObject[] = [
     ],
   },
   {
-    path: '*',
+    path: '/',
     element: <NotFound />,
   },
 ];

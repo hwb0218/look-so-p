@@ -1,8 +1,9 @@
 import { QUERY_KEYS } from '@constants/query-keys';
 import { useMutation, useInfiniteQuery } from '@tanstack/react-query';
 import { storeService } from '@src/lib/firebase/StoreService';
-import { queryClient } from '@src/main';
-import { DocumentData, QueryDocumentSnapshot } from 'firebase/firestore/lite';
+import { DocumentData, QueryDocumentSnapshot } from 'firebase/firestore';
+
+import { queryClient } from '@providers/index';
 
 export function useGetProductsInfiniteQuery({ sellerId, pageLimit }: { sellerId: string; pageLimit?: number }) {
   const res = useInfiniteQuery({
@@ -29,7 +30,6 @@ export function useGetProductsInfiniteQuery({ sellerId, pageLimit }: { sellerId:
 type UseInfiniteQueryReturn = ReturnType<typeof useGetProductsInfiniteQuery>;
 
 export function useDeleteProductsMutation() {
-  // FIXME: 상위 스코프에서 queryKey 재사용하기
   return useMutation({
     mutationFn: ({ productId, sellerId }: { productId: string; sellerId: string }) =>
       storeService.deleteProducts(productId, sellerId),

@@ -2,8 +2,8 @@ import { storeService } from '@src/lib/firebase/StoreService';
 import { paymentService } from '@src/lib/IMP/PaymentService';
 
 import { useAuthContext } from '@providers/auth';
+import { queryClient } from '@providers/index';
 
-import { queryClient } from '@src/main';
 import { QUERY_KEYS } from '@constants/query-keys';
 
 import calcTotalPrice from '@src/utils/calc-total-price';

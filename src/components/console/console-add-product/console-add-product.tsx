@@ -17,7 +17,7 @@ import Wrapper from '@components/common/ui/wrapper';
 import { toast } from 'sonner';
 
 import formatNumber from '@src/utils/format-number';
-import { queryClient } from '@src/main';
+import { queryClient } from '@providers/index';
 import { QUERY_KEYS } from '@constants/query-keys';
 import { useNavigate } from 'react-router-dom';
 import { CONSOLE_ROUTE_PATHS } from '@constants/routes';

@@ -8,7 +8,6 @@ import {
   deleteDoc,
   orderBy,
   query,
-  serverTimestamp,
   limit,
   startAfter,
   QueryDocumentSnapshot,
@@ -16,7 +15,8 @@ import {
   DocumentReference,
   where,
   setDoc,
-} from 'firebase/firestore/lite';
+  serverTimestamp,
+} from 'firebase/firestore';
 import { db } from './config';
 
 import { getLocalStorage, setLocalStorage } from '@src/utils/local-storage';

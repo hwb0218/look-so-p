@@ -1,21 +1,22 @@
 import React from 'react';
 import { Link, createSearchParams } from 'react-router-dom';
 import { storeService } from '@src/lib/firebase/StoreService';
-import { queryClient } from '@src/main';
 
+import useFetchGoodsByCategoryQuery from '@hooks/use-fetch-goods-by-category-query';
+
+import { queryClient } from '@providers/index';
+
+import { WithQueryAsyncBoundary } from '@components/common/with-query-async-boundary';
 import { Li, Ul } from '@components/common/ui/list';
-import { GoodsItemCard } from '../goods-item-card';
 import Wrapper from '@components/common/ui/wrapper';
-
-import numberFormat from '@src/utils/number-format';
+import { GoodsItemCard } from '../goods-item-card';
+import GoodsByCategorySkeleton from './goods-by-category-skeleton';
 
 import { ROUTE_PATHS } from '@constants/routes';
 import { QUERY_KEYS } from '@constants/query-keys';
 
-import useFetchGoodsByCategoryQuery from '@hooks/use-fetch-goods-by-category-query';
 import sortbyOptions from '@src/utils/sort-by-options';
-import { WithQueryAsyncBoundary } from '@components/common/with-query-async-boundary';
-import GoodsByCategorySkeleton from './goods-by-category-skeleton';
+import numberFormat from '@src/utils/number-format';
 
 interface Props {
   sortingOption: string;

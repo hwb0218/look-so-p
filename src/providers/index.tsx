@@ -1,25 +1,33 @@
 import { PropsWithChildren } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { AuthProvider } from './auth';
-import { ModalPortal, ModalProvider } from './modal';
+import { ModalProvider } from './modal';
 import { CartProvider } from './cart';
 import { SearchBarProvider } from './search-bar';
 
-import { Toaster } from '@components/ui/sonner';
+export const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 0,
+      staleTime: 1_000 * 60 * 10,
+    },
+  },
+});
 
 export default function Providers({ children }: PropsWithChildren) {
   return (
-    <HelmetProvider>
-      <AuthProvider>
-        <ModalProvider>
-          <CartProvider>
-            <SearchBarProvider>{children}</SearchBarProvider>
-            <Toaster />
-            <ModalPortal />
-          </CartProvider>
-        </ModalProvider>
-      </AuthProvider>
-    </HelmetProvider>
+    <QueryClientProvider client={queryClient}>
+      <HelmetProvider>
+        <AuthProvider>
+          <ModalProvider>
+            <CartProvider>
+              <SearchBarProvider>{children}</SearchBarProvider>
+            </CartProvider>
+          </ModalProvider>
+        </AuthProvider>
+      </HelmetProvider>
+    </QueryClientProvider>
   );
 }

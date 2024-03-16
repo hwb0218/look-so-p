@@ -1,10 +1,12 @@
 import { useState, createContext, useMemo, PropsWithChildren } from 'react';
 
+import { queryClient } from '@providers/index';
+
 import filterGoods from '@src/utils/filter-goods';
 
-import type { Product } from '@src/lib/firebase/types';
 import { QUERY_KEYS } from '@constants/query-keys';
-import { queryClient } from '@src/main';
+
+import type { Product } from '@src/lib/firebase/types';
 
 interface SearchBarContextProps {
   isOpen: boolean;

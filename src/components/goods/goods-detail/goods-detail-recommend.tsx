@@ -1,6 +1,11 @@
 import React from 'react';
+import { Link, createSearchParams } from 'react-router-dom';
+import { storeService } from '@src/lib/firebase/StoreService';
 
 import useFetchRecommend from '@hooks/use-fetch-recommend-query';
+import useCarouselApi from '@hooks/use-carousel-api';
+
+import { queryClient } from '@providers/index';
 
 import GoodsDetailRecommendItem from './goods-detail-recommend-item';
 
@@ -12,12 +17,9 @@ import {
   CarouselPrevious,
   CarouselDots,
 } from '@components/ui/carousel';
-import { Link, createSearchParams } from 'react-router-dom';
+
 import { ROUTE_PATHS } from '@constants/routes';
-import useCarouselApi from '@hooks/use-carousel-api';
-import { queryClient } from '@src/main';
 import { QUERY_KEYS } from '@constants/query-keys';
-import { storeService } from '@src/lib/firebase/StoreService';
 
 interface Props {
   category: string;

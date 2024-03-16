@@ -1,8 +1,8 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import { FirebaseError } from 'firebase/app';
 import { authService } from '@src/lib/firebase/AuthService';
-import { queryClient } from '@src/main';
 
+import { queryClient } from '@providers/index';
 import { useAuthContext } from '@providers/auth';
 
 import { Li, Ul } from '@components/common/ui/list';
