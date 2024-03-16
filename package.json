@@ -7,6 +7,7 @@
     "build": "node generate-sitemap.js && tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
+    "test": "vitest",
     "deploy": "aws s3 sync ./dist s3://looksoprt.store --profile=hanwookong",
     "cache:clear": "aws cloudfront create-invalidation --profile=hanwookong --distribution-id E2YY7LFAFG3YL5 --paths '/*'"
   },
@@ -42,9 +43,10 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@swc/core": "^1.4.2",
-    "@swc/jest": "^0.2.36",
     "@tanstack/react-query-devtools": "^5.18.0",
+    "@testing-library/jest-dom": "^6.4.2",
+    "@testing-library/react": "^14.2.1",
+    "@types/jest": "^29.5.12",
     "@types/node": "^20.11.6",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
@@ -59,8 +61,10 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
     "jest": "^29.7.0",
+    "jsdom": "^24.0.0",
     "postcss": "^8.4.33",
     "prettier": "^3.2.4",
+    "process": "^0.11.10",
     "rollup-plugin-visualizer": "^5.12.0",
     "sitemap": "^7.1.1",
     "tailwind-scrollbar": "^3.1.0",
@@ -69,6 +73,7 @@
     "vite": "^5.0.8",
     "vite-plugin-svgr": "^4.2.0",
     "vite-plugin-webfont-dl": "^3.9.1",
-    "vite-tsconfig-paths": "^4.3.1"
+    "vite-tsconfig-paths": "^4.3.1",
+    "vitest": "^1.4.0"
   }
 }

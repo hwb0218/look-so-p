@@ -7,7 +7,6 @@
       "@components/*": ["components/*"],
       "@constants/*": ["constants/*"],
       "@hooks/*": ["hooks/*"],
-      "@firebase/*": ["firebase/*"],
       "@providers/*": ["providers/*"],
       "@schema": ["schema"],
       "@lib": ["lib"],
@@ -32,6 +31,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
+
   },
   "include": ["src", "generate-sitemap.js"],
   "exclude": ["node_modules"],
