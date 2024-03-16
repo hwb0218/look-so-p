@@ -24,10 +24,19 @@ yarn run dev
 
 ## 1. 제작 기간 & 참여 인원
 
-- <https://www.looksoprt.store>
+<https://www.looksoprt.store>
 - 1차 배포: 2024/01/25 ~ 2024/02/29
 - 2차 배포: 2024/02/29 ~
 - 개인 프로젝트
+
+판매자 계정
+
+> id: admin@gmail.com   
+> password: 1q2w3e4r!
+
+일반 계정
+> id: common@gmail.com   
+> password: 1q2w3e4r!
 
 </br>
 
