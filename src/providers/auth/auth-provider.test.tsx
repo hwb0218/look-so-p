@@ -1,12 +1,10 @@
 import { vi } from 'vitest';
-import { render } from '@src/utils/test-helpers';
 import { screen } from '@testing-library/react';
+import { render } from '@src/utils/test-helpers';
 
-import ConsoleNav from '@components/layout/console-nav-layout.tsx/console-nav';
+import { AuthContext } from './auth-provider';
 
 import type { User } from '@src/lib/firebase/types';
-
-const context = describe;
 
 const authContext = {
   state: {
@@ -23,22 +21,22 @@ const authContext = {
 };
 
 describe('AuthContext', () => {
-  context('With default value', () => {
-    it('renders user data', () => {
-      render(<ConsoleNav />);
+  it('renders default value', () => {
+    render(
+      <AuthContext.Consumer>{(value) => <span>Received: {value.state.auth.nickname}</span>}</AuthContext.Consumer>,
+    );
 
-      expect(screen.getByText(/nickname/)).toHaveTextContent('test nickname');
-    });
+    expect(screen.getByText(/^Received:/).textContent).toBe('Received: test nickname');
   });
 
-  context('With custom value', () => {
-    it('renders user data', () => {
-      render(<ConsoleNav />, {
+  it('renders custom value', () => {
+    render(
+      <AuthContext.Consumer>{(value) => <span>Received: {value.state.auth.nickname}</span>}</AuthContext.Consumer>,
+      {
         authContext,
-      });
+      },
+    );
 
-      screen.debug();
-      expect(screen.getByText(/nickname/)).toHaveTextContent('custom nickname');
-    });
+    expect(screen.getByText(/^Received:/).textContent).toBe('Received: custom nickname');
   });
 });
