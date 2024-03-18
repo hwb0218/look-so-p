@@ -27,7 +27,7 @@ describe('AuthContext', () => {
     it('renders user data', () => {
       render(<ConsoleNav />);
 
-      expect(screen.getByText(/test nickname/)).toBeInTheDocument();
+      expect(screen.getByText(/nickname/)).toHaveTextContent('test nickname');
     });
   });
 
@@ -38,7 +38,7 @@ describe('AuthContext', () => {
       });
 
       screen.debug();
-      expect(screen.getByText(/custom nickname/)).toBeInTheDocument();
+      expect(screen.getByText(/nickname/)).toHaveTextContent('custom nickname');
     });
   });
 });
