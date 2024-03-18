@@ -12,6 +12,7 @@ import dateFormat from '@src/utils/date-format';
 
 import type { Product } from '@src/lib/firebase/types';
 import DeleteGoodsAlert from './delete-goods-alert';
+import { Timestamp } from 'firebase/firestore';
 
 interface Props {
   products: Product[];
@@ -41,7 +42,7 @@ export default function ConsoleMain({ products }: Props) {
       {products?.map(({ createdAt, productName, productDescription, thumbnail, id, sellerId }) => (
         <Li key={id} className="w-full before:h-[2px] before:content-[''] before:block before:bg-slate-100">
           <Wrapper className="w-full rounded-md p-4">
-            <div className="float-right text-sm">등록일 {dateFormat(createdAt?.toDate())}</div>
+            <div className="float-right text-sm">등록일 {dateFormat((createdAt as Timestamp)?.toDate())}</div>
             <Wrapper className="flex justify-between">
               <div>
                 <Wrapper className="flex">

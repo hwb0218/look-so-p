@@ -10,6 +10,11 @@ export interface CreateUserValues {
   isSeller?: boolean | undefined;
 }
 
+interface Time {
+  seconds: number;
+  nanoseconds: number;
+}
+
 export interface Product extends DocumentData {
   id: string;
   productDescription: string;
@@ -20,9 +25,8 @@ export interface Product extends DocumentData {
   sellerId: string;
   images: string[];
   thumbnail: string;
-  createdAt: Timestamp;
-  updatedAt: Timestamp;
-  productId: string;
+  createdAt: Timestamp | Time;
+  updatedAt: Timestamp | Time;
 }
 
 export interface User extends DocumentData {
@@ -36,6 +40,7 @@ export interface User extends DocumentData {
 export interface CartGoods extends Product {
   goodsCount: number;
   totalPrice: number;
+  productId: string;
 }
 
 export enum Status {

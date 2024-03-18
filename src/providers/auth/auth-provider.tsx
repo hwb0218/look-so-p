@@ -35,7 +35,7 @@ const reducer = (state: InitState = initState, action: ReducerAction) => {
   }
 };
 
-interface IAuthContext {
+export interface IAuthContext {
   state: InitState;
   setAuth: (userData: User) => void;
   resetAuth: () => void;

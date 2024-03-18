@@ -4,7 +4,7 @@ import useCart from './use-cart';
 import type { CartGoods } from '@src/lib/firebase/types';
 import useOverlay from './use-overlay';
 
-interface CartContext {
+export interface CartContext {
   expanded: boolean;
   cart: CartGoods[];
   checkedGoods: CartGoods[];

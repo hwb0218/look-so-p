@@ -1,6 +1,6 @@
 import { useState, createContext, useMemo, useEffect } from 'react';
 
-interface ModalContextProps {
+export interface ModalContextProps {
   isOpen: 'open' | 'closed';
   modalContent: React.ReactNode;
   openModal: (content: React.ReactNode) => void;
