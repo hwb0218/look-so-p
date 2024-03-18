@@ -33,7 +33,7 @@
     "noFallthroughCasesInSwitch": true,
 
   },
-  "include": ["src", "generate-sitemap.js"],
+  "include": ["src", "generate-sitemap.js", "./tests/setup.ts"],
   "exclude": ["node_modules"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

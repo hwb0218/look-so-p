@@ -23,40 +23,25 @@ const routes: RouteObject[] = [
       { path: ROUTE_PATHS.HOME, element: <HomePage /> },
       {
         path: ROUTE_PATHS.SIGNUP,
-        lazy: async () => {
-          const { default: Component } = await SignUpPage();
-          return { Component };
-        },
+        element: <SignUpPage />,
       },
       {
         path: ROUTE_PATHS.SEARCH,
-        lazy: async () => {
-          const { default: Component } = await GoodsSearchPage();
-          return { Component };
-        },
+        element: <GoodsSearchPage />,
       },
       {
         path: ROUTE_PATHS.GOODS_LIST,
-        lazy: async () => {
-          const { default: Component } = await GoodsByCategoryPage();
-          return { Component };
-        },
+        element: <GoodsByCategoryPage />,
       },
       {
         path: ROUTE_PATHS.GOODS_DETAIL(),
-        lazy: async () => {
-          const { default: Component } = await GoodsDetailPage();
-          return { Component };
-        },
+        element: <GoodsDetailPage />,
       },
     ],
   },
   {
     path: ROUTE_PATHS.LOGIN,
-    lazy: async () => {
-      const { default: Component } = await LoginPage();
-      return { Component };
-    },
+    element: <LoginPage />,
   },
   {
     element: (
@@ -67,17 +52,11 @@ const routes: RouteObject[] = [
     children: [
       {
         path: AUTH_ROUTE_PATHS.ORDER,
-        lazy: async () => {
-          const { default: Component } = await OrderPage();
-          return { Component };
-        },
+        element: <OrderPage />,
       },
       {
         path: AUTH_ROUTE_PATHS.ORDER_LIST,
-        lazy: async () => {
-          const { default: Component } = await OrderListPage();
-          return { Component };
-        },
+        element: <OrderListPage />,
       },
     ],
   },
@@ -90,24 +69,15 @@ const routes: RouteObject[] = [
     children: [
       {
         path: CONSOLE_ROUTE_PATHS.CONSOLE(),
-        lazy: async () => {
-          const { default: Component } = await ConsoleMainPage();
-          return { Component };
-        },
+        element: <ConsoleMainPage />,
       },
       {
         path: CONSOLE_ROUTE_PATHS.PRODUCT_REGISTRATION(),
-        lazy: async () => {
-          const { default: Component } = await ConsoleAddProductPage();
-          return { Component };
-        },
+        element: <ConsoleAddProductPage />,
       },
       {
         path: CONSOLE_ROUTE_PATHS.ORDER_MANAGEMENT(),
-        lazy: async () => {
-          const { default: Component } = await ConsoleOrderManagementPage();
-          return { Component };
-        },
+        element: <ConsoleOrderManagementPage />,
       },
     ],
   },
