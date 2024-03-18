@@ -67,7 +67,6 @@ export default function useCart() {
 
   const onToggleCartGoods = useCallback(
     (cartGoods: CartGoods) => {
-      // FIXME: 결제 성공 후 장바구니 단일 품목 체크 시 가격 데이터 버그 발생
       const isAlreadyChecked = checkedGoods.some((goods) => goods.id === cartGoods.id);
 
       const newCheckedGoods = isAlreadyChecked
