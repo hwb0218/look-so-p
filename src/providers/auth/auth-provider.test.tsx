@@ -1,42 +1,52 @@
 import { vi } from 'vitest';
-import { screen } from '@testing-library/react';
-import { render } from '@src/utils/test-helpers';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
-import { AuthContext } from './auth-provider';
+import AuthProvider, { AuthContext } from './auth-provider';
 
-import type { User } from '@src/lib/firebase/types';
-
-const authContext = {
-  state: {
-    auth: {
-      email: 'custom@mail.com',
-      isSeller: true,
-      nickname: 'custom nickname',
-      uid: 'custom uid',
-    } as User,
-    isLoggedIn: true,
-  },
-  setAuth: vi.fn(),
-  resetAuth: vi.fn(),
-};
+const context = describe;
 
 describe('AuthContext', () => {
-  it('renders default value', () => {
-    render(
-      <AuthContext.Consumer>{(value) => <span>Received: {value.state.auth.nickname}</span>}</AuthContext.Consumer>,
-    );
-
-    expect(screen.getByText(/^Received:/).textContent).toBe('Received: test nickname');
+  beforeEach(() => {
+    vi.clearAllMocks();
   });
 
-  it('renders custom value', () => {
+  it('renders the empty auth', async () => {
     render(
-      <AuthContext.Consumer>{(value) => <span>Received: {value.state.auth.nickname}</span>}</AuthContext.Consumer>,
-      {
-        authContext,
-      },
+      <AuthProvider>
+        <AuthContext.Consumer>{(value) => <span>Received: {value.state.auth.nickname}</span>}</AuthContext.Consumer>
+      </AuthProvider>,
     );
 
-    expect(screen.getByText(/^Received:/).textContent).toBe('Received: custom nickname');
+    screen.getByText(/^Received:/).textContent;
+  });
+
+  context('calls "setAuth" button', () => {
+    it('renders test auth', async () => {
+      const testAuth = {
+        email: 'update@mail.com',
+        isSeller: true,
+        nickname: 'update nickname',
+        profile: ['update profile'],
+        uid: 'update uid',
+      };
+
+      render(
+        <AuthProvider>
+          <AuthContext.Consumer>
+            {(value) => (
+              <div>
+                <span>Received: {value.state.auth.nickname}</span>
+                <button onClick={() => value.setAuth(testAuth)}>button</button>
+              </div>
+            )}
+          </AuthContext.Consumer>
+        </AuthProvider>,
+      );
+
+      await userEvent.click(screen.getByRole('button', { name: 'button' }));
+
+      expect(screen.getByText(/^Received:/).textContent).toBe('Received: update nickname');
+    });
   });
 });
