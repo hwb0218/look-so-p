@@ -2,6 +2,9 @@ import { FormEvent, useState } from 'react';
 import { useNavigate, createSearchParams } from 'react-router-dom';
 
 import { useSearchBarContext } from '@providers/search-bar';
+
+import { Li } from '@components/common/ui/list';
+
 import { ROUTE_PATHS } from '@constants/routes';
 
 export default function SearchBar() {
@@ -27,7 +30,7 @@ export default function SearchBar() {
   };
 
   return (
-    <li>
+    <Li>
       <form
         onSubmit={handleSubmit}
         className={`flex ${isOpen ? 'w-[450px] outline-none ring-2 ring-ring' : 'w-[32px]'} h-10 px-1 relative rounded-full transition-all duration-500 overflow-hidden`}
@@ -53,6 +56,6 @@ export default function SearchBar() {
           <img src="/close_MD.svg" alt="검색 취소" />
         </div>
       </form>
-    </li>
+    </Li>
   );
 }

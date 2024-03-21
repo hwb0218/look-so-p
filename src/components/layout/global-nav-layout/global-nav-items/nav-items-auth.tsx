@@ -55,7 +55,7 @@ function NavItemsAuth({ renderIf, isSeller = false }: Props) {
   };
 
   return (
-    <>
+    <Li className="hidden md:flex">
       {AUTH_NAVIGATION_ITEMS[isSeller ? 'seller' : 'common'].map(({ title, to }) => (
         <Li key={title} className="ml-3">
           <NavLink to={typeof to === 'string' ? to : to(uid)}>{title}</NavLink>
@@ -64,7 +64,7 @@ function NavItemsAuth({ renderIf, isSeller = false }: Props) {
       <Li className="ml-3">
         <button onClick={onClickButton}>로그아웃</button>
       </Li>
-    </>
+    </Li>
   );
 }
 

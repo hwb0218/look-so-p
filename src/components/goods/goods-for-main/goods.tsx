@@ -8,7 +8,7 @@ import { GOODS_CATEGORIES } from '@constants/goods-categories';
 
 function GoodsComponent() {
   return (
-    <Wrapper className="w-9/12 m-auto">
+    <Wrapper className="w-11/12 md:w-9/12 m-auto">
       <Wrapper className="flex-col items-start">
         <GoodsList categories={GOODS_CATEGORIES} />
       </Wrapper>

@@ -46,7 +46,7 @@ function Login() {
   };
 
   return (
-    <Wrapper className="max-w-sm w-full fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+    <Wrapper className="px-4 max-w-sm w-full fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="flex justify-center items-center flex-col space-y-4">
           <Wrapper className="w-full relative p-6 border rounded-md ring-2 ring-ring ring-offset-2">

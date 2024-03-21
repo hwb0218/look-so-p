@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 
 import { Ul, Li } from '@components/common/ui/list';
 
-import { NavItems, NavItemsAuth, NavItemsUnauth } from './global-nav-items';
+import { NavItemsHamberger, NavItems, NavItemsAuth, NavItemsUnauth } from './global-nav-items';
 import { SearchBar } from './goods-search-bar';
 
 import { ROUTE_PATHS } from '@constants/routes';
@@ -15,18 +15,24 @@ function GlobalNav() {
   return (
     <header className="fixed top-0 left-0 right-0 px-6 py-2 flex justify-between z-10 bg-gradient-to-b from-muted">
       <Ul className="flex items-center font-black">
-        <Li className="w-14 rounded overflow-hidden">
+        <Li>
+          <NavItemsHamberger />
+        </Li>
+        <Li className="hidden w-14 rounded overflow-hidden md:block">
           <NavLink to={ROUTE_PATHS.HOME}>
             <img src="/logo.svg" alt="logo" className="w-full h-full" />
           </NavLink>
         </Li>
         <Li>
-          <NavLink to={ROUTE_PATHS.HOME} className="pl-6">
+          <NavLink
+            to={ROUTE_PATHS.HOME}
+            className="absolute left-1/2 top-[55%] -translate-x-1/2 -translate-y-1/2 md:static md:pl-6"
+          >
             <span className="text-xl">LookSoPrt</span>
           </NavLink>
         </Li>
       </Ul>
-      <Ul className="*:mx-2 gap-x-2">
+      <Ul className="gap-x-2">
         <SearchBar />
         <NavItems />
         <NavItemsAuth renderIf={() => auth} isSeller={auth?.isSeller} />
