@@ -1,4 +1,4 @@
-import { useState, createContext, useMemo, useEffect } from 'react';
+import { useState, createContext, useMemo } from 'react';
 
 interface ModalContextProps {
   isOpen: 'open' | 'closed';
@@ -22,26 +22,13 @@ export default function ModalProvider({ children }: Props) {
   const [isOpen, setIsOpen] = useState<'open' | 'closed'>('closed');
   const [modalContent, setModalContent] = useState<React.ReactNode>(null);
 
-  useEffect(() => {
-    let timerId: NodeJS.Timeout;
-
-    if (isOpen === 'closed') {
-      timerId = setTimeout(() => {
-        setModalContent(null);
-      }, 125);
-    }
-
-    return () => {
-      clearTimeout(timerId);
-    };
-  }, [isOpen]);
-
   const openModal = (content: React.ReactNode) => {
     setModalContent(content);
     setIsOpen('open');
   };
 
   const closeModal = () => {
+    setModalContent(null);
     setIsOpen('closed');
   };
 

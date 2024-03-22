@@ -5,16 +5,16 @@ import { Li } from '@components/common/ui/list';
 import { useCartContext } from '@providers/cart';
 import { useAuthContext } from '@providers/auth';
 
-function NavItems() {
+function NavItemsCommon() {
   const navigate = useNavigate();
   const { state } = useAuthContext();
-  const { cart, onOpenCart } = useCartContext();
+  const { cart, onShowOverlay } = useCartContext();
 
   const handleClickCartBtn = () => {
     if (!state.auth?.uid) {
       return navigate('/login');
     }
-    onOpenCart();
+    onShowOverlay();
   };
 
   return (
@@ -31,4 +31,4 @@ function NavItems() {
   );
 }
 
-export default NavItems;
+export default NavItemsCommon;

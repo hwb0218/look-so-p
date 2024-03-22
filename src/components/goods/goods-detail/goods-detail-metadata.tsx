@@ -20,7 +20,7 @@ interface Props {
 export default function GoodsDetailMetadata({ goods, productId }: Props) {
   const [goodsCount, setGoodsCount] = useState(1);
 
-  const { cart, onAddItemToCart, onOpenCart } = useCartContext();
+  const { cart, onAddItemToCart, onShowOverlay } = useCartContext();
   const { state } = useAuthContext();
   const { uid } = state.auth;
 
@@ -29,7 +29,7 @@ export default function GoodsDetailMetadata({ goods, productId }: Props) {
   useEffect(() => {
     if (isSuccess && data) {
       onAddItemToCart(data);
-      onOpenCart();
+      onShowOverlay();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, isSuccess]);
@@ -45,7 +45,7 @@ export default function GoodsDetailMetadata({ goods, productId }: Props) {
   };
 
   const handleClickMyCart = () => {
-    onOpenCart();
+    onShowOverlay();
   };
 
   const handleClickAddCart = () => {

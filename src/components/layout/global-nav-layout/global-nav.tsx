@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 
 import { Ul, Li } from '@components/common/ui/list';
 
-import { NavItemsHamberger, NavItems, NavItemsAuth, NavItemsUnauth } from './global-nav-items';
+import { NavItemsCommon, NavItemsAuth, NavItemsUnauth } from './global-nav-items';
 import { SearchBar } from './goods-search-bar';
 
 import { ROUTE_PATHS } from '@constants/routes';
@@ -16,7 +16,9 @@ function GlobalNav() {
     <header className="fixed top-0 left-0 right-0 px-6 py-2 flex justify-between z-10 bg-gradient-to-b from-muted">
       <Ul className="flex items-center font-black">
         <Li>
-          <NavItemsHamberger />
+          <div className="md:hidden">
+            <img src="/hamburger_MD.svg" alt="모바일 메뉴" />
+          </div>
         </Li>
         <Li className="hidden w-14 rounded overflow-hidden md:block">
           <NavLink to={ROUTE_PATHS.HOME}>
@@ -34,7 +36,7 @@ function GlobalNav() {
       </Ul>
       <Ul className="gap-x-2">
         <SearchBar />
-        <NavItems />
+        <NavItemsCommon />
         <NavItemsAuth renderIf={() => auth} isSeller={auth?.isSeller} />
         <NavItemsUnauth renderIf={() => !auth} />
       </Ul>

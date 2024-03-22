@@ -1,16 +1,18 @@
-import { useMemo, createContext, PropsWithChildren } from 'react';
+import { useMemo, createContext, PropsWithChildren, RefObject, MouseEvent } from 'react';
+
 import useCart from './use-cart';
+import useOverlay from '@components/common/overlay/use-overlay';
 
 import type { CartGoods } from '@src/lib/firebase/types';
-import useOverlay from './use-overlay';
 
 interface CartContext {
   expanded: boolean;
   cart: CartGoods[];
   checkedGoods: CartGoods[];
   totalPrice: number;
-  onOpenCart: () => void;
-  onCloseCart: () => void;
+  overlayRef: RefObject<HTMLDivElement>;
+  onShowOverlay: () => void;
+  onHideOverlay: (e: MouseEvent<HTMLElement>, forceHide?: boolean) => void;
   onAddItemToCart: (item: CartGoods) => void;
   onDeleteItemFromCart: (cartGoodsId: string) => void;
   onToggleCartGoods: (cartGoods: CartGoods) => void;
@@ -34,16 +36,17 @@ export default function CartProvider({ children }: PropsWithChildren) {
     onResetCart,
   } = useCart();
 
-  const { expanded, onOpenCart, onCloseCart } = useOverlay();
+  const { overlayRef, expanded, onShowOverlay, onHideOverlay } = useOverlay();
 
   const contextValue = useMemo(
     () => ({
-      expanded,
       cart,
       checkedGoods,
       totalPrice,
-      onOpenCart,
-      onCloseCart,
+      expanded,
+      overlayRef,
+      onShowOverlay,
+      onHideOverlay,
       onAddItemToCart,
       onDeleteItemFromCart,
       onToggleCartGoods,
@@ -52,12 +55,13 @@ export default function CartProvider({ children }: PropsWithChildren) {
       onResetCart,
     }),
     [
-      expanded,
       cart,
       checkedGoods,
       totalPrice,
-      onOpenCart,
-      onCloseCart,
+      expanded,
+      overlayRef,
+      onShowOverlay,
+      onHideOverlay,
       onAddItemToCart,
       onDeleteItemFromCart,
       onToggleCartGoods,
@@ -67,18 +71,5 @@ export default function CartProvider({ children }: PropsWithChildren) {
     ],
   );
 
-  const handeClickWrapper = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.stopPropagation();
-    onCloseCart();
-  };
-
-  return (
-    <>
-      <div
-        onClick={handeClickWrapper}
-        className={`fixed inset-0 z-[9999] ${expanded ? 'bg-stone-800/80' : 'hidden'}`}
-      />
-      <CartContext.Provider value={contextValue}>{children}</CartContext.Provider>
-    </>
-  );
+  return <CartContext.Provider value={contextValue}>{children}</CartContext.Provider>;
 }
