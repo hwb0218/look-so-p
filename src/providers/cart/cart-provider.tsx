@@ -6,7 +6,8 @@ import useOverlay from '@components/common/overlay/use-overlay';
 import type { CartGoods } from '@src/lib/firebase/types';
 
 interface CartContext {
-  expanded: boolean;
+  isOpen: 'open' | 'closed';
+  visible: boolean;
   cart: CartGoods[];
   checkedGoods: CartGoods[];
   totalPrice: number;
@@ -36,14 +37,15 @@ export default function CartProvider({ children }: PropsWithChildren) {
     onResetCart,
   } = useCart();
 
-  const { overlayRef, expanded, onShowOverlay, onHideOverlay } = useOverlay();
+  const { overlayRef, isOpen, visible, onShowOverlay, onHideOverlay } = useOverlay();
 
   const contextValue = useMemo(
     () => ({
       cart,
       checkedGoods,
       totalPrice,
-      expanded,
+      visible,
+      isOpen,
       overlayRef,
       onShowOverlay,
       onHideOverlay,
@@ -58,7 +60,8 @@ export default function CartProvider({ children }: PropsWithChildren) {
       cart,
       checkedGoods,
       totalPrice,
-      expanded,
+      visible,
+      isOpen,
       overlayRef,
       onShowOverlay,
       onHideOverlay,

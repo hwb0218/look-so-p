@@ -26,7 +26,8 @@ export default function Cart() {
   const navigate = useNavigate();
   const { openModal } = useModalContext();
   const {
-    expanded,
+    isOpen,
+    visible,
     cart,
     checkedGoods,
     totalPrice,
@@ -60,9 +61,9 @@ export default function Cart() {
   };
 
   return (
-    <Overlay ref={overlayRef} onClick={onHideOverlay} expanded={expanded}>
+    <Overlay ref={overlayRef} onClick={onHideOverlay} isOpen={isOpen} visible={visible}>
       <Wrapper
-        className={`${expanded ? '-translate-x-full' : 'translate-x-full'} transform-gpu p-5 h-screen w-96 fixed top-0 bottom-0 left-full z-[9999] transition-all duration-500`}
+        className={`${visible ? '-translate-x-full' : 'translate-x-full'} transform-gpu p-5 h-screen w-96 fixed top-0 bottom-0 left-full z-[9999] transition-all duration-500`}
       >
         <aside className="relative h-full w-full rounded-md bg-white">
           <Wrapper className="h-full w-full flex flex-col">

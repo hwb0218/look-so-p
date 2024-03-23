@@ -8,15 +8,18 @@ import { SearchBar } from './goods-search-bar';
 import { ROUTE_PATHS } from '@constants/routes';
 
 import { getLocalStorage } from '@src/utils/local-storage';
+import { useNavMobileContext } from '@providers/nav-mobile';
 
 function GlobalNav() {
   const auth = getLocalStorage({ key: 'auth' });
+
+  const { onShowOverlay } = useNavMobileContext();
 
   return (
     <header className="fixed top-0 left-0 right-0 px-6 py-2 flex justify-between z-10 bg-gradient-to-b from-muted">
       <Ul className="flex items-center font-black">
         <Li>
-          <div className="md:hidden">
+          <div className="md:hidden" onClick={onShowOverlay}>
             <img src="/hamburger_MD.svg" alt="모바일 메뉴" />
           </div>
         </Li>
