@@ -20,21 +20,18 @@ interface Props {
 
 export default function ModalProvider({ children }: Props) {
   const [isOpen, setIsOpen] = useState<'open' | 'closed'>('closed');
-  // const [visible, setVisible] = useState(false);
   const [modalContent, setModalContent] = useState<React.ReactNode>(null);
 
   const openModal = (content: React.ReactNode) => {
     setModalContent(content);
-    // setVisible(true);
     setIsOpen('open');
   };
 
   const closeModal = () => {
     setIsOpen('closed');
-    // setVisible(false);
     setTimeout(() => {
       setModalContent(null);
-    }, 250);
+    }, 150);
   };
 
   const contextValue = useMemo(() => ({ isOpen, modalContent, openModal, closeModal }), [isOpen, modalContent]);
