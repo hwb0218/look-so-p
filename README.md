@@ -40,7 +40,7 @@ yarn run dev
 
 </br>
 
-## 2. 사용 기슬
+## 2. 사용 기술
 
 <div>
   <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=white"/>
