@@ -18,13 +18,20 @@ export const queryClient = new QueryClient({
   },
 });
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <Providers>
-        <App />
-      </Providers>
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
-  </React.StrictMode>,
-);
+function main() {
+  const { IMP } = window;
+  IMP?.init(import.meta.env.VITE_PORTONE_IMP);
+
+  ReactDOM.createRoot(document.getElementById('root')!).render(
+    <React.StrictMode>
+      <QueryClientProvider client={queryClient}>
+        <Providers>
+          <App />
+        </Providers>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </React.StrictMode>,
+  );
+}
+
+main();

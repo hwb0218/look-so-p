@@ -1,15 +1,32 @@
-import * as PortOne from '@portone/browser-sdk/v2';
+import { Iamport, RequestPayParams, RequestPayResponse } from './types';
 
-const STORE_ID = import.meta.env.VITE_PORTONE_STORE_ID || '';
-const CHANNEL_KEY = import.meta.env.VITE_PORTONE_CHANNEL_KEY || '';
+const PG_CODE = import.meta.env.VITE_PORTONE_PG_CODE || '';
 
 type Goods = {
   name: string;
   price: number;
 };
 
+type Buyer = {
+  name: string;
+  email: string;
+  phoneNumber: string;
+  address: string;
+  postalCode: string;
+};
+
 export default class PaymentService {
-  async requestPayment({ goods }: { goods: Goods }): Promise<{
+  instance: Iamport;
+
+  constructor() {
+    if (typeof window.IMP !== 'undefined') {
+      this.instance = window.IMP;
+    } else {
+      throw new Error('아임포트 SDK가 로드되지 않았습니다.');
+    }
+  }
+
+  async requestPayment({ goods, buyer }: { goods: Goods; buyer?: Buyer }): Promise<{
     merchantId: string;
     transactionId: string;
   }> {
@@ -17,28 +34,35 @@ export default class PaymentService {
     const date = now.toISOString().slice(0, 10).replace(/-/g, '');
     const time = now.getTime();
     const nonce = Math.random().toString().slice(-5);
-    const merchantId = `${date}-${time}${nonce}`;
+    const merchantId = `ORDER-${date}-${time}${nonce}`;
 
-    const data: PortOne.PaymentRequest = {
-      storeId: STORE_ID,
-      channelKey: CHANNEL_KEY,
-      paymentId: merchantId,
-      orderName: goods.name,
-      totalAmount: goods.price,
-      currency: 'CURRENCY_KRW',
-      payMethod: 'CARD',
+    const data: RequestPayParams = {
+      pg: PG_CODE,
+      pay_method: 'card',
+      merchant_uid: merchantId,
+      name: goods.name,
+      amount: goods.price,
+      buyer_email: buyer?.email,
+      buyer_name: buyer?.name,
+      buyer_tel: buyer?.phoneNumber,
+      buyer_addr: buyer?.address,
+      buyer_postcode: buyer?.postalCode,
     };
 
-    const res = (await PortOne.requestPayment(data)) as PortOne.PaymentResponse;
+    return new Promise((resolve, reject) => {
+      this.instance.request_pay(data, (response: RequestPayResponse) => {
+        const { success, merchant_uid, imp_uid, error_msg } = response;
 
-    if (res.code !== null) {
-      throw new Error(res.message);
-    }
-
-    return {
-      merchantId: res.paymentId ?? '',
-      transactionId: res.transactionType ?? '',
-    };
+        if (success) {
+          resolve({
+            merchantId: merchant_uid,
+            transactionId: imp_uid ?? '',
+          });
+        } else {
+          reject(Error(error_msg));
+        }
+      });
+    });
   }
 }
 
