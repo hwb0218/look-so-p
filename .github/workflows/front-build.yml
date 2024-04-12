@@ -31,6 +31,8 @@ jobs:
           echo "VITE_FIREBASE_APP_ID=${{ secrets.VITE_FIREBASE_APP_ID }}" >> .env
           echo "VITE_PORTONE_IMP=${{ secrets.VITE_PORTONE_IMP }}" >> .env
           echo "VITE_PORTONE_PG_CODE=${{ secrets.VITE_PORTONE_PG_CODE }}" >> .env
+          echo "VITE_PORTONE_STORE_ID=${{ secrets.VITE_PORTONE_STORE_ID }}" >> .env
+          echo "VITE_PORTONE_CHANNEL_KEY=${{ secrets.VITE_PORTONE_CHANNEL_KEY }}" >> .env
         env:
           VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
           VITE_FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
@@ -39,6 +41,8 @@ jobs:
           VITE_FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID }}
           VITE_PORTONE_IMP: ${{ secrets.VITE_PORTONE_IMP }}
           VITE_PORTONE_PG_CODE: ${{ secrets.VITE_PORTONE_PG_CODE }}
+          VITE_PORTONE_STORE_ID: ${{ secrets.VITE_PORTONE_STORE_ID }}
+          VITE_PORTONE_CHANNEL_KEY: ${{ secrets.VITE_PORTONE_CHANNEL_KEY }}
 
 
 
