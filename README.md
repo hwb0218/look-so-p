@@ -1,4 +1,4 @@
-# LookSoPrt
+# LookSoPretty
 >
 > React + Typescript + Firebase Cosmetic E-commerce
 
